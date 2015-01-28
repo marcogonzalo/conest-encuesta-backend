@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Materia:</strong>
+  <%= @oferta_periodo.materia %>
+</p>
+
+<p>
+  <strong>Periodo academico:</strong>
+  <%= @oferta_periodo.periodo_academico %>
+</p>
+
+<p>
+  <strong>Docente coordinador:</strong>
+  <%= @oferta_periodo.docente_coordinador %>
+</p>
+
+<%= link_to 'Edit', edit_oferta_periodo_path(@oferta_periodo) %> |
+<%= link_to 'Back', ofertas_periodo_path %>

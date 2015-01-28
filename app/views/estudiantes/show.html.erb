@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cedula:</strong>
+  <%= @estudiante.cedula %>
+</p>
+
+<p>
+  <strong>Primer nombre:</strong>
+  <%= @estudiante.primer_nombre %>
+</p>
+
+<p>
+  <strong>Segundo nombre:</strong>
+  <%= @estudiante.segundo_nombre %>
+</p>
+
+<p>
+  <strong>Primer apellido:</strong>
+  <%= @estudiante.primer_apellido %>
+</p>
+
+<p>
+  <strong>Segundo apellido:</strong>
+  <%= @estudiante.segundo_apellido %>
+</p>
+
+<%= link_to 'Edit', edit_estudiante_path(@estudiante) %> |
+<%= link_to 'Back', estudiantes_path %>

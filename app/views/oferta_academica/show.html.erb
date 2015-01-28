@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oferta periodo:</strong>
+  <%= @oferta_academica.oferta_periodo %>
+</p>
+
+<p>
+  <strong>Nombre seccion:</strong>
+  <%= @oferta_academica.nombre_seccion %>
+</p>
+
+<p>
+  <strong>Docente:</strong>
+  <%= @oferta_academica.docente %>
+</p>
+
+<p>
+  <strong>Promedio general:</strong>
+  <%= @oferta_academica.promedio_general %>
+</p>
+
+<p>
+  <strong>Nro estudiantes:</strong>
+  <%= @oferta_academica.nro_estudiantes %>
+</p>
+
+<p>
+  <strong>Nro estudiantes retirados:</strong>
+  <%= @oferta_academica.nro_estudiantes_retirados %>
+</p>
+
+<p>
+  <strong>Nro estudiantes aprobados:</strong>
+  <%= @oferta_academica.nro_estudiantes_aprobados %>
+</p>
+
+<p>
+  <strong>Nro estudiantes equivalencia:</strong>
+  <%= @oferta_academica.nro_estudiantes_equivalencia %>
+</p>
+
+<p>
+  <strong>Nro estudiantes suficiencia:</strong>
+  <%= @oferta_academica.nro_estudiantes_suficiencia %>
+</p>
+
+<p>
+  <strong>Nro estudiantes reparacion:</strong>
+  <%= @oferta_academica.nro_estudiantes_reparacion %>
+</p>
+
+<p>
+  <strong>Nro estudiantes aplazados:</strong>
+  <%= @oferta_academica.nro_estudiantes_aplazados %>
+</p>
+
+<p>
+  <strong>Tipo estatus calificacion:</strong>
+  <%= @oferta_academica.tipo_estatus_calificacion_id %>
+</p>
+
+<%= link_to 'Edit', edit_oferta_academica_path(@oferta_academica) %> |
+<%= link_to 'Back', oferta_academica_index_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  materia_id: 
+  periodo_academico_id: 
+  docente_coordinador: 1
+
+two:
+  materia_id: 
+  periodo_academico_id: 
+  docente_coordinador: 1

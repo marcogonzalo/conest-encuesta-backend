@@ -1,0 +1,29 @@
+<%= form_for(@oferta_periodo) do |f| %>
+  <% if @oferta_periodo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oferta_periodo.errors.count, "error") %> prohibited this oferta_periodo from being saved:</h2>
+
+      <ul>
+      <% @oferta_periodo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :materia_id %><br>
+    <%= f.text_field :materia_id %>
+  </div>
+  <div class="field">
+    <%= f.label :periodo_academico_id %><br>
+    <%= f.text_field :periodo_academico_id %>
+  </div>
+  <div class="field">
+    <%= f.label :docente_coordinador %><br>
+    <%= f.number_field :docente_coordinador %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

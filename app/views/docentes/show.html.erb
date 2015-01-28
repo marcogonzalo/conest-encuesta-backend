@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cedula:</strong>
+  <%= @docente.cedula %>
+</p>
+
+<p>
+  <strong>Primer nombre:</strong>
+  <%= @docente.primer_nombre %>
+</p>
+
+<p>
+  <strong>Segundo nombre:</strong>
+  <%= @docente.segundo_nombre %>
+</p>
+
+<p>
+  <strong>Primer apellido:</strong>
+  <%= @docente.primer_apellido %>
+</p>
+
+<p>
+  <strong>Segundo apellido:</strong>
+  <%= @docente.segundo_apellido %>
+</p>
+
+<%= link_to 'Edit', edit_docente_path(@docente) %> |
+<%= link_to 'Back', docentes_path %>

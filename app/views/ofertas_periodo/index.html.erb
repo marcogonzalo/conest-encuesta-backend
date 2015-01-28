@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ofertas Periodo</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Materia</th>
+      <th>Periodo academico</th>
+      <th>Docente coordinador</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ofertas_periodo.each do |oferta_periodo| %>
+      <tr>
+        <td><%= oferta_periodo.materia %></td>
+        <td><%= oferta_periodo.periodo_academico %></td>
+        <td><%= oferta_periodo.docente_coordinador %></td>
+        <td><%= link_to 'Show', oferta_periodo %></td>
+        <td><%= link_to 'Edit', edit_oferta_periodo_path(oferta_periodo) %></td>
+        <td><%= link_to 'Destroy', oferta_periodo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Oferta periodo', new_oferta_periodo_path %>

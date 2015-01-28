@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Docentes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cedula</th>
+      <th>Primer nombre</th>
+      <th>Segundo nombre</th>
+      <th>Primer apellido</th>
+      <th>Segundo apellido</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @docentes.each do |docente| %>
+      <tr>
+        <td><%= docente.cedula %></td>
+        <td><%= docente.primer_nombre %></td>
+        <td><%= docente.segundo_nombre %></td>
+        <td><%= docente.primer_apellido %></td>
+        <td><%= docente.segundo_apellido %></td>
+        <td><%= link_to 'Show', docente %></td>
+        <td><%= link_to 'Edit', edit_docente_path(docente) %></td>
+        <td><%= link_to 'Destroy', docente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Docente', new_docente_path %>

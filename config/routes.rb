@@ -1,4 +1,34 @@
 Rails.application.routes.draw do
+  resources :respuestas
+
+  resources :consultas
+
+  resources :oferta_academica
+
+  resources :ofertas_periodo
+
+  resources :materias
+
+  resources :carreras
+
+  resources :periodos_academicos
+
+  resources :docentes
+
+  resources :estudiantes
+
+  resources :tokens
+
+  resources :opciones
+
+  resources :preguntas
+
+  resources :tipos_pregunta
+
+  resources :bloques
+
+  resources :instrumentos
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

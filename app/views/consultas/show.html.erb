@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oferta academica:</strong>
+  <%= @consulta.oferta_academica %>
+</p>
+
+<p>
+  <strong>Instrumento:</strong>
+  <%= @consulta.instrumento %>
+</p>
+
+<%= link_to 'Edit', edit_consulta_path(@consulta) %> |
+<%= link_to 'Back', consultas_path %>

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  oferta_periodo_id: 
+  nombre_seccion: MyString
+  docente_id: 
+  promedio_general: MyString
+  nro_estudiantes: 1
+  nro_estudiantes_retirados: 1
+  nro_estudiantes_aprobados: 1
+  nro_estudiantes_equivalencia: 1
+  nro_estudiantes_suficiencia: 1
+  nro_estudiantes_reparacion: 1
+  nro_estudiantes_aplazados: 1
+  tipo_estatus_calificacion_id: MyString
+
+two:
+  oferta_periodo_id: 
+  nombre_seccion: MyString
+  docente_id: 
+  promedio_general: MyString
+  nro_estudiantes: 1
+  nro_estudiantes_retirados: 1
+  nro_estudiantes_aprobados: 1
+  nro_estudiantes_equivalencia: 1
+  nro_estudiantes_suficiencia: 1
+  nro_estudiantes_reparacion: 1
+  nro_estudiantes_aplazados: 1
+  tipo_estatus_calificacion_id: MyString

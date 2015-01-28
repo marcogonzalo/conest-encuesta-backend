@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Opciones</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Etiqueta</th>
+      <th>Valor</th>
+      <th>Pregunta</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @opciones.each do |opcion| %>
+      <tr>
+        <td><%= opcion.etiqueta %></td>
+        <td><%= opcion.valor %></td>
+        <td><%= opcion.pregunta %></td>
+        <td><%= link_to 'Show', opcion %></td>
+        <td><%= link_to 'Edit', edit_opcion_path(opcion) %></td>
+        <td><%= link_to 'Destroy', opcion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Opcion', new_opcion_path %>

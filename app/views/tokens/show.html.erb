@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Token:</strong>
+  <%= @token.token %>
+</p>
+
+<p>
+  <strong>Hash sum:</strong>
+  <%= @token.hash_sum %>
+</p>
+
+<%= link_to 'Edit', edit_token_path(@token) %> |
+<%= link_to 'Back', tokens_path %>

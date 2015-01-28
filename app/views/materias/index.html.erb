@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Materias</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Codigo</th>
+      <th>Carrera</th>
+      <th>Plan nombre</th>
+      <th>Nombre</th>
+      <th>Tipo materia</th>
+      <th>Grupo nota</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @materias.each do |materia| %>
+      <tr>
+        <td><%= materia.codigo %></td>
+        <td><%= materia.carrera %></td>
+        <td><%= materia.plan_nombre %></td>
+        <td><%= materia.nombre %></td>
+        <td><%= materia.tipo_materia_id %></td>
+        <td><%= materia.grupo_nota_id %></td>
+        <td><%= link_to 'Show', materia %></td>
+        <td><%= link_to 'Edit', edit_materia_path(materia) %></td>
+        <td><%= link_to 'Destroy', materia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Materia', new_materia_path %>

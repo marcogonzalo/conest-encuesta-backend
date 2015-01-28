@@ -1,0 +1,25 @@
+<%= form_for(@consulta) do |f| %>
+  <% if @consulta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@consulta.errors.count, "error") %> prohibited this consulta from being saved:</h2>
+
+      <ul>
+      <% @consulta.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :oferta_academica_id %><br>
+    <%= f.text_field :oferta_academica_id %>
+  </div>
+  <div class="field">
+    <%= f.label :instrumento_id %><br>
+    <%= f.text_field :instrumento_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

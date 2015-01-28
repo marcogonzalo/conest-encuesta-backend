@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Periodos Academicos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Periodo</th>
+      <th>Hash sum</th>
+      <th>Sincronizacion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @periodos_academicos.each do |periodo_academico| %>
+      <tr>
+        <td><%= periodo_academico.periodo %></td>
+        <td><%= periodo_academico.hash_sum %></td>
+        <td><%= periodo_academico.sincronizacion %></td>
+        <td><%= link_to 'Show', periodo_academico %></td>
+        <td><%= link_to 'Edit', edit_periodo_academico_path(periodo_academico) %></td>
+        <td><%= link_to 'Destroy', periodo_academico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Periodo academico', new_periodo_academico_path %>

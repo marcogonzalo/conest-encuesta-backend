@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo: MyString
+  carrera_id: 
+  plan_nombre: MyString
+  nombre: MyString
+  tipo_materia_id: MyString
+  grupo_nota_id: MyString
+
+two:
+  codigo: MyString
+  carrera_id: 
+  plan_nombre: MyString
+  nombre: MyString
+  tipo_materia_id: MyString
+  grupo_nota_id: MyString

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @bloque.nombre %>
+</p>
+
+<p>
+  <strong>Descripcion:</strong>
+  <%= @bloque.descripcion %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @bloque.tipo %>
+</p>
+
+<%= link_to 'Edit', edit_bloque_path(@bloque) %> |
+<%= link_to 'Back', bloques_path %>

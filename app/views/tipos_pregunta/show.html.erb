@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @tipo_pregunta.nombre %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @tipo_pregunta.valor %>
+</p>
+
+<p>
+  <strong>Valor html:</strong>
+  <%= @tipo_pregunta.valor_html %>
+</p>
+
+<%= link_to 'Edit', edit_tipo_pregunta_path(@tipo_pregunta) %> |
+<%= link_to 'Back', tipos_pregunta_path %>

@@ -1,0 +1,65 @@
+<%= form_for(@oferta_academica) do |f| %>
+  <% if @oferta_academica.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oferta_academica.errors.count, "error") %> prohibited this oferta_academica from being saved:</h2>
+
+      <ul>
+      <% @oferta_academica.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :oferta_periodo_id %><br>
+    <%= f.text_field :oferta_periodo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :nombre_seccion %><br>
+    <%= f.text_field :nombre_seccion %>
+  </div>
+  <div class="field">
+    <%= f.label :docente_id %><br>
+    <%= f.text_field :docente_id %>
+  </div>
+  <div class="field">
+    <%= f.label :promedio_general %><br>
+    <%= f.text_field :promedio_general %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes %><br>
+    <%= f.number_field :nro_estudiantes %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes_retirados %><br>
+    <%= f.number_field :nro_estudiantes_retirados %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes_aprobados %><br>
+    <%= f.number_field :nro_estudiantes_aprobados %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes_equivalencia %><br>
+    <%= f.number_field :nro_estudiantes_equivalencia %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes_suficiencia %><br>
+    <%= f.number_field :nro_estudiantes_suficiencia %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes_reparacion %><br>
+    <%= f.number_field :nro_estudiantes_reparacion %>
+  </div>
+  <div class="field">
+    <%= f.label :nro_estudiantes_aplazados %><br>
+    <%= f.number_field :nro_estudiantes_aplazados %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_estatus_calificacion_id %><br>
+    <%= f.text_field :tipo_estatus_calificacion_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

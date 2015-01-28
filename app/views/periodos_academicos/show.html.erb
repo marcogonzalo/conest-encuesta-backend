@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Periodo:</strong>
+  <%= @periodo_academico.periodo %>
+</p>
+
+<p>
+  <strong>Hash sum:</strong>
+  <%= @periodo_academico.hash_sum %>
+</p>
+
+<p>
+  <strong>Sincronizacion:</strong>
+  <%= @periodo_academico.sincronizacion %>
+</p>
+
+<%= link_to 'Edit', edit_periodo_academico_path(@periodo_academico) %> |
+<%= link_to 'Back', periodos_academicos_path %>

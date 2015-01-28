@@ -1,0 +1,25 @@
+<%= form_for(@token) do |f| %>
+  <% if @token.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@token.errors.count, "error") %> prohibited this token from being saved:</h2>
+
+      <ul>
+      <% @token.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :token %><br>
+    <%= f.text_field :token %>
+  </div>
+  <div class="field">
+    <%= f.label :hash_sum %><br>
+    <%= f.text_field :hash_sum %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

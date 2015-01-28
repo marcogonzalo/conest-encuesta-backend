@@ -1,0 +1,29 @@
+<%= form_for(@periodo_academico) do |f| %>
+  <% if @periodo_academico.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@periodo_academico.errors.count, "error") %> prohibited this periodo_academico from being saved:</h2>
+
+      <ul>
+      <% @periodo_academico.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :periodo %><br>
+    <%= f.text_field :periodo %>
+  </div>
+  <div class="field">
+    <%= f.label :hash_sum %><br>
+    <%= f.text_field :hash_sum %>
+  </div>
+  <div class="field">
+    <%= f.label :sincronizacion %><br>
+    <%= f.datetime_select :sincronizacion %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
