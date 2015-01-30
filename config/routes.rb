@@ -1,34 +1,37 @@
 Rails.application.routes.draw do
-  resources :respuestas
+  namespace :api, except: [:new, :edit], defaults: {format: :json} do
+    namespace :v1 do
 
-  resources :consultas
+      resources :consultas
 
-  resources :oferta_academica
+      # Rutas asociadas a elementos de Conest
+      resources :periodos_academicos do
+        resources :ofertas_periodo
+      end
 
-  resources :ofertas_periodo
+      resources :carreras, shallow: true do
+        resources :materias
+      end
 
-  resources :materias
+      resources :oferta_academica
 
-  resources :carreras
+      resources :docentes
+      resources :estudiantes
 
-  resources :periodos_academicos
+      # Rutas asociadas  a componentes del SEDAD
+      resources :instrumentos
+      resources :bloques
 
-  resources :docentes
+      # Rutas asociadas a preguntas, opciones y respuestas
+      resources :tipos_pregunta
+      resources :preguntas do
+        resources :opciones
+      end
+      resources :respuestas
 
-  resources :estudiantes
-
-  resources :tokens
-
-  resources :opciones
-
-  resources :preguntas
-
-  resources :tipos_pregunta
-
-  resources :bloques
-
-  resources :instrumentos
-
+      resources :tokens
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
