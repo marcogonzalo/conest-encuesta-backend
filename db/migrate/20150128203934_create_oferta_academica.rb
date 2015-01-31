@@ -12,7 +12,7 @@ class CreateOfertaAcademica < ActiveRecord::Migration
       t.integer :nro_estudiantes_suficiencia, limit: 4, null: true
       t.integer :nro_estudiantes_reparacion, limit: 4, null: true
       t.integer :nro_estudiantes_aplazados, limit: 4, null: true
-      t.string :tipo_estatus_calificaion_id, limit: 10, null: true
+      t.string :tipo_estatus_calificacion_id, limit: 10, null: true
 
       t.timestamps null: false
     end

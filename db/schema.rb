@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20150128204715) do
     t.integer  "nro_estudiantes_suficiencia"
     t.integer  "nro_estudiantes_reparacion"
     t.integer  "nro_estudiantes_aplazados"
-    t.string   "tipo_estatus_calificaion_id",  limit: 10
+    t.string   "tipo_estatus_calificacion_id", limit: 10
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end
