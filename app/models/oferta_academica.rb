@@ -55,7 +55,7 @@ class OfertaAcademica < ActiveRecord::Base
 				length: { maximum: 4 },
 				allow_blank: true
 
-	validates :tipo_estatus_calificaion_id, 
+	validates :tipo_estatus_calificacion_id, 
 				length: { maximum: 10 }, 
 				allow_blank: true
 end
