@@ -9,7 +9,7 @@ class Docente < ActiveRecord::Base
 
 	validates :primer_nombre,
 				length: { maximum: 45 },
-				presence: true,
+				presence: true
 
 	validates :segundo_nombre,
 				length: { maximum: 45 }

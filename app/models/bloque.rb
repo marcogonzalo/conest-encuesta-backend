@@ -2,9 +2,9 @@ class Bloque < ActiveRecord::Base
 	has_and_belongs_to_many :instrumentos
 	has_and_belongs_to_many :preguntas
 
-	TIPO = Hash["D"   => "Docente", 
+	TIPO = Hash["D"  => "Docente", 
 				"L"  => "Laboratorio",
-				"P" => "Práctica",
+				"P"  => "Práctica",
 				"T"  => "Teoría"]
 
 	validates :nombre, 
@@ -15,7 +15,7 @@ class Bloque < ActiveRecord::Base
 				length: { maximum: 255 }
 
 	validates :tipo,
-				length: { is: 4 },
+				length: { in: 1..4 },
 				inclusion: { in: TIPO.keys },
 				presence: true
 end

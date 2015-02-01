@@ -3,7 +3,8 @@ class Estudiante < ActiveRecord::Base
 
 	validates :cedula,
 				length: { in: 4..20 },
-				presence: true
+				presence: true,
+				uniqueness: true
 
 	validates :primer_nombre,
 				length: { maximum: 45 },
