@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+materia_1:
   codigo: MyString
-  carrera_id: 
+  carrera_id: carrera_1
   plan_nombre: MyString
   nombre: MyString
-  tipo_materia_id: MyString
+  tipo_materia_id: tipo1
   grupo_nota_id: MyString
 
-two:
+materia_2:
   codigo: MyString
-  carrera_id: 
+  carrera: carrera_1 
   plan_nombre: MyString
   nombre: MyString
-  tipo_materia_id: MyString
+  tipo_materia_id: tipo2
   grupo_nota_id: MyString

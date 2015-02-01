@@ -1,49 +1,39 @@
 require 'test_helper'
 
-class DocentesControllerTest < ActionController::TestCase
+class Api::V1::DocentesControllerTest < ActionController::TestCase
   setup do
     @docente = docentes(:one)
   end
 
   test "should get index" do
-    get :index
+    get :index, format: :json
     assert_response :success
     assert_not_nil assigns(:docentes)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
   test "should create docente" do
     assert_difference('Docente.count') do
-      post :create, docente: { cedula: @docente.cedula, primer_apellido: @docente.primer_apellido, primer_nombre: @docente.primer_nombre, segundo_apellido: @docente.segundo_apellido, segundo_nombre: @docente.segundo_nombre }
+      post :create, docente: { cedula: @docente.cedula, primer_apellido: @docente.primer_apellido, primer_nombre: @docente.primer_nombre, segundo_apellido: @docente.segundo_apellido, segundo_nombre: @docente.segundo_nombre }, format: :json
     end
 
-    assert_redirected_to docente_path(assigns(:docente))
+    assert_response 201
   end
 
   test "should show docente" do
-    get :show, id: @docente
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @docente
+    get :show, id: @docente, format: :json
     assert_response :success
   end
 
   test "should update docente" do
-    patch :update, id: @docente, docente: { cedula: @docente.cedula, primer_apellido: @docente.primer_apellido, primer_nombre: @docente.primer_nombre, segundo_apellido: @docente.segundo_apellido, segundo_nombre: @docente.segundo_nombre }
-    assert_redirected_to docente_path(assigns(:docente))
+    patch :update, id: @docente, docente: { cedula: @docente.cedula, primer_apellido: @docente.primer_apellido, primer_nombre: @docente.primer_nombre, segundo_apellido: @docente.segundo_apellido, segundo_nombre: @docente.segundo_nombre }, format: :json
+    assert_response 200
   end
 
   test "should destroy docente" do
     assert_difference('Docente.count', -1) do
-      delete :destroy, id: @docente
+      delete :destroy, id: @docente, format: :json
     end
 
-    assert_redirected_to docentes_path
+    assert_response 204
   end
 end

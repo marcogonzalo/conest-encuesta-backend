@@ -1,14 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  cedula: MyString
+docente_1:
+  cedula: 18002738
   primer_nombre: MyString
   segundo_nombre: MyString
   primer_apellido: MyString
   segundo_apellido: MyString
 
-two:
-  cedula: MyString
+docente_2:
+  cedula: 18313357
   primer_nombre: MyString
   segundo_nombre: MyString
   primer_apellido: MyString

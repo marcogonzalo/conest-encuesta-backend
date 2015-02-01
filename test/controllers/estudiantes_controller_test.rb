@@ -1,49 +1,39 @@
 require 'test_helper'
 
-class EstudiantesControllerTest < ActionController::TestCase
+class Api::V1::EstudiantesControllerTest < ActionController::TestCase
   setup do
     @estudiante = estudiantes(:one)
   end
 
   test "should get index" do
-    get :index
+    get :index, format: :json
     assert_response :success
     assert_not_nil assigns(:estudiantes)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
   test "should create estudiante" do
     assert_difference('Estudiante.count') do
-      post :create, estudiante: { cedula: @estudiante.cedula, primer_apellido: @estudiante.primer_apellido, primer_nombre: @estudiante.primer_nombre, segundo_apellido: @estudiante.segundo_apellido, segundo_nombre: @estudiante.segundo_nombre }
+      post :create, estudiante: { cedula: @estudiante.cedula, primer_apellido: @estudiante.primer_apellido, primer_nombre: @estudiante.primer_nombre, segundo_apellido: @estudiante.segundo_apellido, segundo_nombre: @estudiante.segundo_nombre }, format: :json
     end
 
-    assert_redirected_to estudiante_path(assigns(:estudiante))
+    assert_response 201
   end
 
   test "should show estudiante" do
-    get :show, id: @estudiante
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @estudiante
+    get :show, id: @estudiante, format: :json
     assert_response :success
   end
 
   test "should update estudiante" do
-    patch :update, id: @estudiante, estudiante: { cedula: @estudiante.cedula, primer_apellido: @estudiante.primer_apellido, primer_nombre: @estudiante.primer_nombre, segundo_apellido: @estudiante.segundo_apellido, segundo_nombre: @estudiante.segundo_nombre }
-    assert_redirected_to estudiante_path(assigns(:estudiante))
+    patch :update, id: @estudiante, estudiante: { cedula: @estudiante.cedula, primer_apellido: @estudiante.primer_apellido, primer_nombre: @estudiante.primer_nombre, segundo_apellido: @estudiante.segundo_apellido, segundo_nombre: @estudiante.segundo_nombre }, format: :json
+    assert_response 200
   end
 
   test "should destroy estudiante" do
     assert_difference('Estudiante.count', -1) do
-      delete :destroy, id: @estudiante
+      delete :destroy, id: @estudiante, format: :json
     end
 
-    assert_redirected_to estudiantes_path
+    assert_response 204
   end
 end

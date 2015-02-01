@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+periodo_academico_1:
   periodo: MyString
   hash_sum: MyString
   sincronizacion: 2015-01-28 15:54:55
 
-two:
+periodo_academico_2:
   periodo: MyString
   hash_sum: MyString
   sincronizacion: 2015-01-28 15:54:55

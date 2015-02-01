@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+carrera_1:
   codigo: MyString
   nombre: MyString
   organizacion_id: MyString
 
-two:
+carrera_2:
   codigo: MyString
   nombre: MyString
   organizacion_id: MyString

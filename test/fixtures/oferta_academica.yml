@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  oferta_periodo_id: 
+oferta_academica_1:
+  oferta_periodo: oferta_periodo_1
   nombre_seccion: MyString
-  docente_id: 
+  docente: docente_1
   promedio_general: MyString
   nro_estudiantes: 1
   nro_estudiantes_retirados: 1
@@ -14,10 +14,10 @@ one:
   nro_estudiantes_aplazados: 1
   tipo_estatus_calificacion_id: MyString
 
-two:
-  oferta_periodo_id: 
+oferta_academica_2:
+  oferta_periodo: oferta_periodo_1 
   nombre_seccion: MyString
-  docente_id: 
+  docente_id: docente_2
   promedio_general: MyString
   nro_estudiantes: 1
   nro_estudiantes_retirados: 1

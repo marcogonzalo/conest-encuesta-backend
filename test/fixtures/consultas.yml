@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  oferta_academica_id: 
-  instrumento_id: 
+consulta_1:
+  oferta_academica: oferta_academica_1 
+  instrumento: instrumento_1
 
-two:
-  oferta_academica_id: 
-  instrumento_id: 
+consulta_2:
+  oferta_academica: oferta_academica_2
+  instrumento: instrumento_1

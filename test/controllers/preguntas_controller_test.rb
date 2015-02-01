@@ -1,49 +1,39 @@
 require 'test_helper'
 
-class PreguntasControllerTest < ActionController::TestCase
+class Api::V1::PreguntasControllerTest < ActionController::TestCase
   setup do
     @pregunta = preguntas(:one)
   end
 
   test "should get index" do
-    get :index
+    get :index, format: :json
     assert_response :success
     assert_not_nil assigns(:preguntas)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
   test "should create pregunta" do
     assert_difference('Pregunta.count') do
-      post :create, pregunta: { descripcion: @pregunta.descripcion, interrogante: @pregunta.interrogante, tipo_pregunta_id: @pregunta.tipo_pregunta_id }
+      post :create, pregunta: { descripcion: @pregunta.descripcion, interrogante: @pregunta.interrogante, tipo_pregunta_id: @pregunta.tipo_pregunta_id }, format: :json
     end
 
-    assert_redirected_to pregunta_path(assigns(:pregunta))
+    assert_response 201
   end
 
   test "should show pregunta" do
-    get :show, id: @pregunta
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @pregunta
+    get :show, id: @pregunta, format: :json
     assert_response :success
   end
 
   test "should update pregunta" do
-    patch :update, id: @pregunta, pregunta: { descripcion: @pregunta.descripcion, interrogante: @pregunta.interrogante, tipo_pregunta_id: @pregunta.tipo_pregunta_id }
-    assert_redirected_to pregunta_path(assigns(:pregunta))
+    patch :update, id: @pregunta, pregunta: { descripcion: @pregunta.descripcion, interrogante: @pregunta.interrogante, tipo_pregunta_id: @pregunta.tipo_pregunta_id }, format: :json
+    assert_response 200
   end
 
   test "should destroy pregunta" do
     assert_difference('Pregunta.count', -1) do
-      delete :destroy, id: @pregunta
+      delete :destroy, id: @pregunta, format: :json
     end
 
-    assert_redirected_to preguntas_path
+    assert_response 204
   end
 end

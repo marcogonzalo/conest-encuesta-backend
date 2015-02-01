@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+pregunta_1:
   interrogante: MyString
   descripcion: MyString
-  tipo_pregunta_id: 
+  tipo_pregunta: tipo_pregunta_1 
 
-two:
+pregunta_2:
   interrogante: MyString
   descripcion: MyString
-  tipo_pregunta_id: 
+  tipo_pregunta: tipo_pregunta_2

@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+opcion_1:
   etiqueta: MyString
   valor: MyString
-  pregunta_id: 
+  pregunta: pregunta_1 
 
-two:
+opcion_2:
   etiqueta: MyString
   valor: MyString
-  pregunta_id: 
+  pregunta: pregunta_2 

@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  materia_id: 
-  periodo_academico_id: 
-  docente_coordinador: 1
+oferta_periodo_1:
+  materia_id: materia_1
+  periodo_academico: periodo_academico_1 
+  docente_coordinador: docente_1
 
-two:
-  materia_id: 
-  periodo_academico_id: 
-  docente_coordinador: 1
+oferta_periodo_2:
+  materia: materia_2 
+  periodo_academico: periodo_academico_1 
+  docente_coordinador: docente_2
