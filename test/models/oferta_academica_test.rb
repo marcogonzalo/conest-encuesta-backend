@@ -28,6 +28,6 @@ class OfertaAcademicaTest < ActiveSupport::TestCase
 
 	test "debería guardar una oferta académica válida" do
 		oferta = OfertaAcademica.new(oferta_periodo: @op, nombre_seccion: "B1", docente: @docente)
-		assert oferta.save, "Guardada una oferta académica no válida"
+		assert oferta.save, "Guardada una oferta académica no válida #{oferta.errors.inspect}"
 	end
 end

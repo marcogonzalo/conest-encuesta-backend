@@ -11,5 +11,5 @@ class TipoPregunta < ActiveRecord::Base
 
 	validates :valor_html,
 				length: { maximum: 45 },
-				allow_blank: true
+				allow_nil: false
 end

@@ -8,7 +8,7 @@ class OfertaPeriodo < ActiveRecord::Base
 				numericality: { only_integer: true },
 				presence: true
 
-	validates :periodo_academico,
+	validates :periodo_academico_id,
 				numericality: { only_integer: true },
 				presence: true
 

@@ -3,7 +3,7 @@ class Token < ActiveRecord::Base
 				length: { maximum: 45 },
 				presence: true
 
-	validates :sha1_sum,
+	validates :hash_sum,
 				length: { maximum: 255 },
-				allow_blank: true
+				allow_nil: false
 end

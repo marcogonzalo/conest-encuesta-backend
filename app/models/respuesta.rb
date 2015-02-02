@@ -10,7 +10,7 @@ class Respuesta < ActiveRecord::Base
 				numericality: { only_integer: true },
 				presence: true
 
-	validates :valor_respuesta,
+	validates :valor,
 				length: { maximum: 45 },
 				presence: true
 end

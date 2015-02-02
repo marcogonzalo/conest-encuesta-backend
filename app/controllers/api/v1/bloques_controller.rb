@@ -14,15 +14,6 @@ module Api
       def show
       end
 
-      # GET /bloques/new
-      def new
-        @bloque = Bloque.new
-      end
-
-      # GET /bloques/1/edit
-      def edit
-      end
-
       # POST /bloques
       # POST /bloques.json
       def create
@@ -31,7 +22,7 @@ module Api
         respond_to do |format|
           if @bloque.save
             format.html { redirect_to @bloque, notice: 'Bloque was successfully created.' }
-            format.json { render :show, status: :created, location: @bloque }
+            format.json { render :show, status: :created, location: api_v1_bloque_url(@bloque) }
           else
             format.html { render :new }
             format.json { render json: @bloque.errors, status: :unprocessable_entity }
@@ -45,7 +36,7 @@ module Api
         respond_to do |format|
           if @bloque.update(bloque_params)
             format.html { redirect_to @bloque, notice: 'Bloque was successfully updated.' }
-            format.json { render :show, status: :ok, location: @bloque }
+            format.json { render :show, status: :ok, location: api_v1_bloque_url(@bloque) }
           else
             format.html { render :edit }
             format.json { render json: @bloque.errors, status: :unprocessable_entity }
