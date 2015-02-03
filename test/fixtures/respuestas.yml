@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+respuesta_1:
   consulta_id: 
   pregunta_id: 
   valor: MyString
 
-two:
+respuesta_2:
   consulta_id: 
   pregunta_id: 
   valor: MyString

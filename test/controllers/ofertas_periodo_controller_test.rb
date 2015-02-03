@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::OfertasPeriodoControllerTest < ActionController::TestCase
   setup do
-    @oferta_periodo = ofertas_periodo(:one)
+    @oferta_periodo = ofertas_periodo(:oferta_periodo_1)
   end
 
   test "should get index" do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
   setup do
-    @periodo_academico = periodos_academicos(:one)
+    @periodo_academico = periodos_academicos(:periodo_academico_1)
   end
 
   test "should get index" do

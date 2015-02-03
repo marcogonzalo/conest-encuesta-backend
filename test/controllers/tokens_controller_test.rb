@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::TokensControllerTest < ActionController::TestCase
   setup do
-    @token = tokens(:one)
+    @token = tokens(:token_1)
   end
 
   test "should get index" do

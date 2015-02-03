@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::TiposPreguntaControllerTest < ActionController::TestCase
   setup do
-    @tipo_pregunta = tipos_pregunta(:one)
+    @tipo_pregunta = tipos_pregunta(:tipo_pregunta_1)
   end
 
   test "should get index" do

@@ -3,9 +3,9 @@
 carrera_1:
   codigo: MyString
   nombre: MyString
-  organizacion_id: MyString
+  organizacion_id: 1232
 
 carrera_2:
   codigo: MyString
   nombre: MyString
-  organizacion_id: MyString
+  organizacion_id: 1231

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::RespuestasControllerTest < ActionController::TestCase
   setup do
-    @respuesta = respuestas(:one)
+    @respuesta = respuestas(:respuesta_1)
   end
 
   test "should get index" do

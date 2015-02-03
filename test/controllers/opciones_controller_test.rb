@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::OpcionesControllerTest < ActionController::TestCase
   setup do
-    @opcion = opciones(:one)
+    @opcion = opciones(:opcion_1)
   end
 
   test "should get index" do
