@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @estudiante.save
             format.html { redirect_to @estudiante, notice: 'Estudiante was successfully created.' }
-            format.json { render :show, status: :created, location: @estudiante }
+            format.json { render :show, status: :created, location: api_v1_estudiante_url(@estudiante) }
           else
             format.html { render :new }
             format.json { render json: @estudiante.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @estudiante.update(estudiante_params)
             format.html { redirect_to @estudiante, notice: 'Estudiante was successfully updated.' }
-            format.json { render :show, status: :ok, location: @estudiante }
+            format.json { render :show, status: :ok, location: api_v1_estudiante_url(@estudiante) }
           else
             format.html { render :edit }
             format.json { render json: @estudiante.errors, status: :unprocessable_entity }

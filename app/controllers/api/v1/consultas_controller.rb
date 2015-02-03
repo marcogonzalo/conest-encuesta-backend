@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @consulta.save
             format.html { redirect_to @consulta, notice: 'Consulta was successfully created.' }
-            format.json { render :show, status: :created, location: @consulta }
+            format.json { render :show, status: :created, location: api_v1_consulta_url(@consulta) }
           else
             format.html { render :new }
             format.json { render json: @consulta.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @consulta.update(consulta_params)
             format.html { redirect_to @consulta, notice: 'Consulta was successfully updated.' }
-            format.json { render :show, status: :ok, location: @consulta }
+            format.json { render :show, status: :ok, location: api_v1_consulta_url(@consulta) }
           else
             format.html { render :edit }
             format.json { render json: @consulta.errors, status: :unprocessable_entity }

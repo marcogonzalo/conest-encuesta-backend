@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @respuesta.save
             format.html { redirect_to @respuesta, notice: 'Respuesta was successfully created.' }
-            format.json { render :show, status: :created, location: @respuesta }
+            format.json { render :show, status: :created, location: api_v1_respuesta_url(@respuesta) }
           else
             format.html { render :new }
             format.json { render json: @respuesta.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @respuesta.update(respuesta_params)
             format.html { redirect_to @respuesta, notice: 'Respuesta was successfully updated.' }
-            format.json { render :show, status: :ok, location: @respuesta }
+            format.json { render :show, status: :ok, location: api_v1_respuesta_url(@respuesta) }
           else
             format.html { render :edit }
             format.json { render json: @respuesta.errors, status: :unprocessable_entity }

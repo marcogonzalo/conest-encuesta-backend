@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @opcion.save
             format.html { redirect_to @opcion, notice: 'Opcion was successfully created.' }
-            format.json { render :show, status: :created, location: @opcion }
+            format.json { render :show, status: :created, location: api_v1_opcion_url(@opcion) }
           else
             format.html { render :new }
             format.json { render json: @opcion.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @opcion.update(opcion_params)
             format.html { redirect_to @opcion, notice: 'Opcion was successfully updated.' }
-            format.json { render :show, status: :ok, location: @opcion }
+            format.json { render :show, status: :ok, location: api_v1_opcion_url(@opcion) }
           else
             format.html { render :edit }
             format.json { render json: @opcion.errors, status: :unprocessable_entity }

@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @token.save
             format.html { redirect_to @token, notice: 'Token was successfully created.' }
-            format.json { render :show, status: :created, location: @token }
+            format.json { render :show, status: :created, location: api_v1_token_url(@token) }
           else
             format.html { render :new }
             format.json { render json: @token.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @token.update(token_params)
             format.html { redirect_to @token, notice: 'Token was successfully updated.' }
-            format.json { render :show, status: :ok, location: @token }
+            format.json { render :show, status: :ok, location: api_v1_token_url(@token) }
           else
             format.html { render :edit }
             format.json { render json: @token.errors, status: :unprocessable_entity }

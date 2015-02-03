@@ -32,7 +32,7 @@ module Api
         respond_to do |format|
           if @instrumento.save
             format.html { redirect_to @instrumento, notice: 'Instrumento was successfully created.' }
-            format.json { render :show, status: :created, location: @instrumento }
+            format.json { render :show, status: :created, location: api_v1_instrumento_url(@instrumento) }
           else
             format.html { render :new }
             format.json { render json: @instrumento.errors, status: :unprocessable_entity }
@@ -46,7 +46,7 @@ module Api
         respond_to do |format|
           if @instrumento.update(instrumento_params)
             format.html { redirect_to @instrumento, notice: 'Instrumento was successfully updated.' }
-            format.json { render :show, status: :ok, location: @instrumento }
+            format.json { render :show, status: :ok, location: api_v1_instrumento_url(@instrumento) }
           else
             format.html { render :edit }
             format.json { render json: @instrumento.errors, status: :unprocessable_entity }

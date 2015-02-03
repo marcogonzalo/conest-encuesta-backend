@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @oferta_academica.save
             format.html { redirect_to @oferta_academica, notice: 'Oferta academica was successfully created.' }
-            format.json { render :show, status: :created, location: @oferta_academica }
+            format.json { render :show, status: :created, location: api_v1_oferta_academica_url(@oferta_academica) }
           else
             format.html { render :new }
             format.json { render json: @oferta_academica.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @oferta_academica.update(oferta_academica_params)
             format.html { redirect_to @oferta_academica, notice: 'Oferta academica was successfully updated.' }
-            format.json { render :show, status: :ok, location: @oferta_academica }
+            format.json { render :show, status: :ok, location: api_v1_oferta_academica_url(@oferta_academica) }
           else
             format.html { render :edit }
             format.json { render json: @oferta_academica.errors, status: :unprocessable_entity }

@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @carrera.save
             format.html { redirect_to @carrera, notice: 'Carrera was successfully created.' }
-            format.json { render :show, status: :created, location: @carrera }
+            format.json { render :show, status: :created, location: api_v1_carrera_url(@carrera) }
           else
             format.html { render :new }
             format.json { render json: @carrera.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @carrera.update(carrera_params)
             format.html { redirect_to @carrera, notice: 'Carrera was successfully updated.' }
-            format.json { render :show, status: :ok, location: @carrera }
+            format.json { render :show, status: :ok, location: api_v1_carrera_url(@carrera) }
           else
             format.html { render :edit }
             format.json { render json: @carrera.errors, status: :unprocessable_entity }

@@ -31,7 +31,7 @@ module Api
         respond_to do |format|
           if @periodo_academico.save
             format.html { redirect_to @periodo_academico, notice: 'Periodo academico was successfully created.' }
-            format.json { render :show, status: :created, location: @periodo_academico }
+            format.json { render :show, status: :created, location: api_v1_periodo_academico_url(@periodo_academico) }
           else
             format.html { render :new }
             format.json { render json: @periodo_academico.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @periodo_academico.update(periodo_academico_params)
             format.html { redirect_to @periodo_academico, notice: 'Periodo academico was successfully updated.' }
-            format.json { render :show, status: :ok, location: @periodo_academico }
+            format.json { render :show, status: :ok, location: api_v1_periodo_academico_url(@periodo_academico) }
           else
             format.html { render :edit }
             format.json { render json: @periodo_academico.errors, status: :unprocessable_entity }
