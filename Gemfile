@@ -41,5 +41,11 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # A library for setting up Ruby objects as test data. Read more: https://github.com/thoughtbot/factory_girl
+  gem "factory_girl_rails", "~> 4.0"
+  
+  # Easy and customizable generation of forged data. Read more: https://github.com/sevenwire/forgery
+  gem "forgery"
 end
 
