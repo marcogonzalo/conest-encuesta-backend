@@ -2,11 +2,12 @@ module Api
   module V1
     class OfertasPeriodoController < ApplicationController
       before_action :set_oferta_periodo, only: [:show, :edit, :update, :destroy]
+      before_action :set_periodo_academico, only: [:index, :create, :new]
 
       # GET /ofertas_periodo
       # GET /ofertas_periodo.json
       def index
-        @ofertas_periodo = OfertaPeriodo.all
+        @ofertas_periodo = @periodo_academico.ofertas_periodo
       end
 
       # GET /ofertas_periodo/1
@@ -26,12 +27,11 @@ module Api
       # POST /ofertas_periodo
       # POST /ofertas_periodo.json
       def create
-        @oferta_periodo = OfertaPeriodo.new(oferta_periodo_params)
-
+        @oferta_periodo = OfertaPeriodo.new(materia_id: oferta_periodo_params[:materia_id], periodo_academico_id: oferta_periodo_params[:periodo_academico_id], docente_coordinador: Docente.find(oferta_periodo_params[:docente_coordinador]))
         respond_to do |format|
           if @oferta_periodo.save
             format.html { redirect_to @oferta_periodo, notice: 'Oferta periodo was successfully created.' }
-            format.json { render :show, status: :created, location: api_v1_oferta_periodo_url(@oferta_periodo) }
+            format.json { render :show, status: :created, location: api_v1_periodo_academico_oferta_periodo_url(@oferta_periodo.periodo_academico_id, @oferta_periodo) }
           else
             format.html { render :new }
             format.json { render json: @oferta_periodo.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ module Api
         respond_to do |format|
           if @oferta_periodo.update(oferta_periodo_params)
             format.html { redirect_to @oferta_periodo, notice: 'Oferta periodo was successfully updated.' }
-            format.json { render :show, status: :ok, location: api_v1_oferta_periodo_url(@oferta_periodo) }
+            format.json { render :show, status: :ok, location: api_v1_periodo_academico_oferta_periodo_url(@oferta_periodo.periodo_academico_id, @oferta_periodo) }
           else
             format.html { render :edit }
             format.json { render json: @oferta_periodo.errors, status: :unprocessable_entity }
@@ -67,6 +67,10 @@ module Api
         # Use callbacks to share common setup or constraints between actions.
         def set_oferta_periodo
           @oferta_periodo = OfertaPeriodo.find(params[:id])
+        end
+        
+        def set_periodo_academico
+          @periodo_academico = PeriodoAcademico.find(params[:periodo_academico_id])
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.

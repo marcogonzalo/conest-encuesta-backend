@@ -5,7 +5,7 @@ materia_1:
   carrera_id: carrera_1
   plan_nombre: MyString
   nombre: MyString
-  tipo_materia_id: tipo1
+  tipo_materia_id: O
   grupo_nota_id: MyString
 
 materia_2:
@@ -13,5 +13,5 @@ materia_2:
   carrera: carrera_1 
   plan_nombre: MyString
   nombre: MyString
-  tipo_materia_id: tipo2
+  tipo_materia_id: L
   grupo_nota_id: MyString

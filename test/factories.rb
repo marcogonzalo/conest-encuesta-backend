@@ -5,6 +5,11 @@ FactoryGirl.define do
     organizacion_id Forgery('basic').number
   end
 
+  factory :consulta do
+    association :instrumento
+    association :oferta_academica
+  end
+
   factory :docente do
     cedula { Forgery(:basic).number(at_least: 10000000, at_most: 20000000) }
     primer_nombre "Pedro"
@@ -15,6 +20,10 @@ FactoryGirl.define do
     cedula { Forgery(:basic).number(at_least: 15000000, at_most: 30000000) }
     primer_nombre "Pablo"
     primer_apellido  "Padrino"
+  end
+
+  factory :instrumento do
+    nombre "cualquiera"
   end
 
   factory :materia do
@@ -39,9 +48,33 @@ FactoryGirl.define do
     nombre_seccion { Forgery('basic').text(exactly: 2) }
   end
 
+  factory :opcion do
+    association :pregunta
+    etiqueta { Forgery('basic').text(at_least: 2, at_most: 15) }
+    valor { Forgery('basic').text(exactly: 2) }
+  end
+
   factory :periodo_academico do
     periodo { Forgery('basic').text(allow_special: true, exactly: 7) }
     hash_sum { |n| Forgery(:basic).encrypt n }
     sincronizacion { Forgery('date').date }
+  end
+
+  factory :pregunta do
+    association :tipo_pregunta
+    interrogante "interrogante" 
+    descripcion "descripción"
+  end
+
+  factory :tipo_pregunta do
+    nombre "tipo" 
+    valor "valor"
+    valor_html "valor_html"
+  end
+
+  factory :respuesta do
+    association :consulta
+    association :pregunta
+    valor "valor"
   end
 end

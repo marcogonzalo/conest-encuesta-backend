@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::EstudiantesControllerTest < ActionController::TestCase
   setup do
-    @estudiante = estudiantes(:estudiante_1)
+    @estudiante = FactoryGirl.create(:estudiante)
   end
 
   test "should get index" do
@@ -12,8 +12,9 @@ class Api::V1::EstudiantesControllerTest < ActionController::TestCase
   end
 
   test "should create estudiante" do
+    estudiante = FactoryGirl.build(:estudiante)
     assert_difference('Estudiante.count') do
-      post :create, estudiante: { cedula: @estudiante.cedula, primer_apellido: @estudiante.primer_apellido, primer_nombre: @estudiante.primer_nombre, segundo_apellido: @estudiante.segundo_apellido, segundo_nombre: @estudiante.segundo_nombre }, format: :json
+      post :create, estudiante: { cedula: estudiante.cedula, primer_apellido: estudiante.primer_apellido, primer_nombre: estudiante.primer_nombre, segundo_apellido: estudiante.segundo_apellido, segundo_nombre: estudiante.segundo_nombre }, format: :json
     end
 
     assert_response 201

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::OfertaAcademicaControllerTest < ActionController::TestCase
   setup do
-    @oferta_academica = oferta_academica(:oferta_academica_1)
+    @oferta_academica = FactoryGirl.create(:oferta_academica)
   end
 
   test "should get index" do
@@ -12,8 +12,9 @@ class Api::V1::OfertaAcademicaControllerTest < ActionController::TestCase
   end
 
   test "should create oferta_academica" do
+    oferta_academica = FactoryGirl.build(:oferta_academica)
     assert_difference('OfertaAcademica.count') do
-      post :create, oferta_academica: { docente_id: @oferta_academica.docente_id, nombre_seccion: @oferta_academica.nombre_seccion, nro_estudiantes: @oferta_academica.nro_estudiantes, nro_estudiantes_aplazados: @oferta_academica.nro_estudiantes_aplazados, nro_estudiantes_aprobados: @oferta_academica.nro_estudiantes_aprobados, nro_estudiantes_equivalencia: @oferta_academica.nro_estudiantes_equivalencia, nro_estudiantes_reparacion: @oferta_academica.nro_estudiantes_reparacion, nro_estudiantes_retirados: @oferta_academica.nro_estudiantes_retirados, nro_estudiantes_suficiencia: @oferta_academica.nro_estudiantes_suficiencia, oferta_periodo_id: @oferta_academica.oferta_periodo_id, promedio_general: @oferta_academica.promedio_general, tipo_estatus_calificacion_id: @oferta_academica.tipo_estatus_calificacion_id }, format: :json
+      post :create, oferta_academica: { docente_id: oferta_academica.docente_id, nombre_seccion: oferta_academica.nombre_seccion, nro_estudiantes: oferta_academica.nro_estudiantes, nro_estudiantes_aplazados: oferta_academica.nro_estudiantes_aplazados, nro_estudiantes_aprobados: oferta_academica.nro_estudiantes_aprobados, nro_estudiantes_equivalencia: oferta_academica.nro_estudiantes_equivalencia, nro_estudiantes_reparacion: oferta_academica.nro_estudiantes_reparacion, nro_estudiantes_retirados: oferta_academica.nro_estudiantes_retirados, nro_estudiantes_suficiencia: oferta_academica.nro_estudiantes_suficiencia, oferta_periodo_id: oferta_academica.oferta_periodo_id, promedio_general: oferta_academica.promedio_general, tipo_estatus_calificacion_id: oferta_academica.tipo_estatus_calificacion_id }, format: :json
     end
 
     assert_response 201

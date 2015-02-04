@@ -2,18 +2,20 @@ require 'test_helper'
 
 class Api::V1::MateriasControllerTest < ActionController::TestCase
   setup do
-    @materia = materias(:materia_1)
+    @materia = FactoryGirl.create(:materia)
   end
 
   test "should get index" do
-    get :index, format: :json
+    get :index, carrera_id: 1, format: :json
     assert_response :success
     assert_not_nil assigns(:materias)
   end
 
   test "should create materia" do
+    materia = FactoryGirl.build(:materia)
     assert_difference('Materia.count') do
-      post :create, materia: { carrera_id: @materia.carrera_id, codigo: @materia.codigo, grupo_nota_id: @materia.grupo_nota_id, nombre: @materia.nombre, plan_nombre: @materia.plan_nombre, tipo_materia_id: @materia.tipo_materia_id }, format: :json
+      post :create, carrera_id: materia.carrera_id, materia: { carrera_id: materia.carrera_id, codigo: materia.codigo, grupo_nota_id: materia.grupo_nota_id, nombre: materia.nombre, plan_nombre: materia.plan_nombre, tipo_materia_id: materia.tipo_materia_id }, format: :json
+      puts response.body
     end
 
     assert_response 201
