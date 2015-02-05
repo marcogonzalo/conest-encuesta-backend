@@ -27,6 +27,7 @@ module Api
       # POST /instrumentos
       # POST /instrumentos.json
       def create
+        puts instrumento_params
         @instrumento = Instrumento.new(instrumento_params)
 
         respond_to do |format|
@@ -72,7 +73,7 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def instrumento_params
-          params.require(:instrumento).permit(:nombre, :descripcion)
+          params.require(:instrumento).permit(:nombre, :descripcion, bloques_attributes: [:id, :nombre, :descripcion, :tipo], bloque_ids: [])
         end
     end
   end

@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :bloque do
+    nombre "cualquiera"
+    tipo { Bloque::TIPO.keys[Forgery(:basic).number(at_least: 0, at_most: Bloque::TIPO.keys.size-1)] }
+  end
+
   factory :carrera do
     codigo { Forgery('basic').text(exactly: 6) }
     nombre  { |n| "Carrera #{n}" }

@@ -7,4 +7,10 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+	def get_context(request,response=nil)
+		puts "\nRequest: #{request.params}\n"
+		if response
+			puts "Response: #{response.body}\n"
+		end
+	end
 end
