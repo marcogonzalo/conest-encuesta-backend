@@ -73,7 +73,15 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def instrumento_params
-          params.require(:instrumento).permit(:nombre, :descripcion, bloques_attributes: [:id, :nombre, :descripcion, :tipo], bloque_ids: [])
+          params.require(:instrumento).permit(:nombre, :descripcion, bloques_attributes: [
+                                                :nombre, :descripcion, :tipo, 
+                                                preguntas_attributes: [
+                                                  :id, :interrogante, :descripcion, :tipo_pregunta_id, 
+                                                  opciones_attributes: [
+                                                    :id, :etiqueta, :valor 
+                                                  ]
+                                                ]
+                                              ], bloque_ids: [])
         end
     end
   end

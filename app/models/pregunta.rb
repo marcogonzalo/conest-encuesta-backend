@@ -1,8 +1,8 @@
 class Pregunta < ActiveRecord::Base
 	has_and_belongs_to_many :bloques
-	has_many :preguntas
 	has_many :opciones
 	belongs_to :tipo_pregunta
+	accepts_nested_attributes_for :opciones
 
 	validates :interrogante,
 				length: { maximum: 100 },

@@ -11,5 +11,5 @@ class Opcion < ActiveRecord::Base
 
 	validates :pregunta_id,
 				numericality: { only_integer: true },
-				presence: true
+				allow_nil: true
 end
