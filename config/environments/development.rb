@@ -1,4 +1,6 @@
 Rails.application.configure do
+
+  CONEST_API = { :base_url => 'http://localhost:4567', :app_id => "encuestas", :clave => "112233" }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on

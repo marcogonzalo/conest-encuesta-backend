@@ -82,7 +82,7 @@ FactoryGirl.define do
   end
 
   factory :periodo_academico do
-    periodo { Forgery('basic').text(allow_special: true, exactly: 7) }
+    periodo "01-2014" # { Forgery('basic').text(allow_special: true, exactly: 7) }
     hash_sum { |n| Forgery(:basic).encrypt n }
     sincronizacion { Forgery('date').date }
   end
@@ -93,15 +93,20 @@ FactoryGirl.define do
     descripcion "descripción"
   end
 
+  factory :respuesta do
+    association :consulta
+    association :pregunta
+    valor "valor"
+  end
+
   factory :tipo_pregunta do
     nombre "tipo" 
     valor "valor"
     valor_html "valor_html"
   end
 
-  factory :respuesta do
-    association :consulta
-    association :pregunta
-    valor "valor"
+  factory :token do
+    token "123"
+    hash_sum { |n| Forgery(:basic).encrypt n }
   end
 end

@@ -6,4 +6,9 @@ class Token < ActiveRecord::Base
 	validates :hash_sum,
 				length: { maximum: 255 },
 				allow_nil: false
+
+	def self.actual
+		t = Token.last
+		t.token
+	end
 end

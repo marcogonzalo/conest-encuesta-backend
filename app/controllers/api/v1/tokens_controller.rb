@@ -26,16 +26,32 @@ module Api
       # POST /tokens
       # POST /tokens.json
       def create
-        @token = Token.new(token_params)
+        begin
+          response = RestClient.post "#{CONEST_API[:base_url]}/autenticar",
+                      :app_id   =>  CONEST_API[:app_id],
+                      :clave    =>  CONEST_API[:clave]
 
-        respond_to do |format|
-          if @token.save
-            format.html { redirect_to @token, notice: 'Token was successfully created.' }
-            format.json { render :show, status: :created, location: api_v1_token_url(@token) }
-          else
-            format.html { render :new }
-            format.json { render json: @token.errors, status: :unprocessable_entity }
+          respuesta = JSON.parse(response.body)
+          if respuesta['estatus'] == 'OK'
+            @token = Token.new(token: respuesta['datos']['token'], hash_sum: respuesta['sha1_sum'])
           end
+
+          respond_to do |format|
+            if respuesta['estatus'] == 'OK' and @token.save
+              format.html { redirect_to @token, notice: 'Token was successfully created.' }
+              format.json { render :show, status: :created, location: api_v1_token_url(@token) }
+            else
+              if respuesta['estatus'] == 'OK'
+                format.html { render :new }
+                format.json { render json: @token.errors, status: :unprocessable_entity }
+              else
+                format.html { render :new }
+                format.json { render json: respuesta['mensaje'], status: :unprocessable_entity }
+              end
+            end
+          end
+        rescue => e
+          e.response
         end
       end
 
