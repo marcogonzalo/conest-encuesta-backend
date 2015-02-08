@@ -4,6 +4,11 @@ class OfertaAcademica < ActiveRecord::Base
 	belongs_to :oferta_periodo
 	belongs_to :docente
 
+	scope :sin_responder_consulta, ->  	{ 
+											joins(:control_consultas).
+											merge(ControlConsulta.sin_responder) 
+										}
+
 	validates :oferta_periodo_id,
 				numericality: { only_integer: true },
 				presence: true

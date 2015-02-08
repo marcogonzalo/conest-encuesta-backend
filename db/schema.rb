@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128204715) do
+ActiveRecord::Schema.define(version: 20150206234715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,8 +55,9 @@ ActiveRecord::Schema.define(version: 20150128204715) do
   add_index "consultas", ["oferta_academica_id"], name: "index_consultas_on_oferta_academica_id", using: :btree
 
   create_table "control_consultas", id: false, force: :cascade do |t|
-    t.integer "estudiante_id",       null: false
-    t.integer "oferta_academica_id", null: false
+    t.integer "estudiante_id",                       null: false
+    t.integer "oferta_academica_id",                 null: false
+    t.boolean "respondida",          default: false
   end
 
   create_table "docentes", force: :cascade do |t|

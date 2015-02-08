@@ -2,6 +2,8 @@ class ControlConsulta < ActiveRecord::Base
 	belongs_to :oferta_academica
 	belongs_to :estudiante
 
+	scope :sin_responder, -> { where(respondida: false) }
+
 =begin
 	ESTATUS = Hash["A"   => "Aprobado", 
 				   "AP"  => "Aplazado",
@@ -17,6 +19,6 @@ class ControlConsulta < ActiveRecord::Base
 				presence: true
 
 	def self.respondida?(oa_id, e_id)
-		ControlConsultas.where(estudiante_id: e_id, oferta_academica_id: oa_id).exists?
+		ControlConsulta.where(estudiante_id: e_id, oferta_academica_id: oa_id).first.respondida
 	end
 end

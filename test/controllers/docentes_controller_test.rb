@@ -15,7 +15,6 @@ class Api::V1::DocentesControllerTest < ActionController::TestCase
     docente = FactoryGirl.build(:docente)
     assert_difference('Docente.count') do
       post :create, docente: { cedula: docente.cedula, primer_apellido: docente.primer_apellido, primer_nombre: docente.primer_nombre, segundo_apellido: docente.segundo_apellido, segundo_nombre: docente.segundo_nombre }, format: :json
-      puts response.body
     end
 
     assert_response 201

@@ -16,7 +16,11 @@ Rails.application.routes.draw do
       resources :oferta_academica
 
       resources :docentes
-      resources :estudiantes
+      resources :estudiantes do
+        member do
+          get '/consultas_sin_responder' => "estudiantes#consultas_sin_responder", as: "consultas_sin_responder"
+        end
+      end
 
       # Rutas asociadas  a componentes del SEDAD
       resources :instrumentos

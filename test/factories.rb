@@ -15,6 +15,11 @@ FactoryGirl.define do
     association :oferta_academica
   end
 
+  factory :control_consulta do
+    association :estudiante
+    association :oferta_academica
+  end
+
   factory :docente do
     cedula { Forgery(:basic).number(at_least: 10000000, at_most: 20000000) }
     primer_nombre "Pedro"
@@ -25,6 +30,23 @@ FactoryGirl.define do
     cedula { Forgery(:basic).number(at_least: 15000000, at_most: 30000000) }
     primer_nombre "Pablo"
     primer_apellido  "Padrino"
+
+    # user_with_posts will create post data after the user has been created
+    factory :estudiante_con_consultas_por_responder do
+      # posts_count is declared as a transient attribute and available in
+      # attributes on the factory, as well as the callback via the evaluator
+      transient do
+        control_count 5
+      end
+
+      # the after(:create) yields two values; the user instance itself and the
+      # evaluator, which stores all values from the factory, including transient
+      # attributes; `create_list`'s second argument is the number of records
+      # to create and we make sure the user is associated properly to the post
+      after(:create) do |estudiante, evaluator|
+        create_list(:control_consulta, evaluator.control_count, estudiante: estudiante)
+      end
+    end
   end
 
   factory :instrumento do

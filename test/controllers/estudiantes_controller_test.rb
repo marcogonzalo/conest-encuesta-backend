@@ -3,6 +3,8 @@ require 'test_helper'
 class Api::V1::EstudiantesControllerTest < ActionController::TestCase
   setup do
     @estudiante = FactoryGirl.create(:estudiante)
+    FactoryGirl.create(:control_consulta)
+    @estudiante_con_consultas = FactoryGirl.create(:estudiante_con_consultas_por_responder, control_count: 5)
   end
 
   test "should get index" do
@@ -37,5 +39,11 @@ class Api::V1::EstudiantesControllerTest < ActionController::TestCase
     end
 
     assert_response 204
+  end
+
+  test "debería listar consultas que no ha respondido un estudiante" do
+    get :consultas_sin_responder, id: @estudiante_con_consultas, format: :json
+    assert_response :success
+    get_context(request,response)
   end
 end

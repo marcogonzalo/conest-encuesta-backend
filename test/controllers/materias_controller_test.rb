@@ -15,7 +15,6 @@ class Api::V1::MateriasControllerTest < ActionController::TestCase
     materia = FactoryGirl.build(:materia)
     assert_difference('Materia.count') do
       post :create, carrera_id: materia.carrera_id, materia: { carrera_id: materia.carrera_id, codigo: materia.codigo, grupo_nota_id: materia.grupo_nota_id, nombre: materia.nombre, plan_nombre: materia.plan_nombre, tipo_materia_id: materia.tipo_materia_id }, format: :json
-      puts response.body
     end
 
     assert_response 201

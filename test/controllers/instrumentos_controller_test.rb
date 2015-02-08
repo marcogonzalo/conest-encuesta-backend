@@ -105,7 +105,6 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
                       ]
                     }]
                   }, format: :json
-            get_context(request,response)
           end
         end
       end

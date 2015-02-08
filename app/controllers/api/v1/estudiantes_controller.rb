@@ -1,7 +1,7 @@
 module Api
   module V1
     class EstudiantesController < ApplicationController
-      before_action :set_estudiante, only: [:show, :edit, :update, :destroy]
+      before_action :set_estudiante, only: [:show, :edit, :update, :destroy, :consultas_sin_responder]
 
       # GET /estudiantes
       # GET /estudiantes.json
@@ -61,6 +61,10 @@ module Api
           format.html { redirect_to api_v1_estudiantes_url, notice: 'Estudiante was successfully destroyed.' }
           format.json { head :no_content }
         end
+      end
+      
+      def consultas_sin_responder
+        @consultas_sin_responder = @estudiante.oferta_academica.sin_responder_consulta
       end
 
       private
