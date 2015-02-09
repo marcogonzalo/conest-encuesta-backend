@@ -26,10 +26,27 @@ module Api
       # POST /periodos_academicos
       # POST /periodos_academicos.json
       def create
-        @periodo_academico = PeriodoAcademico.new(periodo_academico_params)
-
+          periodo_academico_id = periodo_academico_params[:periodo]
+          response = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico_id}",
+                      :conest_token  => Token::actual
+          r = JSON.parse(response.body)
+          if r['estatus'] == 'OK'
+            d = r['datos']
+            @periodo_academico = PeriodoAcademico.new(periodo: d['periodo_academico_id'], hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
+            @periodo_academico.save
+            d['organizaciones'].each do |o|
+              o['carreras'].each do |c|
+                @carrera = Carrera.new(codigo: c['id'], nombre: c['nombre'], organizacion_id: o['id'])
+                @carrera.save
+                c['materias'].each do |m|
+                  @materia = Materia.new(carrera: @carrera, plan_nombre: c['plan_nombre'], codigo: m['codigo'], nombre: m['nombre'], tipo_materia_id: m['tipo_materia_id'], grupo_nota_id: m['grupo_nota_id'])
+                  @materia.save
+                end
+              end
+            end
+          end
         respond_to do |format|
-          if @periodo_academico.save
+          if @carrera.save
             format.html { redirect_to @periodo_academico, notice: 'Periodo academico was successfully created.' }
             format.json { render :show, status: :created, location: api_v1_periodo_academico_url(@periodo_academico) }
           else

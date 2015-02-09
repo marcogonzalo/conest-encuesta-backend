@@ -9,8 +9,7 @@ class Carrera < ActiveRecord::Base
 				length: { maximum: 255 },
 				presence: true
 
-	validates :organizacion_id, 
-				numericality: { only_integer: true }, 
+	validates :organizacion_id,
 				length: { maximum: 10 },
 				presence: true
 end

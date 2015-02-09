@@ -12,9 +12,15 @@ class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
   end
 
   test "should create periodo_academico" do
+    FactoryGirl.create(:token)
     periodo_academico = FactoryGirl.build(:periodo_academico)
-    assert_difference('PeriodoAcademico.count') do
-      post :create, periodo_academico: { hash_sum: periodo_academico.hash_sum, periodo: periodo_academico.periodo, sincronizacion: periodo_academico.sincronizacion }, format: :json
+    assert_difference('Materia.count') do
+      assert_difference('Carrera.count') do
+        assert_difference('PeriodoAcademico.count') do
+          post :create, periodo_academico: { hash_sum: periodo_academico.hash_sum, periodo: "01-2014", sincronizacion: periodo_academico.sincronizacion }, format: :json
+          get_context(request,response)
+        end
+      end
     end
 
     assert_response 201

@@ -82,7 +82,7 @@ FactoryGirl.define do
   end
 
   factory :periodo_academico do
-    periodo "01-2014" # { Forgery('basic').text(allow_special: true, exactly: 7) }
+    periodo "01-2015" # { Forgery('basic').text(allow_special: true, exactly: 7) }
     hash_sum { |n| Forgery(:basic).encrypt n }
     sincronizacion { Forgery('date').date }
   end
