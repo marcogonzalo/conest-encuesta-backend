@@ -50,9 +50,14 @@ module Api
                   @materia.save
                   
                   # Obtengo el Coordinador
-                  coord = Docente.new(m['coordinador'])
-                  coord.save
-                  puts coord.errors.inspect
+                  @coordinador = Docente.new(m['coordinador'])
+                  if(@coordinador.save)
+                    @oferta_periodo = OfertaPeriodo.new(periodo_academico: @periodo_academico, materia: @materia, docente_coordinador: @coordinador)
+                    @oferta_periodo.save
+                  else
+                    puts coordinador.errors.inspect
+                  end
+
 
                   # Para cada Seccion de cada Materia
                   m['secciones'].each do |s|

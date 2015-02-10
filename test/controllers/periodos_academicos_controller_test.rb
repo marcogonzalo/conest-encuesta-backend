@@ -14,7 +14,7 @@ class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
   test "should create periodo_academico" do
     FactoryGirl.create(:token)
     periodo_academico = FactoryGirl.build(:periodo_academico)
-    #assert_difference('Coordinador.count') do
+    assert_difference('OfertaPeriodo.count') do
       assert_difference('Docente.count') do
         assert_difference('Materia.count') do
           assert_difference('Carrera.count') do
@@ -25,7 +25,7 @@ class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
           end
         end
       end
-    #end
+    end
 
     assert_response 201
   end
