@@ -3,7 +3,7 @@ class Docente < ActiveRecord::Base
 	has_many :oferta_academica
 
 	validates :cedula,
-				length: { in: 4..20 },
+				length: { in: 3..20 },
 				presence: true,
 				uniqueness: true
 

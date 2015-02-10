@@ -3,7 +3,7 @@ class Estudiante < ActiveRecord::Base
 	has_many :oferta_academica, through: :control_consultas
 
 	validates :cedula,
-				length: { in: 4..20 },
+				length: { in: 3..20 },
 				presence: true,
 				uniqueness: true
 

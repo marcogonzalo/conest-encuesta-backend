@@ -32,15 +32,34 @@ module Api
           r = JSON.parse(response.body)
           if r['estatus'] == 'OK'
             d = r['datos']
+            
+            # Crear el nuevo periodo academico
             @periodo_academico = PeriodoAcademico.new(periodo: d['periodo_academico_id'], hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
             @periodo_academico.save
+
+            # Iterar sobre las organizaciones (Escuelas)
             d['organizaciones'].each do |o|
+              # Para cada Carrera de cada Organizacion
               o['carreras'].each do |c|
                 @carrera = Carrera.new(codigo: c['id'], nombre: c['nombre'], organizacion_id: o['id'])
                 @carrera.save
+
+                # Para cada Materia de cada Carrera
                 c['materias'].each do |m|
                   @materia = Materia.new(carrera: @carrera, plan_nombre: c['plan_nombre'], codigo: m['codigo'], nombre: m['nombre'], tipo_materia_id: m['tipo_materia_id'], grupo_nota_id: m['grupo_nota_id'])
                   @materia.save
+                  
+                  # Obtengo el Coordinador
+                  coord = Docente.new(m['coordinador'])
+                  coord.save
+                  puts coord.errors.inspect
+
+                  # Para cada Seccion de cada Materia
+                  m['secciones'].each do |s|
+
+                    # Obtengo el docente
+                    d = s['docente']
+                  end
                 end
               end
             end
