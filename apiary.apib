@@ -1,0 +1,408 @@
+FORMAT: 1A
+HOST: *
+
+# API Consulta Conest
+API del sistema de *Consulta Conest*.
+
+# Group Instrumentos
+Recursos asociados a los **Instrumentos** de consulta
+
+## Colección de Instrumentos [/instrumentos]
+### Listar todos los Instrumentos [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "nombre": "Consulta de teórico-prácticas", "descripcion": "Consulta estudiantil sobre el desempeño docente en materias teórico-prácticas", "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00"
+        }, {
+          "id": 2, "nombre": "Consulta de teóricas", "descripcion": "Consulta estudiantil sobre el desempeño docente en materias teóricas", "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00"
+        }]
+
+### Crear un Instrumento <V1> [POST]
++ Request (application/json)
+
+        {
+          "instrumento": { 
+            "descripcion": "@instrumento.descripcion", "nombre": "@instrumento.nombre", 
+            "bloques_attributes": [
+                { 
+                  "nombre": "@bloque.nombre", "descripcion": "@bloque.descripcion", "tipo": "L",
+                  "preguntas_attributes": [
+                    { "interrogante": "@pregunta1.interrogante", "descripcion": "@pregunta1.descripcion", "tipo_pregunta_id": "1", 
+                     "opciones_attributes": [
+                       { "etiqueta": "@opcion1.etiqueta", "valor": "@opcion1.valor" },
+                       { "etiqueta": "@opcion2.etiqueta", "valor": "@opcion2.valor" }
+                     ] 
+                    },
+                    { "interrogante": "@pregunta2.interrogante", "descripcion": "@pregunta2.descripcion", "tipo_pregunta_id": "2", 
+                     "opciones_attributes": [
+                       { "etiqueta": "@opcion3.etiqueta", "valor": "@opcion3.valor" },
+                       { "etiqueta": "@opcion4.etiqueta", "valor": "@opcion4.valor" },
+                       { "etiqueta": "@opcion5.etiqueta", "valor": "@opcion5.valor" },
+                       { "etiqueta": "@opcion6.etiqueta", "valor": "@opcion6.valor" }
+                     ] 
+                    }
+                  ]
+                }
+            ]
+          }
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id": 4,
+            "nombre": "@instrumento.nombre",
+            "descripcion": "@instrumento.descripcion",
+            "created_at": "2015-02-10T01:44:33.857Z",
+            "updated_at": "2015-02-10T01:44:33.857Z",
+            "bloques": [
+                {
+                    "id": 10,
+                    "nombre": "@bloque.nombre",
+                    "descripcion": "@bloque.descripcion",
+                    "tipo": "L",
+                    "preguntas": [
+                        {
+                            "id": 6,
+                            "interrogante": "@pregunta1.interrogante",
+                            "descripcion": "@pregunta1.descripcion",
+                            "tipo_pregunta_id": 1,
+                            "opciones": [
+                                {
+                                    "id": 14,
+                                    "etiqueta": "@opcion2.etiqueta",
+                                    "valor": "@opcion2.valor"
+                                },
+                                {
+                                    "id": 13,
+                                    "etiqueta": "@opcion1.etiqueta",
+                                    "valor": "@opcion1.valor"
+                                }
+                            ]
+                        },
+                        {
+                            "id": 7,
+                            "interrogante": "@pregunta2.interrogante",
+                            "descripcion": "@pregunta2.descripcion",
+                            "tipo_pregunta_id": 2,
+                            "opciones": [
+                                {
+                                    "id": 18,
+                                    "etiqueta": "@opcion6.etiqueta",
+                                    "valor": "@opcion6.valor"
+                                },
+                                {
+                                    "id": 17,
+                                    "etiqueta": "@opcion5.etiqueta",
+                                    "valor": "@opcion5.valor"
+                                },
+                                {
+                                    "id": 16,
+                                    "etiqueta": "@opcion4.etiqueta",
+                                    "valor": "@opcion4.valor"
+                                },
+                                {
+                                    "id": 15,
+                                    "etiqueta": "@opcion3.etiqueta",
+                                    "valor": "@opcion3.valor"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Instrumento [/instrumentos/{id}]
+Un objeto Instrumento en particular con todos sus detalles
+
++ Parameters
+    + id (required, number, `1`) ... `id` numérico del Instrumento. Tiene un valor de ejemplo.
+
+### Obtener un Instrumento <V1> [GET]
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            {
+                "id": 4,
+                "nombre": "@instrumento.nombre",
+                "descripcion": "@instrumento.descripcion",
+                "created_at": "2015-02-10T01:44:33.857Z",
+                "updated_at": "2015-02-10T01:44:33.857Z",
+                "bloques": [
+                    {
+                        "id": 10,
+                        "nombre": "@bloque.nombre",
+                        "descripcion": "@bloque.descripcion",
+                        "tipo": "L",
+                        "preguntas": [
+                            {
+                                "id": 6,
+                                "interrogante": "@pregunta1.interrogante",
+                                "descripcion": "@pregunta1.descripcion",
+                                "tipo_pregunta_id": 1,
+                                "opciones": [
+                                    {
+                                        "id": 14,
+                                        "etiqueta": "@opcion2.etiqueta",
+                                        "valor": "@opcion2.valor"
+                                    },
+                                    {
+                                        "id": 13,
+                                        "etiqueta": "@opcion1.etiqueta",
+                                        "valor": "@opcion1.valor"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 7,
+                                "interrogante": "@pregunta2.interrogante",
+                                "descripcion": "@pregunta2.descripcion",
+                                "tipo_pregunta_id": 2,
+                                "opciones": [
+                                    {
+                                        "id": 18,
+                                        "etiqueta": "@opcion6.etiqueta",
+                                        "valor": "@opcion6.valor"
+                                    },
+                                    {
+                                        "id": 17,
+                                        "etiqueta": "@opcion5.etiqueta",
+                                        "valor": "@opcion5.valor"
+                                    },
+                                    {
+                                        "id": 16,
+                                        "etiqueta": "@opcion4.etiqueta",
+                                        "valor": "@opcion4.valor"
+                                    },
+                                    {
+                                        "id": 15,
+                                        "etiqueta": "@opcion3.etiqueta",
+                                        "valor": "@opcion3.valor"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+
+### Editar un Instrumento [PUT]
++ Request (application/json)
+
+        { "id": 3, "nombre": "Consulta de Laboratorio", "descripcion": "Consulta estudiantil sobre el desempeño docente en materias de Laboratorios Generales" }
+
++ Response 201 (application/json)
+
+        { "id": 3, "nombre": "Consulta de Laboratorio", "descripcion": "Consulta estudiantil sobre el desempeño docente en materias cde Laboratorios Generales", "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00" }
+
+
+### Eliminar un Instrumento [DELETE]
++ Response 204
+
+
+
+
+
+
+
+
+
+
+
+
+# Group Bloques
+Recursos asociados a los **Bloques** que agrupan **conjuntos de preguntas** de un instrumento
+
+## Colección de Bloques de un Instrumento [/instrumentos/{id}/bloques]
+### Listar todos los Bloques de un Instrumento [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "nombre": "Sobre el docente", "descripcion": "Aspectos asociados al desempeño del docente", "instrumento_id": 1, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00"
+        }, {
+          "id": 2, "nombre": "Sobre la asignatura", "descripcion": "Aspectos asociados al contenido y planificación de la asignatura", "instrumento_id": 1, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00"
+        }]
+
+### Crear un Bloque [POST]
++ Request (application/json)
+
+        { "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento_id": 1 }
+
++ Response 201 (application/json)
+
+        { "id": 3, "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento": { "id":1, "nombre":"Consulta de teórico-prácticas" }, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00" }
+
+## Bloques [/bloques/{id}]
+Un bloque en particular con todos sus detalles
+
++ Parameters
+    + id (required, number, `1`) ... `id` numérico del Bloque. Tiene un valor de ejemplo.
+
+### Obtener un Bloque [GET]
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            { "id": 1, "nombre": "Sobre el docente", "descripcion": "Aspectos asociados al desempeño del docente", "instrumento": { "id": 1, "nombre": "Consulta de teórico-prácticas" }, "created_at": "2014-07-01 09:00:00",  "updated_at": "2014-07-01 09:00:00" }
+
+### Editar un Bloque [PUT]
++ Request (application/json)
+
+        { "id": 3, "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento_id": 1 }
+
++ Response 200 (application/json)
+
+        { "id": 3, "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento": { "id": 1, "nombre": "Consulta de teórico-prácticas" }, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00" }
+
+
+### Eliminar un Bloques [DELETE]
++ Response 204
+
+
+
+
+
+
+
+
+
+# Group Preguntas
+Recursos asociados a las **Preguntas** agrupadas en bloques de un instrumento
+
+## Colección de Preguntas de un Bloque [/bloques/{id}/preguntas]
+### Listar todas las Preguntas de un Bloque [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "interrogante": "¿Cómo evalúa la asistencia del docente a clases", "descripcion": "Considere la asistencia puntual y regular a las actividades", "bloque_id": 1, "tipo_pregunta": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00"
+        }, {
+          "id": 2, "interrogante": "¿En qué medida se cubrió el contenido planificado", "descripcion": "", "bloque_id": 2, "tipo_pregunta": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00"
+        }]
+
+### Crear una Pregunta [POST]
++ Request (application/json)
+
+        { "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo_pregunta_id": 1 }
+
++ Response 201 (application/json)
+
+        { "id": 3, "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo_pregunta": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00" }
+
+
+## Preguntas [/preguntas/{id}]
+Una pregunta en particular con todos sus detalles
+
++ Parameters
+    + id (required, number, `1`) ... `id` numérico de la pregunta. Tiene un valor de ejemplo.
+
+### Obtener una Pregunta [GET]
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            { "id": 1, "interrogante": "¿Cómo evalúa la asistencia del docente a clases", "descripcion": "Considere la asistencia puntual y regular a las actividades", bloque: { "id": 1, "nombre": "Sobre el docente", "instrumento": { "id": 1, "nombre": "Consulta de teórico-prácticas" } }, "tipo": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00" }
+
+### Editar una Pregunta [PUT]
++ Request (application/json)
+
+        { "id": 3, "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo_pregunta_id": 1 }
+
++ Response 200 (application/json)
+
+        { "id": 3, "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00",  "updated_at": "2014-07-01 09:00:00" }
+
+
+### Eliminar una Pregunta [DELETE]
++ Response 204
+
+
+
+# Group Estudiantes
+Recursos asociados a los **Estudiantes** de Conest
+
+## Colección de Consultas sin Responder [/estudiantes/{id}/consultas_sin_responder]
+### Listar las ofertas académicas a las que el estudiante no ha respondido la consulta <V1> [GET]
+
++ Parameters
+    + id (required, number, `1`) ... `id` numérico del estudiante. Tiene un valor de ejemplo.
+
++ Response 200 (application/json)
+
+        {
+            "estudiante_id":434296389,
+            "consultas_sin_responder": 
+            [
+                {
+                    "id":963824662,
+                    "nombre_seccion":"a0",
+                    "materia": {
+                        "id":934171454,
+                        "codigo":"mIpxrW",
+                        "nombre":"Materia #\u003c#\u003cClass:0x00000005384c08\u003e:0x00000003e14440\u003e",
+                        "tipo_materia_id":"M"
+                    },
+                    "periodo_academico":"30RTVBs"
+                },
+                {
+                    "id":963824663,
+                    "nombre_seccion":"2T",
+                    "materia": {
+                        "id":934171455,
+                        "codigo":"6w58Sg",
+                        "nombre":"Materia #\u003c#\u003cClass:0x00000005384c08\u003e:0x000000031d5288\u003e",
+                        "tipo_materia_id":"L"
+                    },
+                    "periodo_academico":"Wwx4zCS"
+                },
+                {
+                    "id":963824664,
+                    "nombre_seccion":"7Z",
+                    "materia":
+                    {
+                        "id":934171456,
+                        "codigo":"TEKUT2",
+                        "nombre":"Materia #\u003c#\u003cClass:0x00000005384c08\u003e:0x00000001647368\u003e",
+                        "tipo_materia_id":"S"
+                    },
+                    "periodo_academico":"0tAQklY"
+                },
+                {
+                    "id":963824665,
+                    "nombre_seccion":"wu",
+                    "materia":
+                    {
+                        "id":934171457,
+                        "codigo":"qDT5aS",
+                        "nombre":"Materia #\u003c#\u003cClass:0x00000005384c08\u003e:0x000000034025d8\u003e",
+                        "tipo_materia_id":"C"
+                    },
+                    "periodo_academico":"duOzZWN"
+                },
+                {
+                    "id":963824666,
+                    "nombre_seccion":"XD",
+                    "materia":
+                    {
+                        "id":934171458,
+                        "codigo":"cEA23a",
+                        "nombre":"Materia #\u003c#\u003cClass:0x00000005384c08\u003e:0x00000003f31440\u003e",
+                        "tipo_materia_id":"M"
+                    },
+                    "periodo_academico":"Jsqz2Tw"
+                }
+            ]
+        }
