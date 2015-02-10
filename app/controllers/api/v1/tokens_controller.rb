@@ -51,7 +51,7 @@ module Api
             end
           end
         rescue => e
-          e.response
+          e
         end
       end
 

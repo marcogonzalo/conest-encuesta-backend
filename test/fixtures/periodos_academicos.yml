@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 periodo_academico_1:
-  periodo: MyString
-  hash_sum: MyString
+  periodo: 01-2012
+  hash_sum: sadghjdkhds
   sincronizacion: 2015-01-28 15:54:55
 
 periodo_academico_2:
-  periodo: MyString
-  hash_sum: MyString
+  periodo: 02-2012
+  hash_sum: fadsdgjkjtr
   sincronizacion: 2015-01-28 15:54:55

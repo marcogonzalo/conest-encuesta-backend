@@ -44,6 +44,5 @@ class Api::V1::EstudiantesControllerTest < ActionController::TestCase
   test "debería listar consultas que no ha respondido un estudiante" do
     get :consultas_sin_responder, id: @estudiante_con_consultas, format: :json
     assert_response :success
-    get_context(request,response)
   end
 end
