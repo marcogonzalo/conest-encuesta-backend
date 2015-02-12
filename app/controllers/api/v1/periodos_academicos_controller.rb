@@ -26,57 +26,40 @@ module Api
       # POST /periodos_academicos
       # POST /periodos_academicos.json
       def create
-          periodo_academico_id = periodo_academico_params[:periodo]
-          response = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico_id}",
-                      :conest_token  => Token::actual
-          r = JSON.parse(response.body)
+        periodo_academico_id = periodo_academico_params[:periodo]
+
+        response = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico_id}",
+                                  :conest_token  => Token::actual
+        r = JSON.parse(response.body)
+
+        if response.code.eql?(200)
           if r['estatus'] == 'OK'
+            # Datos de la respuesta enviada por Conest
             d = r['datos']
-            
-            # Crear el nuevo periodo academico
-            @periodo_academico = PeriodoAcademico.new(periodo: d['periodo_academico_id'], hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
-            @periodo_academico.save
 
-            # Iterar sobre las organizaciones (Escuelas)
-            d['organizaciones'].each do |o|
-              # Para cada Carrera de cada Organizacion
-              o['carreras'].each do |c|
-                @carrera = Carrera.new(codigo: c['id'], nombre: c['nombre'], organizacion_id: o['id'])
-                @carrera.save
+            @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: d['periodo_academico_id'])
 
-                # Para cada Materia de cada Carrera
-                c['materias'].each do |m|
-                  @materia = Materia.new(carrera: @carrera, plan_nombre: c['plan_nombre'], codigo: m['codigo'], nombre: m['nombre'], tipo_materia_id: m['tipo_materia_id'], grupo_nota_id: m['grupo_nota_id'])
-                  @materia.save
-                  
-                  # Obtengo el Coordinador
-                  @coordinador = Docente.new(m['coordinador'])
-                  if(@coordinador.save)
-                    @oferta_periodo = OfertaPeriodo.new(periodo_academico: @periodo_academico, materia: @materia, docente_coordinador: @coordinador)
-                    @oferta_periodo.save
-                  else
-                    puts coordinador.errors.inspect
-                  end
-
-
-                  # Para cada Seccion de cada Materia
-                  m['secciones'].each do |s|
-
-                    # Obtengo el docente
-                    d = s['docente']
-                  end
-                end
+            if @periodo_academico.id.nil?
+              # Crear el nuevo periodo academico
+              @periodo_academico.update(hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
+              procesar_periodo(@periodo_academico, d)
+              render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} registrado" }, status: :created
+            else
+              # Si el hash es el mismo no hay cambios en el listado
+              if @periodo_academico.hash_sum.eql?(r['sha1_sum'])
+                render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
+              else
+                # Si no es el mismo, actualizo y continuo
+                @periodo_academico.update(hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
+                procesar_periodo(@periodo_academico, d)
+                render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} actualizado" }, status: :ok
               end
             end
-          end
-        respond_to do |format|
-          if @carrera.save
-            format.html { redirect_to @periodo_academico, notice: 'Periodo academico was successfully created.' }
-            format.json { render :show, status: :created, location: api_v1_periodo_academico_url(@periodo_academico) }
           else
-            format.html { render :new }
-            format.json { render json: @periodo_academico.errors, status: :unprocessable_entity }
+            render json: { estatus: r['estatus'], mensaje: r['mensaje'] }, status: :bad_request
           end
+        else
+          render nothing: true, status: response.code
         end
       end
 
@@ -112,7 +95,48 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def periodo_academico_params
-          params.require(:periodo_academico).permit(:periodo, :hash_sum, :sincronizacion)
+          params.require(:periodo_academico).permit(:periodo)
+        end
+
+        def procesar_periodo(periodo_academico, d)
+          # Iterar sobre las organizaciones (Escuelas)
+          d['organizaciones'].each do |o|
+            # Para cada Carrera de cada Organizacion
+            o['carreras'].each do |c|
+              @carrera = Carrera.find_or_initialize_by(codigo: c['id'], organizacion_id: o['id'])
+              if @carrera.id.nil?
+                @carrera.update(nombre: c['nombre'])
+              end
+
+              # Para cada Materia de cada Carrera
+              c['materias'].each do |m|
+                @materia = Materia.find_or_initialize_by(carrera: @carrera, plan_nombre: c['plan_nombre'], codigo: m['codigo'])
+                if @materia.id.nil?
+                  @materia.update(nombre: m['nombre'], tipo_materia_id: m['tipo_materia_id'], grupo_nota_id: m['grupo_nota_id'])
+                end
+                
+                # Obtengo el Coordinador
+                @coordinador = Docente.find_or_initialize_by(cedula: m['coordinador']['cedula'])
+                @coordinador.update(m['coordinador'])
+                
+                # Obtengo la oferta en el periodo
+                @oferta_periodo = OfertaPeriodo.find_or_initialize_by(periodo_academico: periodo_academico, materia: @materia)
+                @oferta_periodo.update(docente_coordinador: @coordinador)
+                
+                # Para cada Seccion de cada Materia
+                m['secciones'].each do |s|
+
+                  # Obtengo el docente
+                  @docente = Docente.find_or_initialize_by(cedula: s['docente']['cedula'])
+                  @docente.update(s['docente'])
+                  
+                  # Registro la oferta academica para ese periodo
+                  @oferta_academica = OfertaAcademica.find_or_initialize_by(nombre_seccion: s['nombre'], oferta_periodo: @oferta_periodo)
+                  @oferta_academica.update(docente: @docente, promedio_general: s['promedio_general'], nro_estudiantes: s['nro_estudiantes'], nro_estudiantes_retirados: s['nro_estudiantes_retirados'], nro_estudiantes_aprobados: s['nro_estudiantes_aprobados'], nro_estudiantes_equivalencia: s['nro_estudiantes_equivalencia'], nro_estudiantes_suficiencia: s['nro_estudiantes_suficiencia'], nro_estudiantes_reparacion: s['nro_estudiantes_repararon'], nro_estudiantes_aplazados: s['nro_estudiantes_aplazados'], tipo_estatus_calificacion_id: s['tipo_status_calificacion_id'])
+                end
+              end
+            end
+          end
         end
     end
   end

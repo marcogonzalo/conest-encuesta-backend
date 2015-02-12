@@ -8,9 +8,11 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 	def get_context(request,response=nil)
-		puts "\nRequest: #{request.params}\n"
+		puts "\n\nRequest:\n#{request.params}"
 		if response
-			puts "Response: #{response.body}\n"
+			puts "\nResponse:\nCode: #{response.code}"
+			puts"Body: #{response.body}" unless response.body.empty?
 		end
+		puts "\n\n"
 	end
 end
