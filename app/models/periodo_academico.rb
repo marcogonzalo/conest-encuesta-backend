@@ -5,7 +5,12 @@ class PeriodoAcademico < ActiveRecord::Base
 				presence: true,
 				uniqueness: true
 
-	validates :hash_sum,
+	validates :asignaturas_hash_sum,
 				presence: true,
+				uniqueness: true
+
+	validates :estudiantes_hash_sum,
+				allow_nil: true,
+				allow_blank: true,
 				uniqueness: true
 end

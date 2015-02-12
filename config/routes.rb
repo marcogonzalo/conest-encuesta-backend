@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :periodos_academicos do
         resources :ofertas_periodo
       end
+      post '/periodos_academicos/:periodo/control_consultas' => 'periodos_academicos#generar_control', as: 'control_consultas_de_periodo'
 
       resources :carreras, shallow: true do
         resources :materias
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
       resources :docentes
       resources :estudiantes do
         member do
-          get '/consultas_sin_responder' => "estudiantes#consultas_sin_responder", as: "consultas_sin_responder"
+          get '/consultas_sin_responder' => 'estudiantes#consultas_sin_responder', as: 'consultas_sin_responder'
         end
       end
 

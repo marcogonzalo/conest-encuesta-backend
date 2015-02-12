@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150206234715) do
+ActiveRecord::Schema.define(version: 20150212020403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,11 +147,12 @@ ActiveRecord::Schema.define(version: 20150206234715) do
   add_index "opciones", ["pregunta_id"], name: "index_opciones_on_pregunta_id", using: :btree
 
   create_table "periodos_academicos", force: :cascade do |t|
-    t.string   "periodo",        limit: 10,  null: false
-    t.string   "hash_sum",       limit: 255
+    t.string   "periodo",              limit: 10,  null: false
+    t.string   "asignaturas_hash_sum", limit: 255
     t.datetime "sincronizacion"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "estudiantes_hash_sum", limit: 255
   end
 
   add_index "periodos_academicos", ["periodo"], name: "index_periodos_academicos_on_periodo", using: :btree

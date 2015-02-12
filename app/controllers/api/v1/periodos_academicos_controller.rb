@@ -1,7 +1,7 @@
 module Api
   module V1
     class PeriodosAcademicosController < ApplicationController
-      before_action :set_periodo_academico, only: [:show, :edit, :update, :destroy]
+      before_action :set_periodo_academico, only: [:show, :edit, :update, :destroy, :control_consultas]
 
       # GET /periodos_academicos
       # GET /periodos_academicos.json
@@ -41,16 +41,16 @@ module Api
 
             if @periodo_academico.id.nil?
               # Crear el nuevo periodo academico
-              @periodo_academico.update(hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
+              @periodo_academico.update(asignaturas_hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
               procesar_periodo(@periodo_academico, d)
               render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} registrado" }, status: :created
             else
               # Si el hash es el mismo no hay cambios en el listado
-              if @periodo_academico.hash_sum.eql?(r['sha1_sum'])
+              if @periodo_academico.asignaturas_hash_sum.eql?(r['sha1_sum'])
                 render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
               else
                 # Si no es el mismo, actualizo y continuo
-                @periodo_academico.update(hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
+                @periodo_academico.update(asignaturas_hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
                 procesar_periodo(@periodo_academico, d)
                 render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} actualizado" }, status: :ok
               end
@@ -84,6 +84,56 @@ module Api
         respond_to do |format|
           format.html { redirect_to api_v1_periodos_academicos_url, notice: 'Periodo academico was successfully destroyed.' }
           format.json { head :no_content }
+        end
+      end
+
+      # POST /periodos_academicos/1/control_consultas
+      # POST /periodos_academicos/1/control_consultas.json
+      def generar_control
+        periodo_academico_id = params[:periodo]
+
+        response = RestClient.get "#{CONEST_API[:base_url]}/estudiantes_y_asignaturas_en_periodo_academico/#{periodo_academico_id}",
+                                  :conest_token  => Token::actual
+        r = JSON.parse(response.body)
+
+        if response.code.eql?(200)
+          if r['estatus'] == 'OK'
+            # Datos de la respuesta enviada por Conest
+            d = r['datos']
+
+            @periodo_academico = PeriodoAcademico.find_by(periodo: d['periodo_academico_id'])
+
+            if @periodo_academico.nil?
+              render json: { estatus: r['estatus'], mensaje: "Período #{d['periodo_academico_id']} no está registrado" }, status: :not_found
+            else
+              # Si el hash es el mismo no hay cambios en el listado
+              if @periodo_academico.estudiantes_hash_sum.eql?(r['sha1_sum'])
+                render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
+              else
+                d['carreras'].each do |c|
+                  @carrera = Carrera.find_by(codigo: c['id'])
+                  c['estudiantes'].each do |e|
+                    # Obtengo el Estudiante
+                    @estudiante = Estudiante.find_or_initialize_by(cedula: e['cedula'])
+                    @estudiante.update(cedula: e['cedula'], primer_nombre: e['primer_nombre'], segundo_nombre: e['segundo_nombre'], primer_apellido: e['primer_apellido'], segundo_apellido: e['segundo_apellido'])
+                    
+                    e['materias'].each do |m|
+                      @materia = Materia.includes(ofertas_periodo: [:oferta_academica]).find_by(codigo: m['codigo'], carrera: @carrera)
+                      @oferta_periodo = @materia.ofertas_periodo.find_by(periodo_academico: @periodo_academico)
+                      @oferta_academica = @oferta_periodo.oferta_academica.find_by(oferta_periodo: @oferta_periodo, nombre_seccion: m['nombre_seccion'])
+
+                      @control_consulta = ControlConsulta.find_or_create_by(oferta_academica: @oferta_academica, estudiante: @estudiante)
+                    end
+                  end
+                end
+                render json: { estatus: r['estatus'], mensaje: "Controles para período #{@periodo_academico.periodo} actualizados" }, status: :ok
+              end
+            end
+          else
+            render json: { estatus: r['estatus'], mensaje: r['mensaje'] }, status: :bad_request
+          end
+        else
+          render nothing: true, status: response.code
         end
       end
 
