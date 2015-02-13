@@ -5,8 +5,7 @@ class OfertaAcademica < ActiveRecord::Base
 	belongs_to :docente
 
 	scope :sin_responder_consulta, ->  	{ 
-											joins(:control_consultas).
-											merge(ControlConsulta.sin_responder) 
+											where("control_consultas.respondida = ?", false) 
 										}
 
 	validates :oferta_periodo_id,

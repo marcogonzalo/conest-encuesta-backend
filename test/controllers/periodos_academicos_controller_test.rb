@@ -15,10 +15,10 @@ class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
     FactoryGirl.create(:token)
     periodo_academico = FactoryGirl.build(:periodo_academico)
 
-    assert_difference('OfertaAcademica.count') do
-      assert_difference('OfertaPeriodo.count') do
-        assert_difference('Docente.count') do
-          assert_difference('Materia.count') do
+    assert_difference('OfertaAcademica.count',5) do
+      assert_difference('OfertaPeriodo.count',4) do
+        assert_difference('Docente.count',5) do
+          assert_difference('Materia.count',4) do
             assert_difference('Carrera.count') do
               assert_difference('PeriodoAcademico.count') do
                 post :create, periodo_academico: { asignaturas_hash_sum: periodo_academico.asignaturas_hash_sum, periodo: "01-2014", sincronizacion: periodo_academico.sincronizacion }, format: :json
@@ -78,7 +78,7 @@ class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
       assert_response 201
     end
 
-    assert_difference('ControlConsulta.count') do
+    assert_difference('ControlConsulta.count',5) do
       post :generar_control, periodo: "01-2014", format: :json
       get_context(request,response)
     end

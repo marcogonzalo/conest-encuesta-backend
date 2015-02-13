@@ -1,7 +1,8 @@
 module Api
   module V1
     class EstudiantesController < ApplicationController
-      before_action :set_estudiante, only: [:show, :edit, :update, :destroy, :consultas_sin_responder]
+      before_action :set_estudiante, only: [:show, :edit, :update, :destroy]
+      before_action :set_estudiante_by_cedula, only: [:consultas_sin_responder]
 
       # GET /estudiantes
       # GET /estudiantes.json
@@ -64,13 +65,17 @@ module Api
       end
       
       def consultas_sin_responder
-        @consultas_sin_responder = @estudiante.oferta_academica.sin_responder_consulta
+        @consultas_sin_responder = @estudiante.oferta_academica.sin_responder_consulta.includes(oferta_periodo: [:periodo_academico, :materia])
       end
 
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_estudiante
           @estudiante = Estudiante.find(params[:id])
+        end
+
+        def set_estudiante_by_cedula
+          @estudiante = Estudiante.find_by(cedula: params[:id])
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.

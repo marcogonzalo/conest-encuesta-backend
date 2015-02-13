@@ -110,6 +110,7 @@ module Api
               if @periodo_academico.estudiantes_hash_sum.eql?(r['sha1_sum'])
                 render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
               else
+                @periodo_academico.update(estudiantes_hash_sum: r['sha1_sum'])
                 d['carreras'].each do |c|
                   @carrera = Carrera.find_by(codigo: c['id'])
                   c['estudiantes'].each do |e|
@@ -118,7 +119,7 @@ module Api
                     @estudiante.update(cedula: e['cedula'], primer_nombre: e['primer_nombre'], segundo_nombre: e['segundo_nombre'], primer_apellido: e['primer_apellido'], segundo_apellido: e['segundo_apellido'])
                     
                     e['materias'].each do |m|
-                      @materia = Materia.includes(ofertas_periodo: [:oferta_academica]).find_by(codigo: m['codigo'], carrera: @carrera)
+                      @materia = Materia.find_by(codigo: m['codigo'], carrera: @carrera)
                       @oferta_periodo = @materia.ofertas_periodo.find_by(periodo_academico: @periodo_academico)
                       @oferta_academica = @oferta_periodo.oferta_academica.find_by(oferta_periodo: @oferta_periodo, nombre_seccion: m['nombre_seccion'])
 
