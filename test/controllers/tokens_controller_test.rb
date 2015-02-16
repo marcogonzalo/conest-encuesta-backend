@@ -19,16 +19,6 @@ class Api::V1::TokensControllerTest < ActionController::TestCase
     assert_response 201
   end
 
-  test "should show token" do
-    get :show, id: @token, format: :json
-    assert_response :success
-  end
-
-  test "should update token" do
-    patch :update, id: @token, token: { hash_sum: @token.hash_sum, token: @token.token }, format: :json
-    assert_response 200
-  end
-
   test "should destroy token" do
     skip "No puede borrarse por dependencias creadas"
     assert_difference('Token.count', -1) do

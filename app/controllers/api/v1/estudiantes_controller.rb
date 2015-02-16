@@ -1,7 +1,7 @@
 module Api
   module V1
     class EstudiantesController < ApplicationController
-      before_action :set_estudiante, only: [:show, :edit, :update, :destroy]
+      before_action :set_estudiante, only: [:show, :update, :destroy]
       before_action :set_estudiante_by_cedula, only: [:consultas_sin_responder]
 
       # GET /estudiantes
@@ -13,15 +13,6 @@ module Api
       # GET /estudiantes/1
       # GET /estudiantes/1.json
       def show
-      end
-
-      # GET /estudiantes/new
-      def new
-        @estudiante = Estudiante.new
-      end
-
-      # GET /estudiantes/1/edit
-      def edit
       end
 
       # POST /estudiantes

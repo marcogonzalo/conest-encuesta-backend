@@ -1,7 +1,7 @@
 module Api
   module V1
     class MateriasController < ApplicationController
-      before_action :set_materia, only: [:show, :edit, :update, :destroy]
+      before_action :set_materia, only: [:show, :update, :destroy]
 
       # GET /materias
       # GET /materias.json
@@ -12,15 +12,6 @@ module Api
       # GET /materias/1
       # GET /materias/1.json
       def show
-      end
-
-      # GET /materias/new
-      def new
-        @materia = Materia.new
-      end
-
-      # GET /materias/1/edit
-      def edit
       end
 
       # POST /materias

@@ -1,7 +1,7 @@
 module Api
   module V1
     class InstrumentosController < ApplicationController
-      before_action :set_instrumento, only: [:show, :edit, :update, :destroy]
+      before_action :set_instrumento, only: [:show, :update, :destroy]
 
       # GET /instrumentos
       # GET /instrumentos.json
@@ -15,19 +15,9 @@ module Api
         @instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:id])
       end
 
-      # GET /instrumentos/new
-      def new
-        @instrumento = Instrumento.new
-      end
-
-      # GET /instrumentos/1/edit
-      def edit
-      end
-
       # POST /instrumentos
       # POST /instrumentos.json
       def create
-        puts instrumento_params
         @instrumento = Instrumento.new(instrumento_params)
 
         respond_to do |format|

@@ -1,7 +1,7 @@
 module Api
   module V1
     class ConsultasController < ApplicationController
-      before_action :set_consulta, only: [:show, :edit, :update, :destroy]
+      before_action :set_consulta, only: [:show, :update, :destroy]
 
       # GET /consultas
       # GET /consultas.json
@@ -12,15 +12,6 @@ module Api
       # GET /consultas/1
       # GET /consultas/1.json
       def show
-      end
-
-      # GET /consultas/new
-      def new
-        @consulta = Consulta.new
-      end
-
-      # GET /consultas/1/edit
-      def edit
       end
 
       # POST /consultas

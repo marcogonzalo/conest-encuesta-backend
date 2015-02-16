@@ -1,7 +1,7 @@
 module Api
   module V1
     class TokensController < ApplicationController
-      before_action :set_token, only: [:show, :edit, :update, :destroy]
+      before_action :set_token, only: [:show, :destroy]
 
       # GET /tokens
       # GET /tokens.json
@@ -12,15 +12,6 @@ module Api
       # GET /tokens/1
       # GET /tokens/1.json
       def show
-      end
-
-      # GET /tokens/new
-      def new
-        @token = Token.new
-      end
-
-      # GET /tokens/1/edit
-      def edit
       end
 
       # POST /tokens
@@ -52,20 +43,6 @@ module Api
           end
         rescue => e
           e
-        end
-      end
-
-      # PATCH/PUT /tokens/1
-      # PATCH/PUT /tokens/1.json
-      def update
-        respond_to do |format|
-          if @token.update(token_params)
-            format.html { redirect_to @token, notice: 'Token was successfully updated.' }
-            format.json { render :show, status: :ok, location: api_v1_token_url(@token) }
-          else
-            format.html { render :edit }
-            format.json { render json: @token.errors, status: :unprocessable_entity }
-          end
         end
       end
 

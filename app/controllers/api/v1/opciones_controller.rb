@@ -1,7 +1,7 @@
 module Api
   module V1
     class OpcionesController < ApplicationController
-      before_action :set_opcion, only: [:show, :edit, :update, :destroy]
+      before_action :set_opcion, only: [:show, :update, :destroy]
 
       # GET /opciones
       # GET /opciones.json
@@ -12,15 +12,6 @@ module Api
       # GET /opciones/1
       # GET /opciones/1.json
       def show
-      end
-
-      # GET /opciones/new
-      def new
-        @opcion = Opcion.new
-      end
-
-      # GET /opciones/1/edit
-      def edit
       end
 
       # POST /opciones

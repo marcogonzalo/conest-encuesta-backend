@@ -1,7 +1,7 @@
 module Api
   module V1
     class DocentesController < ApplicationController
-      before_action :set_docente, only: [:show, :edit, :update, :destroy]
+      before_action :set_docente, only: [:show, :update, :destroy]
 
       # GET /docentes
       # GET /docentes.json
@@ -12,15 +12,6 @@ module Api
       # GET /docentes/1
       # GET /docentes/1.json
       def show
-      end
-
-      # GET /docentes/new
-      def new
-        @docente = Docente.new
-      end
-
-      # GET /docentes/1/edit
-      def edit
       end
 
       # POST /docentes

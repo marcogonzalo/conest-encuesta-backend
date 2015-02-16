@@ -1,7 +1,7 @@
 module Api
   module V1
     class OfertaAcademicaController < ApplicationController
-      before_action :set_oferta_academica, only: [:show, :edit, :update, :destroy]
+      before_action :set_oferta_academica, only: [:show, :update, :destroy]
 
       # GET /oferta_academica
       # GET /oferta_academica.json
@@ -12,15 +12,6 @@ module Api
       # GET /oferta_academica/1
       # GET /oferta_academica/1.json
       def show
-      end
-
-      # GET /oferta_academica/new
-      def new
-        @oferta_academica = OfertaAcademica.new
-      end
-
-      # GET /oferta_academica/1/edit
-      def edit
       end
 
       # POST /oferta_academica

@@ -42,7 +42,7 @@ class Api::V1::EstudiantesControllerTest < ActionController::TestCase
   end
 
   test "debería listar consultas que no ha respondido un estudiante" do
-    get :consultas_sin_responder, id: @estudiante_con_consultas, format: :json
+    get :consultas_sin_responder, id: @estudiante_con_consultas.cedula, format: :json
     assert_response :success
   end
 end

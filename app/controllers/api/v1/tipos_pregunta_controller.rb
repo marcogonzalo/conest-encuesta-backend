@@ -1,7 +1,7 @@
 module Api
   module V1
     class TiposPreguntaController < ApplicationController
-      before_action :set_tipo_pregunta, only: [:show, :edit, :update, :destroy]
+      before_action :set_tipo_pregunta, only: [:show, :update, :destroy]
 
       # GET /tipos_pregunta
       # GET /tipos_pregunta.json
@@ -12,15 +12,6 @@ module Api
       # GET /tipos_pregunta/1
       # GET /tipos_pregunta/1.json
       def show
-      end
-
-      # GET /tipos_pregunta/new
-      def new
-        @tipo_pregunta = TipoPregunta.new
-      end
-
-      # GET /tipos_pregunta/1/edit
-      def edit
       end
 
       # POST /tipos_pregunta

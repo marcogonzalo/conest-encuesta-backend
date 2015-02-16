@@ -1,7 +1,7 @@
 module Api
   module V1
     class PreguntasController < ApplicationController
-      before_action :set_pregunta, only: [:show, :edit, :update, :destroy]
+      before_action :set_pregunta, only: [:show, :update, :destroy]
 
       # GET /preguntas
       # GET /preguntas.json
@@ -12,15 +12,6 @@ module Api
       # GET /preguntas/1
       # GET /preguntas/1.json
       def show
-      end
-
-      # GET /preguntas/new
-      def new
-        @pregunta = Pregunta.new
-      end
-
-      # GET /preguntas/1/edit
-      def edit
       end
 
       # POST /preguntas

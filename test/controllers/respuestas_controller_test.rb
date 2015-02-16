@@ -24,11 +24,6 @@ class Api::V1::RespuestasControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should update respuesta" do
-    patch :update, id: @respuesta, respuesta: { consulta_id: @respuesta.consulta_id, pregunta_id: @respuesta.pregunta_id, valor: @respuesta.valor }, format: :json
-    assert_response 200
-  end
-
   test "should destroy respuesta" do
     skip "No puede borrarse por dependencias creadas"
     assert_difference('Respuesta.count', -1) do

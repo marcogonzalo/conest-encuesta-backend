@@ -1,7 +1,7 @@
 module Api
   module V1
     class RespuestasController < ApplicationController
-      before_action :set_respuesta, only: [:show, :edit, :update, :destroy]
+      before_action :set_respuesta, only: [:show]
 
       # GET /respuestas
       # GET /respuestas.json
@@ -12,15 +12,6 @@ module Api
       # GET /respuestas/1
       # GET /respuestas/1.json
       def show
-      end
-
-      # GET /respuestas/new
-      def new
-        @respuesta = Respuesta.new
-      end
-
-      # GET /respuestas/1/edit
-      def edit
       end
 
       # POST /respuestas
@@ -36,30 +27,6 @@ module Api
             format.html { render :new }
             format.json { render json: @respuesta.errors, status: :unprocessable_entity }
           end
-        end
-      end
-
-      # PATCH/PUT /respuestas/1
-      # PATCH/PUT /respuestas/1.json
-      def update
-        respond_to do |format|
-          if @respuesta.update(respuesta_params)
-            format.html { redirect_to @respuesta, notice: 'Respuesta was successfully updated.' }
-            format.json { render :show, status: :ok, location: api_v1_respuesta_url(@respuesta) }
-          else
-            format.html { render :edit }
-            format.json { render json: @respuesta.errors, status: :unprocessable_entity }
-          end
-        end
-      end
-
-      # DELETE /respuestas/1
-      # DELETE /respuestas/1.json
-      def destroy
-        @respuesta.destroy
-        respond_to do |format|
-          format.html { redirect_to respuestas_url, notice: 'Respuesta was successfully destroyed.' }
-          format.json { head :no_content }
         end
       end
 

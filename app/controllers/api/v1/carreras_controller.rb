@@ -1,7 +1,7 @@
 module Api
   module V1
     class CarrerasController < ApplicationController
-      before_action :set_carrera, only: [:show, :edit, :update, :destroy]
+      before_action :set_carrera, only: [:show, :update, :destroy]
 
       # GET /carreras
       # GET /carreras.json
@@ -12,15 +12,6 @@ module Api
       # GET /carreras/1
       # GET /carreras/1.json
       def show
-      end
-
-      # GET /carreras/new
-      def new
-        @carrera = Carrera.new
-      end
-
-      # GET /carreras/1/edit
-      def edit
       end
 
       # POST /carreras

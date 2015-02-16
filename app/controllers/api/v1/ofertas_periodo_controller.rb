@@ -1,8 +1,8 @@
 module Api
   module V1
     class OfertasPeriodoController < ApplicationController
-      before_action :set_oferta_periodo, only: [:show, :edit, :update, :destroy]
-      before_action :set_periodo_academico, only: [:index, :create, :new]
+      before_action :set_oferta_periodo, only: [:show, :update, :destroy]
+      before_action :set_periodo_academico, only: [:index, :create]
 
       # GET /ofertas_periodo
       # GET /ofertas_periodo.json
@@ -13,15 +13,6 @@ module Api
       # GET /ofertas_periodo/1
       # GET /ofertas_periodo/1.json
       def show
-      end
-
-      # GET /ofertas_periodo/new
-      def new
-        @oferta_periodo = OfertaPeriodo.new
-      end
-
-      # GET /ofertas_periodo/1/edit
-      def edit
       end
 
       # POST /ofertas_periodo

@@ -1,7 +1,7 @@
 module Api
   module V1
     class BloquesController < ApplicationController
-      before_action :set_bloque, only: [:show, :edit, :update, :destroy]
+      before_action :set_bloque, only: [:show, :update, :destroy]
 
       # GET /bloques
       # GET /bloques.json
