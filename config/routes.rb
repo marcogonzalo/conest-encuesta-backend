@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resources :periodos_academicos do
         resources :ofertas_periodo
       end
-      post '/periodos_academicos/:periodo/control_consultas' => 'periodos_academicos#generar_control', as: 'control_consultas_de_periodo'
+      post '/periodos_academicos/:periodo/sincronizar_estudiantes' => 'periodos_academicos#sincronizar_estudiantes', as: 'sincronizar_estudiantes_de_periodo'
 
       resources :carreras, shallow: true do
         resources :materias
@@ -32,9 +32,9 @@ Rails.application.routes.draw do
       resources :preguntas do
         resources :opciones
       end
-      resources :respuestas
+      resources :respuestas, except: [:update, :delete]
 
-      resources :tokens
+      resources :tokens, except: [:show]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

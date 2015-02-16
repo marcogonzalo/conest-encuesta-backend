@@ -1,7 +1,7 @@
 module Api
   module V1
     class PeriodosAcademicosController < ApplicationController
-      before_action :set_periodo_academico, only: [:show, :edit, :update, :destroy, :control_consultas]
+      before_action :set_periodo_academico, only: [:show, :update, :destroy, :control_consultas]
 
       # GET /periodos_academicos
       # GET /periodos_academicos.json
@@ -14,19 +14,11 @@ module Api
       def show
       end
 
-      # GET /periodos_academicos/new
-      def new
-        @periodo_academico = PeriodoAcademico.new
-      end
-
-      # GET /periodos_academicos/1/edit
-      def edit
-      end
-
       # POST /periodos_academicos
       # POST /periodos_academicos.json
       def create
         periodo_academico_id = periodo_academico_params[:periodo]
+        instrumento_id = periodo_academico_params[:instrumento_id]
 
         response = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico_id}",
                                   :conest_token  => Token::actual
@@ -42,7 +34,7 @@ module Api
             if @periodo_academico.id.nil?
               # Crear el nuevo periodo academico
               @periodo_academico.update(asignaturas_hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
-              procesar_periodo(@periodo_academico, d)
+              procesar_periodo(@periodo_academico, d, instrumento_id)
               render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} registrado" }, status: :created
             else
               # Si el hash es el mismo no hay cambios en el listado
@@ -51,7 +43,7 @@ module Api
               else
                 # Si no es el mismo, actualizo y continuo
                 @periodo_academico.update(asignaturas_hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
-                procesar_periodo(@periodo_academico, d)
+                procesar_periodo(@periodo_academico, d, instrumento_id)
                 render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} actualizado" }, status: :ok
               end
             end
@@ -87,9 +79,9 @@ module Api
         end
       end
 
-      # POST /periodos_academicos/1/control_consultas
-      # POST /periodos_academicos/1/control_consultas.json
-      def generar_control
+      # POST /periodos_academicos/1/sincronizar_estudiantes
+      # POST /periodos_academicos/1/sincronizar_estudiantes.json
+      def sincronizar_estudiantes
         periodo_academico_id = params[:periodo]
 
         response = RestClient.get "#{CONEST_API[:base_url]}/estudiantes_y_asignaturas_en_periodo_academico/#{periodo_academico_id}",
@@ -146,10 +138,10 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def periodo_academico_params
-          params.require(:periodo_academico).permit(:periodo)
+          params.require(:periodo_academico).permit(:periodo, :instrumento_id)
         end
 
-        def procesar_periodo(periodo_academico, d)
+        def procesar_periodo(periodo_academico, d, instrumento_id = nil)
           # Iterar sobre las organizaciones (Escuelas)
           d['organizaciones'].each do |o|
             # Para cada Carrera de cada Organizacion
@@ -184,6 +176,13 @@ module Api
                   # Registro la oferta academica para ese periodo
                   @oferta_academica = OfertaAcademica.find_or_initialize_by(nombre_seccion: s['nombre'], oferta_periodo: @oferta_periodo)
                   @oferta_academica.update(docente: @docente, promedio_general: s['promedio_general'], nro_estudiantes: s['nro_estudiantes'], nro_estudiantes_retirados: s['nro_estudiantes_retirados'], nro_estudiantes_aprobados: s['nro_estudiantes_aprobados'], nro_estudiantes_equivalencia: s['nro_estudiantes_equivalencia'], nro_estudiantes_suficiencia: s['nro_estudiantes_suficiencia'], nro_estudiantes_reparacion: s['nro_estudiantes_repararon'], nro_estudiantes_aplazados: s['nro_estudiantes_aplazados'], tipo_estatus_calificacion_id: s['tipo_status_calificacion_id'])
+
+                  @consulta = Consulta.find_or_initialize_by(oferta_academica: @oferta_academica)
+                  
+
+                  instrumento = instrumento_id.nil? ? Instrumento.all.last : Instrumento.find(instrumento_id)
+
+                  @consulta.update(instrumento: instrumento)
                 end
               end
             end
