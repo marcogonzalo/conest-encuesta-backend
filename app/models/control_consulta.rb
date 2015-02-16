@@ -3,6 +3,7 @@ class ControlConsulta < ActiveRecord::Base
 	belongs_to :estudiante
 
 	scope :sin_responder, -> { where(respondida: false) }
+	scope :respondidas, -> { where(respondida: true) }
 
 =begin
 	ESTATUS = Hash["A"   => "Aprobado", 
