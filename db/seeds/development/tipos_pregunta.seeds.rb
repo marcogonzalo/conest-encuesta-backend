@@ -1,0 +1,7 @@
+TipoPregunta.find_or_create_by(nombre: 'Ńúmero', valor: 'numero', valor_html: 'number')
+TipoPregunta.find_or_create_by(nombre: 'Texto', valor: 'texto', valor_html: 'text')
+TipoPregunta.find_or_create_by(nombre: 'Texto de párrafo', valor: 'texto_parrafo', valor_html: 'textarea')
+TipoPregunta.find_or_create_by(nombre: 'Selección simple', valor: 'seleccion_simple', valor_html: 'radio')
+TipoPregunta.find_or_create_by(nombre: 'Selección múltiple', valor: 'seleccion_multiple', valor_html: 'checkbox')
+TipoPregunta.find_or_create_by(nombre: 'Lista de selección', valor: 'seleccion_lista', valor_html: 'select')
+TipoPregunta.find_or_create_by(nombre: 'Escala', valor: 'escala', valor_html: 'range')

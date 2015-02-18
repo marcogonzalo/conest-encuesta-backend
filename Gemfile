@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
@@ -11,6 +10,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Simple HTTP and REST client for Ruby, inspired by microframework syntax for specifying actions. Read more: https://github.com/rest-client/rest-client
 gem 'rest-client'
+# Create seeds for each environment, share seeds between environments and specify dependencies to load your seeds in order. Read more: https://github.com/james2m/seedbank
+gem "seedbank"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
