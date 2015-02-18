@@ -93,7 +93,6 @@ module Api
               ControlConsulta.where(oferta_academica_id: @consulta.oferta_academica_id, estudiante_id: @estudiante.id).update_all(respondida: true)
               render json: { estatus: "OK", mensaje: "Registrada respuesta a la consulta" }, status: :created
             else
-              puts "Dsfsdf"
               render json: { estatus: "OK", mensaje: "Estudiante ya respodió la consulta" }, status: :not_modified
             end
           else

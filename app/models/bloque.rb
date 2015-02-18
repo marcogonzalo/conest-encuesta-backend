@@ -4,6 +4,7 @@ class Bloque < ActiveRecord::Base
 	accepts_nested_attributes_for :preguntas
 
 	TIPO = Hash["D"  => "Docente", 
+				"G"  => "General",
 				"L"  => "Laboratorio",
 				"P"  => "Práctica",
 				"T"  => "Teoría"]

@@ -1,5 +1,5 @@
 class OfertaAcademica < ActiveRecord::Base
-	has_many :consultas
+	has_one :consulta
 	has_many :control_consultas
 	belongs_to :oferta_periodo
 	belongs_to :docente

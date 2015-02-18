@@ -8,7 +8,9 @@ json.bloques @instrumento.bloques do |b|
 		json.id p.id
 		json.interrogante p.interrogante
 		json.descripcion p.descripcion
-		json.tipo_pregunta_id p.tipo_pregunta_id
+		json.tipo_pregunta do |tp|
+			json.extract! tp,  :nombre, :valor, :valor_html
+		end
 		json.opciones p.opciones do |o| 
 			json.id o.id
 			json.etiqueta o.etiqueta
