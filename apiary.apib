@@ -17,7 +17,7 @@ Recursos asociados a los **Instrumentos** de consulta
           "id": 2, "nombre": "Consulta de teóricas", "descripcion": "Consulta estudiantil sobre el desempeño docente en materias teóricas", "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00"
         }]
 
-### Crear un Instrumento <V1> [POST]
+### Crear un Instrumento [POST]
 + Request (application/json)
 
         {
@@ -49,69 +49,1240 @@ Recursos asociados a los **Instrumentos** de consulta
 
 + Response 201 (application/json)
 
-        {
-            "id": 4,
-            "nombre": "@instrumento.nombre",
-            "descripcion": "@instrumento.descripcion",
-            "created_at": "2015-02-10T01:44:33.857Z",
-            "updated_at": "2015-02-10T01:44:33.857Z",
-            "bloques": [
-                {
-                    "id": 10,
-                    "nombre": "@bloque.nombre",
-                    "descripcion": "@bloque.descripcion",
-                    "tipo": "L",
-                    "preguntas": [
-                        {
-                            "id": 6,
-                            "interrogante": "@pregunta1.interrogante",
-                            "descripcion": "@pregunta1.descripcion",
-                            "tipo_pregunta_id": 1,
-                            "opciones": [
-                                {
-                                    "id": 14,
-                                    "etiqueta": "@opcion2.etiqueta",
-                                    "valor": "@opcion2.valor"
+    + Body
+
+            {
+                "id": 1,
+                "nombre": "Evaluación Docente (rev.2014)",
+                "descripcion": "Instrumento para la evaluación y diagnóstico de la actividad docente (Revisado en 2014)",
+                "created_at": "2015-02-18T18:49:01.320Z",
+                "updated_at": "2015-02-18T18:49:01.320Z",
+                "bloques": [
+                    {
+                        "id": 1,
+                        "nombre": "Teoría",
+                        "descripcion": "Preguntas sobre aspectos teóricos de la asignatura",
+                        "tipo": "T",
+                        "preguntas": [
+                            {
+                                "id": 1,
+                                "interrogante": "La densidad de contenidos es asimilable en un trimestre",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
                                 },
-                                {
-                                    "id": 13,
-                                    "etiqueta": "@opcion1.etiqueta",
-                                    "valor": "@opcion1.valor"
-                                }
-                            ]
-                        },
-                        {
-                            "id": 7,
-                            "interrogante": "@pregunta2.interrogante",
-                            "descripcion": "@pregunta2.descripcion",
-                            "tipo_pregunta_id": 2,
-                            "opciones": [
-                                {
-                                    "id": 18,
-                                    "etiqueta": "@opcion6.etiqueta",
-                                    "valor": "@opcion6.valor"
+                                "opciones": [
+                                    {
+                                        "id": 1,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 5,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "nombre": "Práctica",
+                        "descripcion": "Preguntas sobre aspectos prácticos de la asignatura",
+                        "tipo": "P",
+                        "preguntas": []
+                    },
+                    {
+                        "id": 3,
+                        "nombre": "Laboratorio",
+                        "descripcion": "Preguntas sobre el laboratorio de la asignatura",
+                        "tipo": "L",
+                        "preguntas": [
+                            {
+                                "id": 2,
+                                "interrogante": "Dotación de la universidad de materiales y equipos requeridos",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
                                 },
-                                {
-                                    "id": 17,
-                                    "etiqueta": "@opcion5.etiqueta",
-                                    "valor": "@opcion5.valor"
+                                "opciones": [
+                                    {
+                                        "id": 6,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 7,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 8,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 9,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 10,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 4,
+                        "nombre": "Docente",
+                        "descripcion": "Preguntas sobre el desempeño del docente de la asignatura",
+                        "tipo": "D",
+                        "preguntas": [
+                            {
+                                "id": 3,
+                                "interrogante": "¿Expuso claramente el programa al inicio del curso?",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
                                 },
-                                {
-                                    "id": 16,
-                                    "etiqueta": "@opcion4.etiqueta",
-                                    "valor": "@opcion4.valor"
+                                "opciones": [
+                                    {
+                                        "id": 11,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 12,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 13,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 14,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 15,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 4,
+                                "interrogante": "¿Informó con precisión sobre el proceso de evaluación?",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
                                 },
-                                {
-                                    "id": 15,
-                                    "etiqueta": "@opcion3.etiqueta",
-                                    "valor": "@opcion3.valor"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
+                                "opciones": [
+                                    {
+                                        "id": 16,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 17,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 18,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 19,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 20,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 5,
+                                "interrogante": "Le dedicó el tiempo apropiado a cada tema del programa",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 21,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 22,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 23,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 24,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 25,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 6,
+                                "interrogante": "Desarrolló ordenadamente las actividades docentes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 26,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 27,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 28,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 29,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 30,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 7,
+                                "interrogante": "Logró comunicarse efectivamente con el estudiante",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 31,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 32,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 33,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 34,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 35,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 8,
+                                "interrogante": "Orientó sobre el uso de material necesario para el aprendizaje",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 36,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 37,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 38,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 39,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 40,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 9,
+                                "interrogante": "Indicó claramente la relación entre los temas del curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 41,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 42,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 43,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 44,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 45,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 10,
+                                "interrogante": "Adaptó sus explicaciones para hacerse entender mejor",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 46,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 47,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 48,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 49,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 50,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 11,
+                                "interrogante": "Explicó claramente la relación entre la teoría y la práctica",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 51,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 52,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 53,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 54,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 55,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 12,
+                                "interrogante": "Fue receptivo a las intervenciones de los estudiantes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 56,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 57,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 58,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 59,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 60,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 13,
+                                "interrogante": "Fomentó un ambiente propicio para el aprendizaje",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 61,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 62,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 63,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 64,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 65,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 14,
+                                "interrogante": "Mantuvo criterios claros de evaluación",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 66,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 67,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 68,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 69,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 70,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 15,
+                                "interrogante": "Muestra disposición para atender individualmente a los estudiantes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 71,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 72,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 73,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 74,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 75,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 16,
+                                "interrogante": "Mantuvo una actitud respetuosa hacia los estudiantes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 76,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 77,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 78,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 79,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 80,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 17,
+                                "interrogante": "El profesor cumplió con el horario de clases",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 81,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 82,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 83,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 84,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 85,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 18,
+                                "interrogante": "Planificó tiempo suficiente para las evaluaciones",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 86,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 87,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 88,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 89,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 90,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 19,
+                                "interrogante": "Las evaluaciones se correspondieron con lo desarrollado durante el curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 91,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 92,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 93,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 94,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 95,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 20,
+                                "interrogante": "Realizó la entrega y revisión oportuna de los resultados de las evaluaciones",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 96,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 97,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 98,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 99,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 100,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 21,
+                                "interrogante": "Motivó la búsqueda activa de conocimiento",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 101,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 102,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 103,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 104,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 105,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 22,
+                                "interrogante": "Estimuló la participación del estudiante en el proceso de aprendizaje",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 106,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 107,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 108,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 109,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 110,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 23,
+                                "interrogante": "Evalúe el desempeño global del profesor",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 111,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 112,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 113,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 114,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 115,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 24,
+                                "interrogante": "¿Avalaría que su profesor fuera postulado a la destacada labor docente?",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 116,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 117,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 118,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 119,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 120,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 5,
+                        "nombre": "General",
+                        "descripcion": "Preguntas sobre la activiidad de la asignatura en general",
+                        "tipo": "G",
+                        "preguntas": [
+                            {
+                                "id": 25,
+                                "interrogante": "Preparación previa para cursar esta asignatura",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 121,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 122,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 123,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 124,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 125,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 26,
+                                "interrogante": "Dedicación de tiempo y esfuerzo a este curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 126,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 127,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 128,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 129,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 130,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 27,
+                                "interrogante": "Contribución del curso a su formación como profesional",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 131,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 132,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 133,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 134,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 135,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 28,
+                                "interrogante": "Las actividades están bien planificadas para obtener resultados",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 136,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 137,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 138,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 139,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 140,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 29,
+                                "interrogante": "El esfuerzo requerido se corresponde con el número de créditos",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 141,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 142,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 143,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 144,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 145,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 30,
+                                "interrogante": "Disponibilidad personal de libros, guías y material docente requeridos",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 146,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 147,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 148,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 149,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 150,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 31,
+                                "interrogante": "Aprendizaje efectivo que usted considera haber logrado en el curso",
+                                "descripcion": null,
+                                "tipo_pregunta": { "public_send": "valor_html", "nombre": "nombre", "valor": "valor", "valor_html": "valor_html" },
+                                "opciones": [
+                                    { "id": 151, "etiqueta": "1", "valor": "1" },
+                                    { "id": 152, "etiqueta": "2", "valor": "2" },
+                                    { "id": 153, "etiqueta": "3", "valor": "3" },
+                                    { "id": 154, "etiqueta": "4", "valor": "4" },
+                                    { "id": 155, "etiqueta": "5", "valor": "5" }
+                                ]
+                            },
+                            {
+                                "id": 32,
+                                "interrogante": "Grado de dificultad del curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    { "id": 156, "etiqueta": "1", "valor": "1" },
+                                    { "id": 157, "etiqueta": "2", "valor": "2" },
+                                    { "id": 158, "etiqueta": "3", "valor": "3" },
+                                    { "id": 159, "etiqueta": "4", "valor": "4" },
+                                    { "id": 160, "etiqueta": "5", "valor": "5" }
+                                ]
+                            },
+                            {
+                                "id": 33,
+                                "interrogante": "Expectativa de calificación final",
+                                "descripcion": null,
+                                "tipo_pregunta": { "public_send": "valor_html", "nombre": "nombre", "valor": "valor", "valor_html": "valor_html" },
+                                "opciones": [
+                                    { "id": 161, "etiqueta": "1", "valor": "1" },
+                                    { "id": 162, "etiqueta": "2", "valor": "2" },
+                                    { "id": 163, "etiqueta": "3", "valor": "3" },
+                                    { "id": 164, "etiqueta": "4", "valor": "4" },
+                                    { "id": 165, "etiqueta": "5", "valor": "5" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
 
 ## Instrumento [/instrumentos/{id}]
 Un objeto Instrumento en particular con todos sus detalles
@@ -119,7 +1290,7 @@ Un objeto Instrumento en particular con todos sus detalles
 + Parameters
     + id (required, number, `1`) ... `id` numérico del Instrumento. Tiene un valor de ejemplo.
 
-### Obtener un Instrumento <V1> [GET]
+### Obtener un Instrumento [GET]
 + Response 200 (application/json)
 
     + Header
@@ -129,61 +1300,1300 @@ Un objeto Instrumento en particular con todos sus detalles
     + Body
 
             {
-                "id": 4,
-                "nombre": "@instrumento.nombre",
-                "descripcion": "@instrumento.descripcion",
-                "created_at": "2015-02-10T01:44:33.857Z",
-                "updated_at": "2015-02-10T01:44:33.857Z",
+                "id": 1,
+                "nombre": "Evaluación Docente (rev.2014)",
+                "descripcion": "Instrumento para la evaluación y diagnóstico de la actividad docente (Revisado en 2014)",
+                "created_at": "2015-02-18T18:49:01.320Z",
+                "updated_at": "2015-02-18T18:49:01.320Z",
                 "bloques": [
                     {
-                        "id": 10,
-                        "nombre": "@bloque.nombre",
-                        "descripcion": "@bloque.descripcion",
+                        "id": 1,
+                        "nombre": "Teoría",
+                        "descripcion": "Preguntas sobre aspectos teóricos de la asignatura",
+                        "tipo": "T",
+                        "preguntas": [
+                            {
+                                "id": 1,
+                                "interrogante": "La densidad de contenidos es asimilable en un trimestre",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 1,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 5,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "nombre": "Práctica",
+                        "descripcion": "Preguntas sobre aspectos prácticos de la asignatura",
+                        "tipo": "P",
+                        "preguntas": []
+                    },
+                    {
+                        "id": 3,
+                        "nombre": "Laboratorio",
+                        "descripcion": "Preguntas sobre el laboratorio de la asignatura",
                         "tipo": "L",
                         "preguntas": [
                             {
-                                "id": 6,
-                                "interrogante": "@pregunta1.interrogante",
-                                "descripcion": "@pregunta1.descripcion",
-                                "tipo_pregunta_id": 1,
+                                "id": 2,
+                                "interrogante": "Dotación de la universidad de materiales y equipos requeridos",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
                                 "opciones": [
                                     {
-                                        "id": 14,
-                                        "etiqueta": "@opcion2.etiqueta",
-                                        "valor": "@opcion2.valor"
+                                        "id": 6,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 7,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 8,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 9,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 10,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 4,
+                        "nombre": "Docente",
+                        "descripcion": "Preguntas sobre el desempeño del docente de la asignatura",
+                        "tipo": "D",
+                        "preguntas": [
+                            {
+                                "id": 3,
+                                "interrogante": "¿Expuso claramente el programa al inicio del curso?",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 11,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 12,
+                                        "etiqueta": "2",
+                                        "valor": "2"
                                     },
                                     {
                                         "id": 13,
-                                        "etiqueta": "@opcion1.etiqueta",
-                                        "valor": "@opcion1.valor"
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 14,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 15,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 4,
+                                "interrogante": "¿Informó con precisión sobre el proceso de evaluación?",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 16,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 17,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 18,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 19,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 20,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 5,
+                                "interrogante": "Le dedicó el tiempo apropiado a cada tema del programa",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 21,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 22,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 23,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 24,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 25,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 6,
+                                "interrogante": "Desarrolló ordenadamente las actividades docentes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 26,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 27,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 28,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 29,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 30,
+                                        "etiqueta": "5",
+                                        "valor": "5"
                                     }
                                 ]
                             },
                             {
                                 "id": 7,
-                                "interrogante": "@pregunta2.interrogante",
-                                "descripcion": "@pregunta2.descripcion",
-                                "tipo_pregunta_id": 2,
+                                "interrogante": "Logró comunicarse efectivamente con el estudiante",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
                                 "opciones": [
                                     {
-                                        "id": 18,
-                                        "etiqueta": "@opcion6.etiqueta",
-                                        "valor": "@opcion6.valor"
+                                        "id": 31,
+                                        "etiqueta": "1",
+                                        "valor": "1"
                                     },
                                     {
-                                        "id": 17,
-                                        "etiqueta": "@opcion5.etiqueta",
-                                        "valor": "@opcion5.valor"
+                                        "id": 32,
+                                        "etiqueta": "2",
+                                        "valor": "2"
                                     },
                                     {
-                                        "id": 16,
-                                        "etiqueta": "@opcion4.etiqueta",
-                                        "valor": "@opcion4.valor"
+                                        "id": 33,
+                                        "etiqueta": "3",
+                                        "valor": "3"
                                     },
                                     {
-                                        "id": 15,
-                                        "etiqueta": "@opcion3.etiqueta",
-                                        "valor": "@opcion3.valor"
+                                        "id": 34,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 35,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 8,
+                                "interrogante": "Orientó sobre el uso de material necesario para el aprendizaje",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 36,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 37,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 38,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 39,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 40,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 9,
+                                "interrogante": "Indicó claramente la relación entre los temas del curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 41,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 42,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 43,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 44,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 45,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 10,
+                                "interrogante": "Adaptó sus explicaciones para hacerse entender mejor",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 46,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 47,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 48,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 49,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 50,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 11,
+                                "interrogante": "Explicó claramente la relación entre la teoría y la práctica",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 51,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 52,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 53,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 54,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 55,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 12,
+                                "interrogante": "Fue receptivo a las intervenciones de los estudiantes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 56,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 57,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 58,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 59,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 60,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 13,
+                                "interrogante": "Fomentó un ambiente propicio para el aprendizaje",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 61,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 62,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 63,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 64,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 65,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 14,
+                                "interrogante": "Mantuvo criterios claros de evaluación",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 66,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 67,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 68,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 69,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 70,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 15,
+                                "interrogante": "Muestra disposición para atender individualmente a los estudiantes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 71,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 72,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 73,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 74,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 75,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 16,
+                                "interrogante": "Mantuvo una actitud respetuosa hacia los estudiantes",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 76,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 77,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 78,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 79,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 80,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 17,
+                                "interrogante": "El profesor cumplió con el horario de clases",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 81,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 82,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 83,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 84,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 85,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 18,
+                                "interrogante": "Planificó tiempo suficiente para las evaluaciones",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 86,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 87,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 88,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 89,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 90,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 19,
+                                "interrogante": "Las evaluaciones se correspondieron con lo desarrollado durante el curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 91,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 92,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 93,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 94,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 95,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 20,
+                                "interrogante": "Realizó la entrega y revisión oportuna de los resultados de las evaluaciones",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 96,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 97,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 98,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 99,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 100,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 21,
+                                "interrogante": "Motivó la búsqueda activa de conocimiento",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 101,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 102,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 103,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 104,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 105,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 22,
+                                "interrogante": "Estimuló la participación del estudiante en el proceso de aprendizaje",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 106,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 107,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 108,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 109,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 110,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 23,
+                                "interrogante": "Evalúe el desempeño global del profesor",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 111,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 112,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 113,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 114,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 115,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 24,
+                                "interrogante": "¿Avalaría que su profesor fuera postulado a la destacada labor docente?",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 116,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 117,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 118,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 119,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 120,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 5,
+                        "nombre": "General",
+                        "descripcion": "Preguntas sobre la activiidad de la asignatura en general",
+                        "tipo": "G",
+                        "preguntas": [
+                            {
+                                "id": 25,
+                                "interrogante": "Preparación previa para cursar esta asignatura",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 121,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 122,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 123,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 124,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 125,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 26,
+                                "interrogante": "Dedicación de tiempo y esfuerzo a este curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 126,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 127,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 128,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 129,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 130,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 27,
+                                "interrogante": "Contribución del curso a su formación como profesional",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 131,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 132,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 133,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 134,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 135,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 28,
+                                "interrogante": "Las actividades están bien planificadas para obtener resultados",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 136,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 137,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 138,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 139,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 140,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 29,
+                                "interrogante": "El esfuerzo requerido se corresponde con el número de créditos",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 141,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 142,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 143,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 144,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 145,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 30,
+                                "interrogante": "Disponibilidad personal de libros, guías y material docente requeridos",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 146,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 147,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 148,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 149,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 150,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 31,
+                                "interrogante": "Aprendizaje efectivo que usted considera haber logrado en el curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 151,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 152,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 153,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 154,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 155,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 32,
+                                "interrogante": "Grado de dificultad del curso",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 156,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 157,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 158,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 159,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 160,
+                                        "etiqueta": "5",
+                                        "valor": "5"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 33,
+                                "interrogante": "Expectativa de calificación final",
+                                "descripcion": null,
+                                "tipo_pregunta": {
+                                    "public_send": "valor_html",
+                                    "nombre": "nombre",
+                                    "valor": "valor",
+                                    "valor_html": "valor_html"
+                                },
+                                "opciones": [
+                                    {
+                                        "id": 161,
+                                        "etiqueta": "1",
+                                        "valor": "1"
+                                    },
+                                    {
+                                        "id": 162,
+                                        "etiqueta": "2",
+                                        "valor": "2"
+                                    },
+                                    {
+                                        "id": 163,
+                                        "etiqueta": "3",
+                                        "valor": "3"
+                                    },
+                                    {
+                                        "id": 164,
+                                        "etiqueta": "4",
+                                        "valor": "4"
+                                    },
+                                    {
+                                        "id": 165,
+                                        "etiqueta": "5",
+                                        "valor": "5"
                                     }
                                 ]
                             }
@@ -206,128 +2616,6 @@ Un objeto Instrumento en particular con todos sus detalles
 + Response 204
 
 
-
-
-
-
-
-
-
-
-
-
-# Group Bloques
-Recursos asociados a los **Bloques** que agrupan **conjuntos de preguntas** de un instrumento
-
-## Colección de Bloques de un Instrumento [/instrumentos/{id}/bloques]
-### Listar todos los Bloques de un Instrumento [GET]
-+ Response 200 (application/json)
-
-        [{
-          "id": 1, "nombre": "Sobre el docente", "descripcion": "Aspectos asociados al desempeño del docente", "instrumento_id": 1, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00"
-        }, {
-          "id": 2, "nombre": "Sobre la asignatura", "descripcion": "Aspectos asociados al contenido y planificación de la asignatura", "instrumento_id": 1, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00"
-        }]
-
-### Crear un Bloque [POST]
-+ Request (application/json)
-
-        { "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento_id": 1 }
-
-+ Response 201 (application/json)
-
-        { "id": 3, "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento": { "id":1, "nombre":"Consulta de teórico-prácticas" }, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00" }
-
-## Bloques [/bloques/{id}]
-Un bloque en particular con todos sus detalles
-
-+ Parameters
-    + id (required, number, `1`) ... `id` numérico del Bloque. Tiene un valor de ejemplo.
-
-### Obtener un Bloque [GET]
-+ Response 200 (application/json)
-
-    + Header
-
-            X-My-Header: The Value
-
-    + Body
-
-            { "id": 1, "nombre": "Sobre el docente", "descripcion": "Aspectos asociados al desempeño del docente", "instrumento": { "id": 1, "nombre": "Consulta de teórico-prácticas" }, "created_at": "2014-07-01 09:00:00",  "updated_at": "2014-07-01 09:00:00" }
-
-### Editar un Bloque [PUT]
-+ Request (application/json)
-
-        { "id": 3, "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento_id": 1 }
-
-+ Response 200 (application/json)
-
-        { "id": 3, "nombre": "Sobre el laboratorio", "descripcion": "Aspectos asociados a las actividades docentes de laboratorio", "instrumento": { "id": 1, "nombre": "Consulta de teórico-prácticas" }, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00" }
-
-
-### Eliminar un Bloques [DELETE]
-+ Response 204
-
-
-
-
-
-
-
-
-
-# Group Preguntas
-Recursos asociados a las **Preguntas** agrupadas en bloques de un instrumento
-
-## Colección de Preguntas de un Bloque [/bloques/{id}/preguntas]
-### Listar todas las Preguntas de un Bloque [GET]
-+ Response 200 (application/json)
-
-        [{
-          "id": 1, "interrogante": "¿Cómo evalúa la asistencia del docente a clases", "descripcion": "Considere la asistencia puntual y regular a las actividades", "bloque_id": 1, "tipo_pregunta": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00"
-        }, {
-          "id": 2, "interrogante": "¿En qué medida se cubrió el contenido planificado", "descripcion": "", "bloque_id": 2, "tipo_pregunta": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:30:00", "updated_at": "2014-07-01 09:00:00"
-        }]
-
-### Crear una Pregunta [POST]
-+ Request (application/json)
-
-        { "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo_pregunta_id": 1 }
-
-+ Response 201 (application/json)
-
-        { "id": 3, "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo_pregunta": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00" }
-
-
-## Preguntas [/preguntas/{id}]
-Una pregunta en particular con todos sus detalles
-
-+ Parameters
-    + id (required, number, `1`) ... `id` numérico de la pregunta. Tiene un valor de ejemplo.
-
-### Obtener una Pregunta [GET]
-+ Response 200 (application/json)
-
-    + Header
-
-            X-My-Header: The Value
-
-    + Body
-
-            { "id": 1, "interrogante": "¿Cómo evalúa la asistencia del docente a clases", "descripcion": "Considere la asistencia puntual y regular a las actividades", bloque: { "id": 1, "nombre": "Sobre el docente", "instrumento": { "id": 1, "nombre": "Consulta de teórico-prácticas" } }, "tipo": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00", "updated_at": "2014-07-01 09:00:00" }
-
-### Editar una Pregunta [PUT]
-+ Request (application/json)
-
-        { "id": 3, "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo_pregunta_id": 1 }
-
-+ Response 200 (application/json)
-
-        { "id": 3, "interrogante": "¿El docente atendió las dudas presentadas de manera oportuna?", "descripcion": "Dio oportunidad para presentar dudas en cada contenido y supo dar respuesta o material para resolverlas", "bloque_id": 1, "tipo": { "id": 1, "nombre": "Selección Simple" }, "created_at": "2014-07-01 09:00:00",  "updated_at": "2014-07-01 09:00:00" }
-
-
-### Eliminar una Pregunta [DELETE]
-+ Response 204
 
 
 
@@ -408,3 +2696,71 @@ Recursos asociados a los **Estudiantes** de Conest
                     }
                 ]
             }
+
+# Group Consultas
+Recursos asociados a las **Consultas** de Conest
+
+## Colección de Consultas [/consultas/{id}/responder]
+### Responder una consulta [POST]
+
++ Parameters
+    + id (required, number, `1`) ... `id` numérico de la consulta. Tiene un valor de ejemplo.
+
++ Request (application/json)
+
+        {
+            "consulta": 
+            {
+                "cedula_estudiante": "18132323", 
+                "respuestas": 
+                [
+                    { "pregunta_id": "1", "valor": "5" },
+                    { "pregunta_id": "2", "valor": "4" },
+                    { "pregunta_id": "3", "valor": "4" },
+                    { "pregunta_id": "4", "valor": "5" },
+                    { "pregunta_id": "5", "valor": "5" },
+                    { "pregunta_id": "6", "valor": "5" },
+                    { "pregunta_id": "7", "valor": "4" },
+                    { "pregunta_id": "8", "valor": "3" },
+                    { "pregunta_id": "9", "valor": "3" },
+                    { "pregunta_id": "10", "valor": "5" },
+                    { "pregunta_id": "11", "valor": "4" },
+                    { "pregunta_id": "12", "valor": "5" },
+                    { "pregunta_id": "13", "valor": "5" },
+                    { "pregunta_id": "14", "valor": "5" },
+                    { "pregunta_id": "15", "valor": "3" },
+                    { "pregunta_id": "16", "valor": "5" },
+                    { "pregunta_id": "17", "valor": "5" },
+                    { "pregunta_id": "18", "valor": "5" },
+                    { "pregunta_id": "19", "valor": "5" },
+                    { "pregunta_id": "20", "valor": "4" },
+                    { "pregunta_id": "21", "valor": "4" },
+                    { "pregunta_id": "22", "valor": "5" },
+                    { "pregunta_id": "23", "valor": "4" },
+                    { "pregunta_id": "24", "valor": "4" },
+                    { "pregunta_id": "25", "valor": "4" },
+                    { "pregunta_id": "26", "valor": "4" },
+                    { "pregunta_id": "27", "valor": "4" },
+                    { "pregunta_id": "28", "valor": "3" },
+                    { "pregunta_id": "29", "valor": "5" },
+                    { "pregunta_id": "30", "valor": "4" },
+                    { "pregunta_id": "31", "valor": "4" },
+                    { "pregunta_id": "32", "valor": "3" },
+                    { "pregunta_id": "33", "valor": "5" }
+                ] 
+            }
+        }
+
++ Response 201 (application/json)
+
+        { "estatus": "OK", "mensaje": "Registrada respuesta a la consulta" }
+
++ Response 304 (application/json)
+
++ Response 503 (application/json)
+
+        { "estatus": "ERROR", "mensaje": "Consulta/Oferta no asociada a estudiante" }
+        
++ Response 503 (application/json)
+
+        { "estatus": "ERROR", "mensaje": "Cédula #{cedula_estudiante} no se encuentra registrada" }
