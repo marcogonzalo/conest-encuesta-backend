@@ -1,4 +1,5 @@
 class Consulta < ActiveRecord::Base
+	has_many :respuestas
 	belongs_to :oferta_academica
 	belongs_to :instrumento
 

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         end
       end
 
+      get '/reportes/:tipo_reporte/materias/:codigo_materia/preguntas/:pregunta_id(.:format)' => 'reportes#controlador', as: 'generar_reporte'
       # Rutas asociadas a elementos de Conest
       resources :periodos_academicos do
         resources :ofertas_periodo

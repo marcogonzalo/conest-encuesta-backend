@@ -30,22 +30,6 @@ module Api
         end
       end
 
-      # POST /consultas
-      # POST /consultas.json
-      def create
-        @consulta = Consulta.new(consulta_params)
-
-        respond_to do |format|
-          if @consulta.save
-            format.html { redirect_to @consulta, notice: 'Consulta was successfully created.' }
-            format.json { render :show, status: :created, location: api_v1_consulta_url(@consulta) }
-          else
-            format.html { render :new }
-            format.json { render json: @consulta.errors, status: :unprocessable_entity }
-          end
-        end
-      end
-
       # PATCH/PUT /consultas/1
       # PATCH/PUT /consultas/1.json
       def update
