@@ -2623,7 +2623,7 @@ Un objeto Instrumento en particular con todos sus detalles
 Recursos asociados a los **Estudiantes** de Conest
 
 ## Colección de Consultas sin Responder [/estudiantes/{id}/consultas_sin_responder]
-### Listar las ofertas académicas a las que el estudiante no ha respondido la consulta <V1> [GET]
+### Listar las ofertas académicas a las que el estudiante no ha respondido la consulta [GET]
 
 + Parameters
     + id (required, number, `1`) ... `id` numérico del estudiante. Tiene un valor de ejemplo.
@@ -2764,3 +2764,72 @@ Recursos asociados a las **Consultas** de Conest
 + Response 503 (application/json)
 
         { "estatus": "ERROR", "mensaje": "Cédula #{cedula_estudiante} no se encuentra registrada" }
+        
+        
+        
+
+
+# Group Resultados
+Recursos asociados a los **Resultados** de las Consultas
+
+## Colección de Resultados [/resultados/{tipo_resultado}/materias/{codigo_materia}/preguntas/{pregunta_id}{format}]
+### Devolver los resultados totalizados de una pregunta agrupados por período y valor [GET]
+
++ Parameters
+    + tipo_resultado (required, text, `sencillo`) ... `tipo_resultado` texto del tipo de resultado. Tiene un valor de ejemplo.
+    + codigo_materia (required, number, `6104`) ... `codigo` numérico de la asignatura. Tiene un valor de ejemplo.
+    + pregunta_id (required, number, `1`) ... `id` numérico de la pregunta. Tiene un valor de ejemplo.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "pregunta": {
+                    "id": 1,
+                    "interrogante": "La densidad de contenidos es asimilable en un trimestre"
+                },
+                "periodos": [
+                    { 
+                        "periodo": "01-2014",
+                        "secciones": [
+                            {
+                                "seccion":"C1",
+                                "datos": {
+                                    "total_estudiantes": 25,
+                                    "total_respuestas": 2
+                                },
+                                "totalizacion": [
+                                    { "valor": "4", "total": 1 },
+                                    { "valor": "5", "total": 1 }
+                                ]
+                            },
+                            {
+                                "seccion": "C2",
+                                "datos": {
+                                    "total_estudiantes": 18,
+                                    "total_respuestas": 3
+                                },
+                                "totalizacion": [
+                                    { "valor": "5", "total": 1 }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "periodo": "02-2014",
+                        "secciones": [
+                            {
+                                "seccion": "C1",
+                                "datos": {
+                                    "total_estudiantes": 25,
+                                    "total_respuestas": 1
+                                },
+                                "totalizacion": [
+                                    { "valor": "4", "total": 1 }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
