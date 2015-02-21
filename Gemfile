@@ -9,10 +9,13 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Simple HTTP and REST client for Ruby, inspired by microframework syntax for specifying actions. Read more: https://github.com/rest-client/rest-client
+# Para conexion con API de Conest
 gem 'rest-client'
 # Create seeds for each environment, share seeds between environments and specify dependencies to load your seeds in order. Read more: https://github.com/james2m/seedbank
-gem "seedbank"
-
+gem 'seedbank'
+# Prawn is a fast, tiny, and nimble PDF generator for Ruby. Read more: https://github.com/prawnpdf/prawn
+gem 'prawn', '~> 1.3.0'
+gem 'prawn-table', '~> 0.2'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
