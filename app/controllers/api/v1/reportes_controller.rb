@@ -26,32 +26,48 @@ module Api
 		    			if @pregunta.bloques.find_by(tipo: 'D').nil?
 		    			# Si es una pregunta sobre la materia
 		    				puts "De la materia"
+
+		    				# Se obtienen las respuestas y se totalizan agrupadas por período y valor de respuesta
 		    				respuestas = Respuesta.includes(consulta: { oferta_academica: { oferta_periodo: [:periodo_academico, :materia] } })
 		    																.where(materias: { codigo: @materia.codigo }, respuestas: { pregunta_id: @pregunta.id	})
 		    																.references(:materias)
-		    																.group("periodos_academicos.periodo", "respuestas.valor")
+		    																.group("periodos_academicos.periodo", "oferta_academica.nombre_seccion", "respuestas.valor")
 		    																.order('count_id ASC')
 		    																.count
 		    				puts respuestas.inspect
 		    				aux_periodo = 0
-		    				@resultados = respuestas.each_with_object({}) do |((periodo, valor), total), r|
+		    				total_respuestas = 0
+								# Para cada resultado {[periodo, seccion, valor] => total} de la materia
+		    				@resultados = respuestas.each_with_object({}) do |((periodo, seccion, valor), total), r|
+		    					puts "periodo"+periodo
+		    					puts "seccion"+seccion
+		    					puts "valor"+valor.to_s
+		    					puts "total"+total.to_s
 								  if aux_periodo != periodo
 									  total_respuestas = 0
-									  aux_periodo = periodo
 									  r[periodo] ||= {}
-									  r[periodo]["totalizacion"] ||= {}
-									  r[periodo]["datos"] ||= {}
-									  r[periodo]["datos"]["total_estudiantes"] = OfertaAcademica.includes(oferta_periodo: [:periodo_academico, :materia])
-																						    																.where(materias: { codigo: @materia.codigo }, periodos_academicos: { periodo: periodo})
-																						    																.references(:materias)
-																						    																.sum("nro_estudiantes")
+									  aux_periodo = periodo
+				    				aux_seccion = 0
 									end
 
+									if aux_seccion != seccion
+										r[periodo][seccion] ||= {}
+									  r[periodo][seccion]["datos"] ||= {}
+									  r[periodo][seccion]["totalizacion"] ||= {}
 
-								  r[periodo]["totalizacion"][valor] = total
+									  # Se obtiene el total de estudiantes de esa sección en ese período
+									  oferta_academica = OfertaAcademica.includes(oferta_periodo: [:periodo_academico, :materia])
+																						    																.where(oferta_academica: { nombre_seccion: seccion},
+																						    																				materias: { codigo: @materia.codigo }, 
+																						    																				periodos_academicos: { periodo: periodo})
+																						    																.references(:materias).first
+									  r[periodo][seccion]["datos"]["total_estudiantes"] = oferta_academica.nro_estudiantes
+										aux_seccion = seccion
+									end
+								  r[periodo][seccion]["totalizacion"][valor] = total
 
 								  total_respuestas = total_respuestas + total
-								  r[periodo]["datos"]["total_respuestas"] = total_respuestas
+								  r[periodo][seccion]["datos"]["total_respuestas"] = total_respuestas
 								end
 
 								puts @resultados.inspect
@@ -61,6 +77,11 @@ module Api
 		    				puts "De la sección o el docente"
 		    			end
 		    		end
+
+		    		Prawn::Document.generate("hello.pdf") do
+						  text "Hello World!"
+						end
+
 	    			#puts @pregunta.attributes
 	    			respond_to do |format|
 		          if error.nil?
