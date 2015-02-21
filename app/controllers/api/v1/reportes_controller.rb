@@ -12,7 +12,7 @@ module Api
     		end
     	end
 
-			protected
+		protected
     		def reporte_sencillo
     			error = nil
     			@pregunta = Pregunta.find(params[:pregunta_id])
@@ -77,10 +77,6 @@ module Api
 		    				puts "De la sección o el docente"
 		    			end
 		    		end
-
-		    		Prawn::Document.generate("hello.pdf") do
-						  text "Hello World!"
-						end
 
 	    			#puts @pregunta.attributes
 	    			respond_to do |format|
