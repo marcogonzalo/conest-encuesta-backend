@@ -2783,51 +2783,53 @@ Recursos asociados a los **Resultados** de las Consultas
 + Response 200 (application/json)
 
     + Body
-            
+
             {
                 "pregunta": {
                     "id": 1,
                     "interrogante": "La densidad de contenidos es asimilable en un trimestre"
                 },
                 "periodos": [
-                    {
+                    { 
                         "periodo": "01-2014",
-                        "totalizacion": [
+                        "secciones": [
                             {
-                                "valor": "4",
-                                "total": 1
+                                "seccion":"C1",
+                                "datos": {
+                                    "total_estudiantes": 25,
+                                    "total_respuestas": 2
+                                },
+                                "totalizacion": [
+                                    { "valor": "4", "total": 1 },
+                                    { "valor": "5", "total": 1 }
+                                ]
                             },
                             {
-                                "valor": "5",
-                                "total": 2
-                            }
-                        ],
-                        "datos": [
-                            {
-                                "total_estudiantes": 43
-                            },
-                            {
-                                "total_respuestas": 2
+                                "seccion": "C2",
+                                "datos": {
+                                    "total_estudiantes": 18,
+                                    "total_respuestas": 3
+                                },
+                                "totalizacion": [
+                                    { "valor": "5", "total": 1 }
+                                ]
                             }
                         ]
                     },
                     {
                         "periodo": "02-2014",
-                        "totalizacion": [
+                        "secciones": [
                             {
-                                "valor": "4",
-                                "total": 1
-                            }
-                        ],
-                        "datos": [
-                            {
-                                "total_estudiantes": 43
-                            },
-                            {
-                                "total_respuestas": 1
+                                "seccion": "C1",
+                                "datos": {
+                                    "total_estudiantes": 25,
+                                    "total_respuestas": 1
+                                },
+                                "totalizacion": [
+                                    { "valor": "4", "total": 1 }
+                                ]
                             }
                         ]
                     }
                 ]
             }
-            
