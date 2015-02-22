@@ -38,7 +38,7 @@ module Api
 						aux_periodo = ""
 						aux_seccion = ""
 						total_respuestas = 0
-						opciones = @pregunta.opciones
+						@opciones = @pregunta.opciones.order(:valor)
 							# Para cada resultado {[periodo, seccion, valor] => total} de la materia
 						@resultados = respuestas.each_with_object({}) do |((periodo, seccion, valor), total), r|
 							if aux_periodo != periodo
@@ -52,7 +52,7 @@ module Api
 								r[periodo][seccion] ||= {}
 								r[periodo][seccion]["datos"] ||= {}
 								r[periodo][seccion]["totalizacion"] ||= {}
-								opciones.each do |o|
+								@opciones.each do |o|
 									r[periodo][seccion]["totalizacion"][o.valor] = 0
 								end
 
@@ -82,7 +82,7 @@ module Api
 			        if error.nil?
 						format.json { render :reporte_sencillo, status: :ok }
 						format.pdf do
-							pdf = ReporteSencilloPdf.new(@materia,@pregunta,@resultados) #Prawn::Document.new
+							pdf = ReporteSencilloPdf.new(@materia,@pregunta,@opciones,@resultados) #Prawn::Document.new
 							send_data pdf.render, filename: 'reporte-consulta.pdf'
 						end
 					elsif error == :no_materia	

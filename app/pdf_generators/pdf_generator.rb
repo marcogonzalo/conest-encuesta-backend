@@ -8,37 +8,53 @@ class PdfGenerator < Prawn::Document
 	def initialize(default_prawn_options={})
 		super(default_prawn_options)
 		font_size 10
+		define_grid(columns: 12, rows: 20, gutter: 10)
 	end
 
 	def header
-		y_position = cursor
-		image "#{Rails.root}/public/logo_ucv.jpg", height: 50, :at => [0, y_position]
-		image "#{Rails.root}/public/logociens.jpg", height: 50, :at => [bounds.right-50, y_position]
-		text "UNIVERSIDAD CENTRAL DE VENEZUELA", size: 16, style: :bold, align: :center
-		text "FACULTAD DE CIENCIAS", size: 16, style: :bold, align: :center
-		text "DIVISIÓN DE CONTROL DE ESTUDIOS", size: 16, style: :bold, align: :center
-		hr
+		grid([0,0],[1,11]).bounding_box do
+			image "#{Rails.root}/public/logo_ucv.jpg", height: 50, :at => [bounds.left, bounds.top]
+			image "#{Rails.root}/public/logociens.jpg", height: 50, :at => [bounds.right-50, bounds.top]
+			text "UNIVERSIDAD CENTRAL DE VENEZUELA", size: 16, style: :bold, align: :center
+			text "FACULTAD DE CIENCIAS", size: 16, style: :bold, align: :center
+			text "DIVISIÓN DE CONTROL DE ESTUDIOS", size: 16, style: :bold, align: :center
+			hr
+			move_down 10
+		end
 	end
 
 	def footer
-		# The cursor for inserting content starts on the top left of the page. Here we move it down a little to create more space between the text and the image inserted above
-		# y_position = cursor - 50
-
-		# The bounding_box takes the x and y coordinates for positioning its content and some options to style it
-		bounding_box([bounds.left, bounds.bottom], :width => bounds.right-bounds.left, :height => 100) do
-		# 	text "Duis vel", size: 15, style: :bold
-		# 	text "Duis vel tortor elementum, ultrices tortor vel, accumsan dui. Nullam in dolor rutrum, gravida turpis eu, vestibulum lectus. Pellentesque aliquet dignissim justo ut fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut venenatis massa non eros venenatis aliquet. Suspendisse potenti. Mauris sed tincidunt mauris, et vulputate risus. Aliquam eget nibh at erat dignissim aliquam non et risus. Fusce mattis neque id diam pulvinar, fermentum luctus enim porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+		bounding_box([bounds.left, bounds.bottom], :width => bounds.width, :height => 100) do
 			hr
+			y_position = cursor
+			opciones_fecha = {
+				:at => [bounds.left,y_position],
+				:width => 150,
+				:align => :left,
+				:page_filter => :all,
+				:size => 8
+			}
+			number_pages "Fecha #{Time.now.to_s}", opciones_fecha
+
+			string = "página <page> de <total>"
+			opciones_paginacion = {
+				:at => [bounds.right-150,y_position],
+				:width => 150,
+				:align => :right,
+				:page_filter => :all,
+				:size => 8
+			}
+			number_pages string, opciones_paginacion
 		end
 	end
 
 	def hr
 		stroke_color AZUL_CIENCIAS
 		stroke do
-			move_down 10
+			move_down 5
 			horizontal_rule
-			move_down 10
 			self.line_width = 2
+			move_down 5
 		end
 	end
 end
