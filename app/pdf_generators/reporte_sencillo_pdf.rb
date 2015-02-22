@@ -1,4 +1,4 @@
-class ReporteSencilloPdfGenerator < Prawn::Document
+class ReporteSencilloPdf < PdfGenerator
 	def initialize(materia,pregunta,resultados)
 		super()
 		@materia = materia
@@ -7,19 +7,17 @@ class ReporteSencilloPdfGenerator < Prawn::Document
 		header
 		text_content
 		table_content
+		footer
 	end
 
-	def header
-		#This inserts an image in the pdf file and sets the size of the image
-		image "#{Rails.root}/app/assets/images/logo_conest.png" #, width: 530, height: 150
-	end
-
+	protected
 	def text_content
 		# The cursor for inserting content starts on the top left of the page. Here we move it down a little to create more space between the text and the image inserted above
 		# y_position = cursor - 50
 
-		text @pregunta.interrogante, size: 15, style: :bold
-		
+		move_down 50
+		text @pregunta.interrogante, size: 15, style: :bold, align: :center
+		hr
 		# The bounding_box takes the x and y coordinates for positioning its content and some options to style it
 		# bounding_box([300, y_position], :width => 270, :height => 300) do
 		# 	text "Duis vel", size: 15, style: :bold
@@ -33,14 +31,17 @@ class ReporteSencilloPdfGenerator < Prawn::Document
 		# Then I set the table column widths
 		table result_rows do
 			self.header = true
-			row(0).font_style = :bold
-			self.row_colors = ['EEEEEE', 'FFFFFF']
+			self.row_colors = TABLE_ROW_COLORS
+			self.cell_style = {align: :center, size: 10}
+			self.position = :center
 			# self.column_widths = [40, 300, 200]
+			row(0).font_style = :bold
 		end
 	end
 
 	def result_rows
-		data = [['#', 'Período', 'Sección', "Código","1","2","3","4","5","Participantes","Total Estudiantes"]]
+		data = [['#', 'Período', 'Sección', "Código","1","2","3","4","5","Respuestas","Inscritos","Participación"]]
+		i = 0
 		@resultados.map do |periodo,secciones|
 			secciones.each do |s,info|
 				valores = {"1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0}
@@ -52,8 +53,8 @@ class ReporteSencilloPdfGenerator < Prawn::Document
 				info['datos'].each do |clave, valor|
 					datos[clave] = valor
 				end
-
-				data = data + [['#',periodo,s,@materia.codigo,valores["1"],valores["2"],valores["3"],valores["4"],valores["5"],datos["total_respuestas"],datos["total_estudiantes"]]]
+				participacion = (datos["total_respuestas"].to_f/datos["total_estudiantes"].to_f).round(2)
+				data += [[i+=1,periodo,s,@materia.codigo,valores["1"],valores["2"],valores["3"],valores["4"],valores["5"],datos["total_respuestas"],datos["total_estudiantes"],participacion]]
 			end
 		end
 		return data
