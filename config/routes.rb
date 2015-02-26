@@ -8,7 +8,11 @@ Rails.application.routes.draw do
         end
       end
 
-      get '/reportes/:tipo_reporte/materias/:codigo_materia/preguntas/:pregunta_id(.:format)' => 'reportes#controlador', as: 'generar_reporte'
+      scope '/reportes/:tipo_reporte' do
+        get '/materias/:codigo_materia/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_sencillo', as: 'generar_reporte_sencillo', constraints: { tipo_reporte: /sencillo/ }
+        get '/materias/:codigo_materia/periodos/:periodo/secciones/:nombre_seccion(.:format)' => 'reportes#reporte_completo', as: 'generar_reporte_completo', constraints: { tipo_reporte: /completo/ }
+        get '/materias/:codigo_materia/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico', as: 'generar_reporte_historico', constraints: { tipo_reporte: /historico/ }
+      end
       # Rutas asociadas a elementos de Conest
       resources :periodos_academicos do
         resources :ofertas_periodo
