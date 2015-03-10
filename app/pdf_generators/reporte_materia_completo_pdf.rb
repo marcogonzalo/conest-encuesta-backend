@@ -1,9 +1,10 @@
-class ReporteHistoricoPdf < PdfGenerator
-	def initialize(materia,instrumento,resultados)
+class ReporteMateriaCompletoPdf < PdfGenerator
+	def initialize(materia,instrumento,resultados,titulo = nil)
 		super()
 		@materia = materia
 		@instrumento = instrumento
 		@resultados = resultados
+		@titulo = titulo
 		content
 		repeat (:all) do
 			header
@@ -15,7 +16,10 @@ class ReporteHistoricoPdf < PdfGenerator
 		grid([2,0],[19,11]).bounding_box do
 			text @materia.nombre, size: 15, style: :bold, align: :center
 			text @instrumento.nombre, size: 15, style: :bold, align: :center
+			text(@titulo, size: 15, style: :bold, align: :center) unless @titulo.nil?
 			@instrumento.bloques.each do |b|
+				puts b.inspect
+				puts b.preguntas.inspect
 				if b.preguntas.size > 0
 					move_down 25
 					text b.nombre, size: 15, style: :bold, align: :center
@@ -24,7 +28,7 @@ class ReporteHistoricoPdf < PdfGenerator
 						if @resultados[p.id]
 							tabla_de_datos(p.opciones,@resultados[p.id])
 						else
-							text "No se registraron respuestas para esta pregunta", align: :center
+							text "No se registraron respuestas para esta pregunta", size: 12, style: :normal, align: :center
 						end
 					end
 				end

@@ -1,0 +1,32 @@
+<% headers = ['Período', 'Sección', "Código"]
+	@pregunta.opciones.each do |o|
+		headers.push(o.valor)
+	end
+	headers += ["Respuestas", "Inscritos", "Participación"] 
+%>
+<%= CSV.generate_line headers %>
+<% @resultados.each do |k,resultado|
+		resultado.each do |periodo,secciones|
+			secciones.each do |s,info|
+				valores = {}
+				info['totalizacion'].each do |valor, total|
+					valores[valor] = total
+				end
+
+				datos = {}
+				info['datos'].each do |clave, valor|
+					datos[clave] = valor
+				end
+				participacion = (datos["total_respuestas"].to_f/datos["total_estudiantes"].to_f).round(2)
+				arreglo_valores = [periodo,s,@materia.codigo]
+				@pregunta.opciones.each do |o|
+					arreglo_valores.push(valores[o.valor])
+				end
+				arreglo_valores += [datos["total_respuestas"],datos["total_estudiantes"],participacion]
+%>
+<%=		 		CSV.generate_line(arreglo_valores) %>
+<%
+			end
+		end
+	end
+%>

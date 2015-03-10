@@ -6,7 +6,7 @@ json.materia do
 	json.extract! @materia, :codigo, :nombre
 end
 
-json.periodos @resultados do |periodo,secciones|
+json.periodos @resultados do |k,periodo,secciones|
 	json.periodo periodo
 	json.secciones secciones do |s,info|
 		json.seccion s

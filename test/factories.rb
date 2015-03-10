@@ -1,4 +1,7 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :reporte do
+    
+  end
+
   factory :bloque do
     nombre "cualquiera"
     tipo { Bloque::TIPO.keys[Forgery(:basic).number(at_least: 0, at_most: Bloque::TIPO.keys.size-1)] }

@@ -9,10 +9,23 @@ Rails.application.routes.draw do
       end
 
       scope '/reportes/:tipo_reporte' do
-        get '/materias/:codigo_materia/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_sencillo', as: 'generar_reporte_sencillo', constraints: { tipo_reporte: /sencillo/ }
-        get '/materias/:codigo_materia/periodos/:periodo/secciones/:nombre_seccion(.:format)' => 'reportes#reporte_completo', as: 'generar_reporte_completo', constraints: { tipo_reporte: /completo/ }
-        get '/materias/:codigo_materia/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico', as: 'generar_reporte_historico', constraints: { tipo_reporte: /historico/ }
+        # Reportes por materia
+        scope '/materias/:codigo_materia' do
+          # Reportes historicos
+          get '/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_historico_materia_pregunta', as: 'generar_reporte_historico_materia_pregunta', constraints: { tipo_reporte: /historico_pregunta/ }
+          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_materia_completo', as: 'generar_reporte_historico_materia_completo', constraints: { tipo_reporte: /historico_completo/ }
+          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_materia_comparado', as: 'generar_reporte_historico_materia_comparado', constraints: { tipo_reporte: /historico_comparado/ }
+
+          # Reportes de periodo
+          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_completo', as: 'generar_reporte_periodo_completo', constraints: { tipo_reporte: /periodo_completo/ }
+          # get '/periodos/:periodo/secciones/:nombre_seccion(.:format)' => 'reportes#reporte_instrumento_periodo', as: 'generar_reporte_instrumento_periodo', constraints: { tipo_reporte: /instrumento/ }
+        end
+
+        # Reportes por materia
+        scope '/docentes/:cedula_docente' do
+        end
       end
+      
       # Rutas asociadas a elementos de Conest
       resources :periodos_academicos do
         resources :ofertas_periodo
