@@ -1,3 +1,7 @@
+unless @periodo_academico.nil?
+	json.periodo @periodo_academico.periodo
+end
+
 json.materia do
 	json.extract! @materia, :codigo, :nombre
 end

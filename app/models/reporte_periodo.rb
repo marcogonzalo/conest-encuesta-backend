@@ -1,12 +1,9 @@
 class ReportePeriodo
-	def self.materia_periodo(oferta_periodo,instrumento)
+	def self.materia_periodo(oferta_periodo,preguntas)
 		resultados ||= {}
-	
-		instrumento.bloques.each do |bloque|
-			bloque.preguntas.each do |pregunta|
-				resultados[pregunta.id] = {}
-				resultados[pregunta.id] = ReportePeriodo.resultados_pregunta_materia(pregunta,oferta_periodo)
-			end
+		preguntas.each do |pregunta|
+			resultados[pregunta.id] = {}
+			resultados[pregunta.id] = ReportePeriodo.resultados_pregunta_materia(pregunta,oferta_periodo)
 		end
 		return resultados
 	end

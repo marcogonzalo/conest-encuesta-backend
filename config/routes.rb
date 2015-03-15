@@ -17,8 +17,8 @@ Rails.application.routes.draw do
           get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_materia_comparado', as: 'generar_reporte_historico_materia_comparado', constraints: { tipo_reporte: /historico_comparado/ }
 
           # Reportes de periodo
-          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_completo', as: 'generar_reporte_periodo_completo', constraints: { tipo_reporte: /periodo_completo/ }
-          # get '/periodos/:periodo/secciones/:nombre_seccion(.:format)' => 'reportes#reporte_instrumento_periodo', as: 'generar_reporte_instrumento_periodo', constraints: { tipo_reporte: /instrumento/ }
+          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_materia_completo', as: 'generar_reporte_periodo_materia_completo', constraints: { tipo_reporte: /periodo_completo/ }
+          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_materia_comparado', as: 'generar_reporte_periodo_materia_comparado', constraints: { tipo_reporte: /periodo_comparado/ }
         end
 
         # Reportes por materia

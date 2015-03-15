@@ -19,4 +19,14 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     get :reporte_historico_materia_comparado, tipo_reporte: 'historico_comparado', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, instrumento_id: @respuesta.consulta.instrumento_id, ids: [@respuesta.pregunta_id], format: :json
     assert_response :success
   end
+
+  test "debería mostrarme un reporte del período según un instrumento en json" do
+    get :reporte_periodo_materia_completo, tipo_reporte: 'periodo_completo', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
+    assert_response :success
+  end
+
+  test "debería mostrarme un reporte comparado del período entre preguntas de un instrumento en json" do
+    get :reporte_periodo_materia_comparado, tipo_reporte: 'periodo_comparado', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, ids: [@respuesta.pregunta_id], format: :json
+    assert_response :success
+  end
 end
