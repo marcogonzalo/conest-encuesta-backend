@@ -1,10 +1,14 @@
-FactoryGirl.define do  factory :reporte do
-    
+FactoryGirl.define do  
+  factory :instrumento do
+    nombre "cualquiera"
   end
 
   factory :bloque do
     nombre "cualquiera"
     tipo { Bloque::TIPO.keys[Forgery(:basic).number(at_least: 0, at_most: Bloque::TIPO.keys.size-1)] }
+    factory :bloque_en_instrumentos do
+      after(:create) {|bloque| bloque.instrumentos = [create(:instrumento)]}
+    end
   end
 
   factory :carrera do
@@ -52,10 +56,6 @@ FactoryGirl.define do  factory :reporte do
     end
   end
 
-  factory :instrumento do
-    nombre "cualquiera"
-  end
-
   factory :materia do
     codigo { Forgery('basic').text(exactly: 6) }
     plan_nombre "Plan de Materia"
@@ -94,6 +94,10 @@ FactoryGirl.define do  factory :reporte do
     association :tipo_pregunta
     interrogante "interrogante" 
     descripcion "descripción"
+
+    factory :pregunta_en_bloques do
+      after(:create) {|pregunta| pregunta.bloques = [create(:bloque_en_instrumentos)]}
+    end
   end
 
   factory :respuesta do

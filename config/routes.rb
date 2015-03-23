@@ -12,13 +12,13 @@ Rails.application.routes.draw do
         # Reportes por materia
         scope '/materias/:codigo_materia' do
           # Reportes historicos
-          get '/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_historico_materia_pregunta', as: 'generar_reporte_historico_materia_pregunta', constraints: { tipo_reporte: /historico_pregunta/ }
-          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_materia_completo', as: 'generar_reporte_historico_materia_completo', constraints: { tipo_reporte: /historico_completo/ }
-          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_materia_comparado', as: 'generar_reporte_historico_materia_comparado', constraints: { tipo_reporte: /historico_comparado/ }
+          get '/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_historico_pregunta_de_materia', as: 'generar_reporte_historico_pregunta_de_materia', constraints: { tipo_reporte: /historico_pregunta/ }
+          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_completo_de_materia', as: 'generar_reporte_historico_completo_de_materia', constraints: { tipo_reporte: /historico_completo/ }
+          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_comparado_de_materia', as: 'generar_reporte_historico_comparado_de_materia', constraints: { tipo_reporte: /historico_comparado/ }
 
           # Reportes de periodo
-          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_materia_completo', as: 'generar_reporte_periodo_materia_completo', constraints: { tipo_reporte: /periodo_completo/ }
-          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_materia_comparado', as: 'generar_reporte_periodo_materia_comparado', constraints: { tipo_reporte: /periodo_comparado/ }
+          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_completo_de_materia', as: 'generar_reporte_periodo_completo_de_materia', constraints: { tipo_reporte: /periodo_completo/ }
+          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_comparado_de_materia', as: 'generar_reporte_periodo_comparado_de_materia', constraints: { tipo_reporte: /periodo_comparado/ }
         end
 
         # Reportes por materia
