@@ -141,7 +141,7 @@ module Api
 					preguntas_ids = params[:ids]
 					@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
 					if @periodo_academico.nil?
-						@error = :no_instrumento
+						@error = :no_periodo
 					else
 						@materia = Materia.find_by(codigo: params[:codigo_materia])
 						if @materia.nil?
@@ -159,14 +159,19 @@ module Api
 						end
 					end
 				end
+			rescue ActiveRecord::RecordNotFound
+				@error = :no_instrumento
+		    ensure
 				if @error.nil?
 					respond_to do |format|
 						format.json { render :reporte_materia_periodo_comparado, status: :ok }
 					end
 				elsif @error == :no_materia	
-					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :ok
-				elsif @error == :no_instrumento	
-					render json: { estatus: "ERROR", mensaje: "El instrumento no existe" }, status: :ok
+					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
+				elsif @error == :no_periodo
+					render json: { estatus: "ERROR", mensaje: "El período no existe" }, status: :not_found
+				elsif @error == :no_oferta_periodo
+					render json: { estatus: "ERROR", mensaje: "El la oferta académica no existe en el período" }, status: :not_found
 				end
 			end
 
@@ -175,7 +180,7 @@ module Api
 				@error = nil
 				@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
 				if @periodo_academico.nil?
-					@error = :no_instrumento
+					@error = :no_periodo
 				else
 					@materia = Materia.find_by(codigo: params[:codigo_materia])
 					if @materia.nil?
@@ -197,6 +202,9 @@ module Api
 						end
 					end
 				end
+			rescue ActiveRecord::RecordNotFound
+				@error = :no_periodo
+		    ensure
 				if @error.nil?
 					respond_to do |format|
 						format.json { render :reporte_materia_completo, status: :ok }
@@ -206,9 +214,9 @@ module Api
 						end
 					end
 				elsif @error == :no_materia	
-					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :ok
-				elsif @error == :no_instrumento	
-					render json: { estatus: "ERROR", mensaje: "El instrumento no existe" }, status: :ok
+					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
+				elsif @error == :no_periodo
+					render json: { estatus: "ERROR", mensaje: "El período no existe" }, status: :not_found
 				end
 			end
 		end

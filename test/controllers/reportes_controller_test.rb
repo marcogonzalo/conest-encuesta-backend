@@ -64,8 +64,28 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "no debería mostrarme un reporte comparado según un instrumento si la materia no existe" do
+    get :reporte_periodo_comparado_de_materia, tipo_reporte: 'periodo_comparado', codigo_materia: 0000, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, ids: [@respuesta.pregunta_id], format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte comparado según un instrumento si el periodo no existe" do
+    get :reporte_periodo_comparado_de_materia, tipo_reporte: 'periodo_comparado', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: "01-2000", ids: [@respuesta.pregunta_id], format: :json
+    assert_response :not_found
+  end
+
   test "debería mostrarme un reporte del período según un instrumento en json" do
     get :reporte_periodo_completo_de_materia, tipo_reporte: 'periodo_completo', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
     assert_response :success
+  end
+
+  test "no debería mostrarme un reporte del período según un instrumento en json si el código de la materia es incorrecto" do
+    get :reporte_periodo_completo_de_materia, tipo_reporte: 'periodo_completo', codigo_materia: 0000, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte del período según un instrumento en json si el período es incorrecto" do
+    get :reporte_periodo_completo_de_materia, tipo_reporte: 'periodo_completo', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: "01-2000", format: :json
+    assert_response :not_found
   end
 end
