@@ -81,7 +81,7 @@ FactoryGirl.define do
   factory :opcion do
     association :pregunta
     etiqueta { Forgery('basic').text(at_least: 2, at_most: 15) }
-    valor { Forgery('basic').text(exactly: 2) }
+    valor { Forgery('basic').number(at_least: 0) }
   end
 
   factory :periodo_academico do

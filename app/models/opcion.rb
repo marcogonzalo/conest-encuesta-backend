@@ -6,7 +6,7 @@ class Opcion < ActiveRecord::Base
 				presence: true
 
 	validates :valor,
-				length: { maximum: 20 },
+				numericality: true,
 				presence: true
 
 	validates :pregunta_id,

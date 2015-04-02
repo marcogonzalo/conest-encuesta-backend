@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212020403) do
+ActiveRecord::Schema.define(version: 20150402032208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20150212020403) do
   create_table "bloques", force: :cascade do |t|
     t.string   "nombre",      limit: 100, null: false
     t.string   "descripcion", limit: 255
-    t.string   "tipo",        limit: 4,   null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "tipo"
   end
 
   create_table "bloques_instrumentos", id: false, force: :cascade do |t|
@@ -138,10 +138,10 @@ ActiveRecord::Schema.define(version: 20150212020403) do
 
   create_table "opciones", force: :cascade do |t|
     t.string   "etiqueta",    limit: 100, null: false
-    t.string   "valor",       limit: 20,  null: false
     t.integer  "pregunta_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "valor"
   end
 
   add_index "opciones", ["pregunta_id"], name: "index_opciones_on_pregunta_id", using: :btree
@@ -170,9 +170,9 @@ ActiveRecord::Schema.define(version: 20150212020403) do
   create_table "respuestas", force: :cascade do |t|
     t.integer  "consulta_id"
     t.integer  "pregunta_id"
-    t.string   "valor",       limit: 45, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "valor"
   end
 
   add_index "respuestas", ["consulta_id"], name: "index_respuestas_on_consulta_id", using: :btree

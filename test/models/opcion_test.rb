@@ -27,7 +27,7 @@ class OpcionTest < ActiveSupport::TestCase
 	end
 
 	test "debería guardar una opción válida" do
-		opcion = Opcion.new(pregunta: @pregunta, etiqueta: "Etiqueta", valor: "Valor")
+		opcion = Opcion.new(pregunta: @pregunta, etiqueta: "Etiqueta", valor: 213)
 		assert opcion.save, "No guardó una opción válida #{opcion.errors.inspect}"
 	end
 end
