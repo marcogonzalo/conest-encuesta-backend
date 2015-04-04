@@ -1,9 +1,8 @@
-json.docente do |json|
-	json.extract! @docente, :cedula
-	json.nombre_completo @docente.nombre_completo
+json.docente do
+	json.extract! @docente, :cedula, :nombre_completo
 end
 
-json.pregunta do |json|
+json.pregunta do
 	json.extract! @pregunta, :id, :interrogante
 end
 
