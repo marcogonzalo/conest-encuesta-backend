@@ -5,6 +5,12 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     @respuesta = FactoryGirl.create(:respuesta)
   end
 
+  # # #
+  #
+  #  Reportes historicos por materia
+  # 
+  # # #
+
   test "debería mostrarme un reporte histórico de una pregunta para una materia en json" do
     get :reporte_historico_pregunta_de_materia, tipo_reporte: 'historico_pregunta', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, pregunta_id: @respuesta.pregunta_id, format: :json
     assert_response :success
@@ -59,6 +65,12 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  # # #
+  #
+  #  Reportes de periodo por materia
+  # 
+  # # #
+
   test "debería mostrarme un reporte comparado del período entre preguntas de un instrumento en json" do
     get :reporte_periodo_comparado_de_materia, tipo_reporte: 'periodo_comparado', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, ids: [@respuesta.pregunta_id], format: :json
     assert_response :success
@@ -88,4 +100,32 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     get :reporte_periodo_completo_de_materia, tipo_reporte: 'periodo_completo', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: "01-2000", format: :json
     assert_response :not_found
   end
+
+  # # #
+  #
+  #  Reportes historicos por docente
+  # 
+  # # #
+
+  test "debería mostrarme un reporte histórico de una pregunta para un docente en json" do
+    get :reporte_historico_pregunta_de_docente, tipo_reporte: 'historico_pregunta', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, pregunta_id: @respuesta.pregunta_id, format: :json
+    assert_response :success
+  end
+
+  test "no debería mostrarme un reporte histórico de una pregunta para un docente si cedula de un docente es incorrecta" do
+    get :reporte_historico_pregunta_de_docente, tipo_reporte: 'historico_pregunta', cedula_docente: 0000, pregunta_id: @respuesta.pregunta_id, format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte histórico de una pregunta para un docente en json si la pregunta no existe" do
+    get :reporte_historico_pregunta_de_docente, tipo_reporte: 'historico_pregunta', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, pregunta_id: 14365468, format: :json
+    assert_response :not_found
+  end
+
+  # # #
+  #
+  #  Reportes de perido por docente
+  # 
+  # # #
+
 end

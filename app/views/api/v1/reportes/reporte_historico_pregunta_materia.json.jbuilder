@@ -1,9 +1,9 @@
-json.pregunta do
-	json.extract! @pregunta, :id, :interrogante
-end
-
 json.materia do
 	json.extract! @materia, :codigo, :nombre
+end
+
+json.pregunta do
+	json.extract! @pregunta, :id, :interrogante
 end
 
 json.periodos @resultados do |k,periodo,secciones|

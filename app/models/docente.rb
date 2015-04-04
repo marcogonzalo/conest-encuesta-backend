@@ -20,4 +20,8 @@ class Docente < ActiveRecord::Base
 
 	validates :segundo_apellido,
 				length: { maximum: 45 }
+
+	def nombre_completo
+		return "#{self.primer_nombre} #{self.primer_apellido}"
+	end
 end

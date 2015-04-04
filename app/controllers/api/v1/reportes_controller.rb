@@ -27,7 +27,7 @@ module Api
 		    ensure
 		        if @error.nil?	
 					respond_to do |format|
-						format.json { render :reporte_historico_pregunta, status: :ok }
+						format.json { render :reporte_historico_pregunta_materia, status: :ok }
 						format.pdf do
 							pdf = ReporteHistoricoPreguntaPdf.new(@materia,@pregunta,@resultados) #Prawn::Document.new
 							send_data pdf.render, filename: 'reporte-consulta.pdf'
@@ -217,6 +217,42 @@ module Api
 					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
 				elsif @error == :no_periodo
 					render json: { estatus: "ERROR", mensaje: "El período no existe" }, status: :not_found
+				end
+			end
+
+
+
+			######
+			# => Reportes Históricos por Docentes
+			######
+
+			# Devuelve todos los resultados históricos para una pregunta en una materia
+			def reporte_historico_pregunta_de_docente
+				@error = nil
+				@docente = Docente.find_by(cedula: params[:cedula_docente])
+				if @docente.nil?
+					@error = :no_docente
+				else
+					@pregunta = Pregunta.find(params[:pregunta_id])
+					if @pregunta.nil?
+						@error = :no_pregunta
+					else
+						@preguntas ||= []
+						@preguntas.push(@pregunta)
+						@resultados = ReporteHistorico.docente_preguntas(@docente,@preguntas)
+					end
+				end
+			rescue ActiveRecord::RecordNotFound
+				@error = :no_pregunta
+		    ensure
+		        if @error.nil?
+					respond_to do |format|
+						format.json { render :reporte_historico_pregunta_docente, status: :ok }
+					end
+				elsif @error == :no_docente	
+					render json: { estatus: "ERROR", mensaje: "La cédula del docente no está registrada" }, status: :not_found
+				elsif @error == :no_pregunta	
+					render json: { estatus: "ERROR", mensaje: "La pregunta no está registrada" }, status: :not_found
 				end
 			end
 		end

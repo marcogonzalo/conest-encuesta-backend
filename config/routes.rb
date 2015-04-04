@@ -23,6 +23,9 @@ Rails.application.routes.draw do
 
         # Reportes por materia
         scope '/docentes/:cedula_docente' do
+          # Reportes historicos
+          get '/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_historico_pregunta_de_docente', as: 'generar_reporte_historico_pregunta_de_docente', constraints: { tipo_reporte: /historico_pregunta/ }
+          
         end
       end
       
