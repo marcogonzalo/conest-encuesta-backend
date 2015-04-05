@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         scope '/docentes/:cedula_docente' do
           # Reportes historicos
           get '/preguntas/:pregunta_id(.:format)' => 'reportes#reporte_historico_pregunta_de_docente', as: 'generar_reporte_historico_pregunta_de_docente', constraints: { tipo_reporte: /historico_pregunta/ }
+          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_completo_de_docente', as: 'generar_reporte_historico_completo_de_docente', constraints: { tipo_reporte: /historico_completo/ }
+          get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_comparado_de_docente', as: 'generar_reporte_historico_comparado_de_docente', constraints: { tipo_reporte: /historico_comparado/ }
           
         end
       end

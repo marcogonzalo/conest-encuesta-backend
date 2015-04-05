@@ -70,7 +70,7 @@ module Api
 		    ensure
 		        if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_historico_comparado, status: :ok }
+						format.json { render :reporte_historico_comparado_materia, status: :ok }
 					end
 				elsif @error == :no_materia	
 					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada." }, status: :not_found
@@ -255,6 +255,85 @@ module Api
 					render json: { estatus: "ERROR", mensaje: "La pregunta no está registrada" }, status: :not_found
 				end
 			end
+
+			# Devuelve todos los resultados de las preguntas especificadas de un instrumento para un docente
+			def reporte_historico_completo_de_docente
+				@error = nil
+				@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
+				if @instrumento.nil?
+					@error = :no_instrumento
+				else
+					@docente = Docente.find_by(cedula: params[:cedula_docente])
+					if @docente.nil?
+						@error = :no_docente
+					else
+						@preguntas ||= []
+						@instrumento.bloques.each do |bloque|
+							bloque.preguntas.each do |pregunta|
+								@preguntas.push(pregunta)
+							end
+						end
+						if @preguntas.nil? or @preguntas.size == 0
+							@error = :no_preguntas
+						else
+							@resultados = ReporteHistorico.docente_preguntas(@docente,@preguntas)
+						end
+					end
+				end
+			rescue ActiveRecord::RecordNotFound
+				@error = :no_instrumento
+		    ensure
+				if @error.nil?
+					respond_to do |format|
+						format.json { render :reporte_docente_completo, status: :ok }
+					end
+				elsif @error == :no_docente	
+					render json: { estatus: "ERROR", mensaje: "La céduña del docente no está registrada" }, status: :not_found
+				elsif @error == :no_instrumento	
+					render json: { estatus: "ERROR", mensaje: "El instrumento no existe" }, status: :not_found
+				elsif @error == :no_preguntas	
+					render json: { estatus: "ERROR", mensaje: "Ninguna de las preguntas indicadas fue encontrada en el instrumento." }, status: :not_found
+				end
+			end
+			
+			# Devuelve todos los resultados de las preguntas especificadas de un instrumento en una materia
+			def reporte_historico_comparado_de_docente
+				@error = nil
+				if params[:ids].nil? or params[:ids].size == 0
+					@error = :no_parameters
+				else
+					preguntas_ids = params[:ids]
+					@docente = Docente.find_by(cedula: params[:cedula_docente])
+					if @docente.nil?
+						@error = :no_docente
+					else
+						@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
+						@preguntas = @instrumento.preguntas.where(id: preguntas_ids)
+						if @preguntas.nil? or @preguntas.size == 0
+							@error = :no_preguntas
+						else
+							@resultados = ReporteHistorico.docente_preguntas(@docente,@preguntas)
+						end
+					end
+				end
+			rescue ActiveRecord::RecordNotFound
+				@error = :no_instrumento
+		    ensure
+		        if @error.nil?
+					respond_to do |format|
+						format.json { render :reporte_historico_comparado_docente, status: :ok }
+					end
+				elsif @error == :no_docente	
+					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada." }, status: :not_found
+				elsif @error == :no_instrumento
+					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada." }, status: :not_found
+				elsif @error == :no_preguntas	
+					render json: { estatus: "ERROR", mensaje: "Ninguna de las preguntas indicadas fue encontrada en el instrumento." }, status: :not_found
+				elsif @error == :no_parameters	
+					render json: { estatus: "ERROR", mensaje: "No se detectaron parámetros para la comparación." }.to_json, status: :bad_request
+				end
+			end
+
 		end
 	end
 end

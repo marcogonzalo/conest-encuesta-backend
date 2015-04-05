@@ -86,7 +86,7 @@ class ReporteHistorico
 		aux_seccion = ""
 		total_respuestas = 0
 		opciones = pregunta.opciones.order(:valor)
-		
+
 		# Para cada resultado {[periodo, materia, eccion, valor] => total} de la materia
 		resultados = respuestas.each_with_object({}) do |((periodo, materia, seccion, valor), total), r|
 			if aux_periodo != periodo

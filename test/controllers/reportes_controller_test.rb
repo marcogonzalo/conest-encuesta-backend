@@ -122,6 +122,45 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "debería mostrarme un reporte histórico completo para un docente en json" do
+    @docente = FactoryGirl.create(:docente)
+    @pregunta = FactoryGirl.create(:pregunta_en_bloques)
+    get :reporte_historico_completo_de_docente, tipo_reporte: 'historico_completo', cedula_docente: @docente.cedula, instrumento_id: @pregunta.bloques.first.instrumentos.first.id, format: :json
+    assert_response :success
+  end
+
+  test "no debería mostrarme un reporte histórico completo para un docente si cedula de un docente es incorrecta" do
+    get :reporte_historico_completo_de_docente, tipo_reporte: 'historico_completo', cedula_docente: 0000, instrumento_id:  @respuesta.consulta.instrumento_id, format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte histórico completo para un docente en json si la pregunta no existe" do
+    get :reporte_historico_completo_de_docente, tipo_reporte: 'historico_completo', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, instrumento_id: 14365468, format: :json
+    assert_response :not_found
+  end
+
+  test "debería mostrarme un reporte comparado entre preguntas de un instrumento para un docente en json" do
+    @docente = FactoryGirl.create(:docente)
+    @pregunta = FactoryGirl.create(:pregunta_en_bloques)
+    get :reporte_historico_comparado_de_docente, tipo_reporte: 'historico_comparado', cedula_docente: @docente.cedula, instrumento_id: @pregunta.bloques.first.instrumentos.first.id, ids: [@pregunta.id], format: :json
+    assert_response :success
+  end
+
+  test "no debería mostrarme un reporte comparado entre preguntas de un instrumento para un docente si cédula del docente es incorrecta" do
+    get :reporte_historico_comparado_de_docente, tipo_reporte: 'historico_comparado', cedula_docente: 0000, instrumento_id: @respuesta.consulta.instrumento_id, ids: [@respuesta.pregunta_id], format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte comparado entre preguntas para un docente si el instrumento no existe" do
+    get :reporte_historico_comparado_de_docente, tipo_reporte: 'historico_comparado', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, instrumento_id: 321324, ids: [@respuesta.pregunta_id], format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte comparado de un instrumento para un docente si las preguntas no existen" do
+    get :reporte_historico_comparado_de_docente, tipo_reporte: 'historico_comparado', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, instrumento_id: @respuesta.consulta.instrumento_id, ids: [0,2], format: :json
+    assert_response :not_found
+  end
+
   # # #
   #
   #  Reportes de perido por docente
