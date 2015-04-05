@@ -28,6 +28,8 @@ Rails.application.routes.draw do
           get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_completo_de_docente', as: 'generar_reporte_historico_completo_de_docente', constraints: { tipo_reporte: /historico_completo/ }
           get '/instrumentos/:instrumento_id(.:format)' => 'reportes#reporte_historico_comparado_de_docente', as: 'generar_reporte_historico_comparado_de_docente', constraints: { tipo_reporte: /historico_comparado/ }
           
+          # Reportes de periodo
+          get '/periodos/:periodo(.:format)' => 'reportes#reporte_periodo_comparado_de_docente', as: 'generar_reporte_periodo_comparado_de_docente', constraints: { tipo_reporte: /periodo_comparado/ }
         end
       end
       

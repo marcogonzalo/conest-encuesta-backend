@@ -2,8 +2,8 @@ json.docente do
 	json.extract! @docente, :cedula, :nombre_completo
 end
 
-json.instrumento do
-	json.extract! @instrumento, :id, :nombre
+json.periodo_academico do
+	json.extract! @periodo_academico, :id, :periodo
 
 	json.preguntas @preguntas do |p|
 		json.id p.id
@@ -18,8 +18,8 @@ json.instrumento do
 			json.valor o.valor
 		end
 
-		json.resultados @resultados[p.id] do |p,materias|
-			json.periodo p
+		json.resultados @resultados[p.id] do |periodo,materias|
+			json.periodo periodo
 			json.materias materias do |m, secciones|
 				json.materia m
 				json.secciones secciones do |s,info|

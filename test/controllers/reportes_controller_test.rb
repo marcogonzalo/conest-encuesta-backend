@@ -167,4 +167,19 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
   # 
   # # #
 
+  test "debería mostrarme un reporte comparado del período entre preguntas de un instrumento para un docente en json" do
+    get :reporte_periodo_comparado_de_docente, tipo_reporte: 'periodo_comparado', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, ids: [@respuesta.pregunta_id], format: :json
+    assert_response :success
+  end
+
+  test "no debería mostrarme un reporte comparado según un instrumento si el docente no existe" do
+    get :reporte_periodo_comparado_de_docente, tipo_reporte: 'periodo_comparado', cedula_docente: 0000, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, ids: [@respuesta.pregunta_id], format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte comparado según un instrumento para un docente si el periodo no existe" do
+    get :reporte_periodo_comparado_de_docente, tipo_reporte: 'periodo_comparado', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: "01-2000", ids: [@respuesta.pregunta_id], format: :json
+    assert_response :not_found
+  end
+
 end

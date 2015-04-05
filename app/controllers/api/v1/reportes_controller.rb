@@ -227,6 +227,7 @@ module Api
 			######
 
 			# Devuelve todos los resultados históricos para una pregunta en una materia
+			# GET /api/v1/reportes/historico_comparado/docentes/12243532/preguntas/1.json
 			def reporte_historico_pregunta_de_docente
 				@error = nil
 				@docente = Docente.find_by(cedula: params[:cedula_docente])
@@ -257,6 +258,7 @@ module Api
 			end
 
 			# Devuelve todos los resultados de las preguntas especificadas de un instrumento para un docente
+			# GET /api/v1/reportes/historico_comparado/docentes/12243532/instrumentos/1.json
 			def reporte_historico_completo_de_docente
 				@error = nil
 				@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
@@ -297,6 +299,7 @@ module Api
 			end
 			
 			# Devuelve todos los resultados de las preguntas especificadas de un instrumento en una materia
+			# GET /api/v1/reportes/historico_comparado/docentes/12243532/instrumentos/1.json?ids[]=1
 			def reporte_historico_comparado_de_docente
 				@error = nil
 				if params[:ids].nil? or params[:ids].size == 0
@@ -331,6 +334,56 @@ module Api
 					render json: { estatus: "ERROR", mensaje: "Ninguna de las preguntas indicadas fue encontrada en el instrumento." }, status: :not_found
 				elsif @error == :no_parameters	
 					render json: { estatus: "ERROR", mensaje: "No se detectaron parámetros para la comparación." }.to_json, status: :bad_request
+				end
+			end
+
+
+
+			######
+			# => Reportes de Período por Materias
+			######
+
+			# Devuelve los resultados las preguntas especificadas de instrumento aplicado para el período en un docente
+			def reporte_periodo_comparado_de_docente
+				@error = nil
+
+				if params[:ids].nil?
+					@error = :no_parameters
+				else
+					preguntas_ids = params[:ids]
+					@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
+					if @periodo_academico.nil?
+						@error = :no_periodo
+					else
+						@docente = Docente.find_by(cedula: params[:cedula_docente])
+						if @docente.nil?
+							@error = :no_docente
+						else
+							@ofertas_academicas = OfertaAcademica.includes(:consulta, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
+							if @ofertas_academicas.nil?
+								@error = :no_oferta_academica
+								return nil
+							else
+								@instrumento = @ofertas_academicas.first.consulta.instrumento
+								@preguntas = @instrumento.preguntas.where(id: preguntas_ids)
+								@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
+							end
+						end
+					end
+				end
+			rescue ActiveRecord::RecordNotFound
+				@error = :no_instrumento
+		    ensure
+				if @error.nil?
+					respond_to do |format|
+						format.json { render :reporte_docente_periodo_comparado, status: :ok }
+					end
+				elsif @error == :no_docente	
+					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
+				elsif @error == :no_periodo
+					render json: { estatus: "ERROR", mensaje: "El período no existe" }, status: :not_found
+				elsif @error == :no_oferta_academica
+					render json: { estatus: "ERROR", mensaje: "El la oferta académica no existe en el período" }, status: :not_found
 				end
 			end
 
