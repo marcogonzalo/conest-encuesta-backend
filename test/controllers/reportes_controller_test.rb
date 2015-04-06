@@ -181,5 +181,20 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     get :reporte_periodo_comparado_de_docente, tipo_reporte: 'periodo_comparado', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: "01-2000", ids: [@respuesta.pregunta_id], format: :json
     assert_response :not_found
   end
+  
+  test "debería mostrarme un reporte completo del período entre preguntas de un instrumento para un docente en json" do
+    get :reporte_periodo_completo_de_docente, tipo_reporte: 'periodo_completo', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
+    assert_response :success
+  end
+
+  test "no debería mostrarme un reporte completo según un instrumento si el docente no existe" do
+    get :reporte_periodo_completo_de_docente, tipo_reporte: 'periodo_completo', cedula_docente: 0000, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
+    assert_response :not_found
+  end
+
+  test "no debería mostrarme un reporte completo según un instrumento para un docente si el periodo no existe" do
+    get :reporte_periodo_completo_de_docente, tipo_reporte: 'periodo_completo', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: "01-2000", format: :json
+    assert_response :not_found
+  end
 
 end

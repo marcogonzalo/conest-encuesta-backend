@@ -57,7 +57,7 @@ module Api
 						@error = :no_materia
 					else
 						@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
-						@preguntas = @instrumento.preguntas.where(id: preguntas_ids)
+						@preguntas = @instrumento.preguntas.includes(:opciones).where(id: preguntas_ids)
 						if @preguntas.nil? or @preguntas.size == 0
 							@error = :no_preguntas
 						else
@@ -95,8 +95,8 @@ module Api
 						@error = :no_materia
 					else
 						@preguntas ||= []
-						@instrumento.bloques.each do |bloque|
-							bloque.preguntas.each do |pregunta|
+						@instrumento.bloques.includes(:preguntas).each do |bloque|
+							bloque.preguntas.includes(:opciones).each do |pregunta|
 								@preguntas.push(pregunta)
 							end
 						end
@@ -153,7 +153,7 @@ module Api
 								return nil
 							else
 								@instrumento = @oferta_periodo.oferta_academica.first.consulta.instrumento
-								@preguntas = @instrumento.preguntas.where(id: preguntas_ids)
+								@preguntas = @instrumento.preguntas.includes(:opciones).where(id: preguntas_ids)
 								@resultados = ReportePeriodo.materia_periodo(@oferta_periodo,@preguntas)
 							end
 						end
@@ -193,8 +193,8 @@ module Api
 						else
 							@preguntas ||= []
 							@instrumento = @oferta_periodo.oferta_academica.first.consulta.instrumento
-							@instrumento.bloques.each do |bloque|
-								bloque.preguntas.each do |pregunta|
+							@instrumento.bloques.includes(:preguntas).each do |bloque|
+								bloque.preguntas.includes(:opciones).each do |pregunta|
 									@preguntas.push(pregunta)
 								end
 							end
@@ -270,8 +270,8 @@ module Api
 						@error = :no_docente
 					else
 						@preguntas ||= []
-						@instrumento.bloques.each do |bloque|
-							bloque.preguntas.each do |pregunta|
+						@instrumento.bloques.includes(:preguntas).each do |bloque|
+							bloque.preguntas.includes(:opciones).each do |pregunta|
 								@preguntas.push(pregunta)
 							end
 						end
@@ -340,10 +340,11 @@ module Api
 
 
 			######
-			# => Reportes de Período por Materias
+			# => Reportes de Período por Docente
 			######
 
-			# Devuelve los resultados las preguntas especificadas de instrumento aplicado para el período en un docente
+			# Devuelve los resultados de las preguntas especificadas de instrumento aplicado para el período en un docente
+			# GET /api/v1/reportes/historico_comparado/docentes/12243532/periodo/01-2014.json?ids[]=1
 			def reporte_periodo_comparado_de_docente
 				@error = nil
 
@@ -364,10 +365,66 @@ module Api
 								@error = :no_oferta_academica
 								return nil
 							else
-								@instrumento = @ofertas_academicas.first.consulta.instrumento
-								@preguntas = @instrumento.preguntas.where(id: preguntas_ids)
-								@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
+								@instrumento = Instrumento.where(consultas: {oferta_academica: @ofertas_academicas.ids }).from("instrumentos, consultas").includes(:bloques, :preguntas).first
+								@preguntas = @instrumento.preguntas.includes(:opciones).where(id: preguntas_ids)
+
+								puts preguntas_ids
+								puts @instrumento.inspect 
+								if @preguntas.nil? or @preguntas.size == 0
+									@error = :no_preguntas
+								else
+									puts @preguntas
+									@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
+								end
 							end
+						end
+					end
+				end
+		    ensure
+				if @error.nil?
+					respond_to do |format|
+						format.json { render :reporte_docente_periodo_comparado, status: :ok }
+					end
+				elsif @error == :no_docente	
+					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
+				elsif @error == :no_periodo
+					render json: { estatus: "ERROR", mensaje: "El período no existe" }, status: :not_found
+				elsif @error == :no_oferta_academica
+					render json: { estatus: "ERROR", mensaje: "El la oferta académica no existe en el período" }, status: :not_found
+				elsif @error == :no_preguntas	
+					render json: { estatus: "ERROR", mensaje: "Ninguna de las preguntas indicadas fue encontrada en el instrumento." }, status: :not_found
+				elsif @error == :no_parameters	
+					render json: { estatus: "ERROR", mensaje: "No se detectaron parámetros para la comparación." }.to_json, status: :bad_request
+				end
+			end
+
+			# Devuelve los resultados de las preguntas de instrumento aplicado para el período en un docente
+			# GET /api/v1/reportes/historico_comparado/docentes/12243532/periodo/01-2014.json
+			def reporte_periodo_completo_de_docente
+				@error = nil
+
+				preguntas_ids = params[:ids]
+				@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
+				if @periodo_academico.nil?
+					@error = :no_periodo
+				else
+					@docente = Docente.find_by(cedula: params[:cedula_docente])
+					if @docente.nil?
+						@error = :no_docente
+					else
+						@ofertas_academicas = OfertaAcademica.includes(:consulta, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
+						if @ofertas_academicas.nil?
+							@error = :no_oferta_academica
+							return nil
+						else
+							@preguntas ||= []
+							@instrumento = @ofertas_academicas.first.consulta.instrumento
+							@instrumento.bloques.includes(:preguntas).each do |bloque|
+								bloque.preguntas.includes(:opciones).each do |pregunta|
+									@preguntas.push(pregunta)
+								end
+							end
+							@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
 						end
 					end
 				end
@@ -376,7 +433,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_docente_periodo_comparado, status: :ok }
+						format.json { render :reporte_docente_completo, status: :ok }
 					end
 				elsif @error == :no_docente	
 					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
