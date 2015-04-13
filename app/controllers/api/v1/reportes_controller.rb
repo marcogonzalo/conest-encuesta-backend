@@ -7,6 +7,7 @@ module Api
 			######
 
 			# Devuelve todos los resultados históricos para una pregunta en una materia
+			# GET /api/v1/reportes/historico_pregunta/materias/6014/preguntas/1.json
 			def reporte_historico_pregunta_de_materia
 				@error = nil
 				@materia = Materia.find_by(codigo: params[:codigo_materia])
@@ -46,6 +47,7 @@ module Api
 			end
 
 			# Devuelve todos los resultados de las preguntas especificadas de un instrumento en una materia
+			# GET /api/v1/reportes/historico_comparado/materias/6014/instrumentos/1.json?ids[]=1
 			def reporte_historico_comparado_de_materia
 				@error = nil
 				if params[:ids].nil? or params[:ids].size == 0
@@ -84,6 +86,7 @@ module Api
 			end
 
 			# Devuelve todos los resultados de las preguntas de un instrumento en una materia
+			# GET /api/v1/reportes/historico_completo/materias/6014/instrumentos/1.json
 			def reporte_historico_completo_de_materia
 				@error = nil
 				@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
@@ -365,15 +368,13 @@ module Api
 								@error = :no_oferta_academica
 								return nil
 							else
-								@instrumento = Instrumento.where(consultas: {oferta_academica: @ofertas_academicas.ids }).from("instrumentos, consultas").includes(:bloques, :preguntas).first
-								@preguntas = @instrumento.preguntas.includes(:opciones).where(id: preguntas_ids)
+								@consultas = Consulta.where(oferta_academica: @ofertas_academicas.ids)
+								@preguntas = Pregunta.includes(:opciones).where(id: preguntas_ids)
+								@instrumento = Instrumento.includes(:preguntas).where(preguntas: { id: @preguntas.first.id }).first
 
-								puts preguntas_ids
-								puts @instrumento.inspect 
 								if @preguntas.nil? or @preguntas.size == 0
 									@error = :no_preguntas
 								else
-									puts @preguntas
 									@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
 								end
 							end

@@ -168,6 +168,8 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
   # # #
 
   test "debería mostrarme un reporte comparado del período entre preguntas de un instrumento para un docente en json" do
+    @pregunta = FactoryGirl.create(:pregunta_en_bloques)
+    @respuesta.pregunta_id = @pregunta.id
     get :reporte_periodo_comparado_de_docente, tipo_reporte: 'periodo_comparado', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, ids: [@respuesta.pregunta_id], format: :json
     assert_response :success
   end
