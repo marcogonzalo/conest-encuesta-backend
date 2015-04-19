@@ -1,10 +1,10 @@
-class ReporteHistoricoPreguntaPdf < PdfGenerator
-	def initialize(materia,pregunta,resultados)
+class ReporteMateriaHistoricoCompletoPdf < PdfGenerator
+	def initialize(materia,instrumento,resultados,titulo = nil)
 		super()
 		@materia = materia
-		@pregunta = pregunta
-		@opciones = pregunta.opciones
+		@instrumento = instrumento
 		@resultados = resultados
+		@titulo = "Reporte histórico completo"
 		content
 		repeat (:all) do
 			header
@@ -14,18 +14,30 @@ class ReporteHistoricoPreguntaPdf < PdfGenerator
 
 	def content
 		grid([2,0],[19,11]).bounding_box do
-			text_content
-			puts @resultados
-			tabla_de_datos(@pregunta.opciones,@resultados[1])
+			titulo("#{@materia.nombre} (#{@materia.codigo})",@instrumento.nombre,@titulo)
+			@instrumento.bloques.each do |b|
+				if b.preguntas.size > 0
+					move_down 25
+					text b.nombre, size: 15, style: :bold, align: :center
+					b.preguntas.each do |p|
+						text_content(p.interrogante)
+						if @resultados[p.id]
+							tabla_de_datos(p.opciones,@resultados[p.id],:materia)
+						else
+							text "No se registraron respuestas para esta pregunta", size: 12, style: :normal, align: :center
+						end
+					end
+				end
+			end
 		end
 	end
 
 	protected
-	def text_content
+	def text_content(interrogante)
 		# The cursor for inserting content starts on the top left of the page. Here we move it down a little to create more space between the text and the image inserted above
 		# y_position = cursor - 50
-		text @materia.nombre, size: 15, style: :bold, align: :center
-		text @pregunta.interrogante, size: 14, style: :normal, align: :center
+		move_down 15
+		text interrogante, size: 14, style: :normal
 		move_down 5
 		# The bounding_box takes the x and y coordinates for positioning its content and some options to style it
 		# bounding_box([300, y_position], :width => 270, :height => 300) do

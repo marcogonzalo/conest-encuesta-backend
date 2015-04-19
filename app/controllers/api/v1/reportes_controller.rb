@@ -30,8 +30,8 @@ module Api
 					respond_to do |format|
 						format.json { render :reporte_historico_pregunta_materia, status: :ok }
 						format.pdf do
-							pdf = ReporteHistoricoPreguntaPdf.new(@materia,@pregunta,@resultados) #Prawn::Document.new
-							send_data pdf.render, filename: 'reporte-consulta.pdf'
+							pdf = ReporteMateriaHistoricoPreguntaPdf.new(@materia,@pregunta,@resultados) #Prawn::Document.new
+							send_data pdf.render, filename: "reporte-materia-#{@materia.codigo}-historico-pregunta.pdf"
 						end
 						format.csv do
 							headers['Content-Disposition'] = "attachment; filename=\"reporte-consulta\""
@@ -117,8 +117,8 @@ module Api
 					respond_to do |format|
 						format.json { render :reporte_materia_completo, status: :ok }
 						format.pdf do
-							pdf = ReporteMateriaCompletoPdf.new(@materia,@instrumento,@resultados,"Reporte histórico") #Prawn::Document.new
-							send_data pdf.render, filename: 'reporte-consulta.pdf'
+							pdf = ReporteMateriaHistoricoCompletoPdf.new(@materia,@instrumento,@resultados,"Reporte histórico") #Prawn::Document.new
+							send_data pdf.render, filename: "reporte-materia-#{@materia.codigo}-historico-completo.pdf"
 						end
 					end
 				elsif @error == :no_materia	
@@ -212,8 +212,8 @@ module Api
 					respond_to do |format|
 						format.json { render :reporte_materia_completo, status: :ok }
 						format.pdf do
-							pdf = ReporteMateriaCompletoPdf.new(@materia,@instrumento,@resultados,"Reporte Período #{@periodo_academico.periodo}") #Prawn::Document.new
-							send_data pdf.render, filename: "reporte-completo-#{@materia.codigo}-periodo-#{@periodo_academico.periodo}.pdf"
+							pdf = ReporteMateriaPeriodoCompletoPdf.new(@materia,@instrumento,@resultados,"Reporte Período #{@periodo_academico.periodo}") #Prawn::Document.new
+							send_data pdf.render, filename: "reporte-materia-#{@materia.codigo}-periodo-#{@periodo_academico.periodo}-completo.pdf"
 						end
 					end
 				elsif @error == :no_materia	

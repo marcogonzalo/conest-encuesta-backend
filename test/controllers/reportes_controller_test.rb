@@ -163,7 +163,7 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
 
   # # #
   #
-  #  Reportes de perido por docente
+  #  Reportes de periodo por docente
   # 
   # # #
 
