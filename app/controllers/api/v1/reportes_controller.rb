@@ -252,6 +252,10 @@ module Api
 		        if @error.nil?
 					respond_to do |format|
 						format.json { render :reporte_historico_pregunta_docente, status: :ok }
+						format.pdf do
+							pdf = ReporteDocenteHistoricoPreguntaPdf.new(@docente,@pregunta,@resultados) #Prawn::Document.new
+							send_data pdf.render, filename: "reporte-docente-#{@docente.cedula}-historico-pregunta.pdf"
+						end
 					end
 				elsif @error == :no_docente	
 					render json: { estatus: "ERROR", mensaje: "La cédula del docente no está registrada" }, status: :not_found
@@ -291,6 +295,10 @@ module Api
 				if @error.nil?
 					respond_to do |format|
 						format.json { render :reporte_docente_completo, status: :ok }
+						format.pdf do
+							pdf = ReporteDocenteHistoricoCompletoPdf.new(@docente,@instrumento,@resultados,"Reporte histórico") #Prawn::Document.new
+							send_data pdf.render, filename: "reporte-docente-#{@docente.cedula}-historico-completo.pdf"
+						end
 					end
 				elsif @error == :no_docente	
 					render json: { estatus: "ERROR", mensaje: "La céduña del docente no está registrada" }, status: :not_found
@@ -435,6 +443,10 @@ module Api
 				if @error.nil?
 					respond_to do |format|
 						format.json { render :reporte_docente_completo, status: :ok }
+						format.pdf do
+							pdf = ReporteDocentePeriodoCompletoPdf.new(@docente,@instrumento,@resultados,"Reporte Docente #{@periodo_academico.periodo}") #Prawn::Document.new
+							send_data pdf.render, filename: "reporte-docente-#{@docente.cedula}-periodo-#{@periodo_academico.periodo}-completo.pdf"
+						end
 					end
 				elsif @error == :no_docente	
 					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
