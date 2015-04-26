@@ -57,7 +57,6 @@ class ReportePeriodo
 			total_respuestas += total
 			r[periodo][seccion]['datos']['total_respuestas'] = total_respuestas
 		end
-		puts resultados
 		return resultados
 	end
 

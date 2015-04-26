@@ -17,8 +17,7 @@ class ReporteMateriaHistoricoPreguntaPdf < PdfGenerator
 		grid([2,0],[19,11]).bounding_box do
 			titulo("#{@materia.nombre} (#{@materia.codigo})",nil,@titulo)
 			text_content
-			puts @resultados
-			tabla_de_datos(@pregunta.opciones,@resultados[1],:materia)
+			tabla_de_datos(@pregunta.opciones,@resultados[@pregunta.id],:materia)
 		end
 	end
 

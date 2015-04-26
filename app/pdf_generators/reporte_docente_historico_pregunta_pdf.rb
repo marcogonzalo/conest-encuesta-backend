@@ -17,8 +17,7 @@ class ReporteDocenteHistoricoPreguntaPdf < PdfGenerator
 		grid([2,0],[19,11]).bounding_box do
 			titulo(@docente.nombre_completo,nil,@titulo)
 			text_content
-			puts @resultados
-			tabla_de_datos(@pregunta.opciones,@resultados[1],:docente)
+			tabla_de_datos(@pregunta.opciones,@resultados[@pregunta.id],:docente)
 		end
 	end
 

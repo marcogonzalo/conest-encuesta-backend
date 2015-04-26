@@ -16,6 +16,16 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "debería mostrarme un reporte histórico de una pregunta para una materia en pdf" do
+    get :reporte_historico_pregunta_de_materia, tipo_reporte: 'historico_pregunta', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, pregunta_id: @respuesta.pregunta_id, format: :pdf
+    assert_response :success
+  end
+
+  test "debería mostrarme un reporte histórico de una pregunta para una materia en csv" do
+    get :reporte_historico_pregunta_de_materia, tipo_reporte: 'historico_pregunta', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, pregunta_id: @respuesta.pregunta_id, format: :csv
+    assert_response :success
+  end
+
   test "no debería mostrarme un reporte histórico de una pregunta para una materia si el código de la materia es incorrecto" do
     get :reporte_historico_pregunta_de_materia, tipo_reporte: 'historico_pregunta', codigo_materia: 0000, pregunta_id: @respuesta.pregunta_id, format: :json
     assert_response :not_found
@@ -55,6 +65,13 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "debería mostrarme un reporte histórico según un instrumento en pdf" do
+    @materia = FactoryGirl.create(:materia)
+    @pregunta = FactoryGirl.create(:pregunta_en_bloques)
+    get :reporte_historico_completo_de_materia, tipo_reporte: 'historico_completo', codigo_materia: @materia.codigo, instrumento_id: @pregunta.bloques.first.instrumentos.first.id, format: :pdf
+    assert_response :success
+  end
+
   test "no debería mostrarme un reporte histórico según un instrumento si la materia no existe" do
     get :reporte_historico_completo_de_materia, tipo_reporte: 'historico_completo', codigo_materia: 0000, instrumento_id: @respuesta.consulta.instrumento_id, format: :json
     assert_response :not_found
@@ -91,6 +108,11 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "debería mostrarme un reporte del período según un instrumento en pdf" do
+    get :reporte_periodo_completo_de_materia, tipo_reporte: 'periodo_completo', codigo_materia: @respuesta.consulta.oferta_academica.oferta_periodo.materia.codigo, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :pdf
+    assert_response :success
+  end
+
   test "no debería mostrarme un reporte del período según un instrumento en json si el código de la materia es incorrecto" do
     get :reporte_periodo_completo_de_materia, tipo_reporte: 'periodo_completo', codigo_materia: 0000, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
     assert_response :not_found
@@ -112,6 +134,16 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "debería mostrarme un reporte histórico de una pregunta para un docente en pdf" do
+    get :reporte_historico_pregunta_de_docente, tipo_reporte: 'historico_pregunta', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, pregunta_id: @respuesta.pregunta_id, format: :pdf
+    assert_response :success
+  end
+
+  test "debería mostrarme un reporte histórico de una pregunta para un docente en csv" do
+    get :reporte_historico_pregunta_de_docente, tipo_reporte: 'historico_pregunta', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, pregunta_id: @respuesta.pregunta_id, format: :csv
+    assert_response :success
+  end
+
   test "no debería mostrarme un reporte histórico de una pregunta para un docente si cedula de un docente es incorrecta" do
     get :reporte_historico_pregunta_de_docente, tipo_reporte: 'historico_pregunta', cedula_docente: 0000, pregunta_id: @respuesta.pregunta_id, format: :json
     assert_response :not_found
@@ -126,6 +158,13 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
     @docente = FactoryGirl.create(:docente)
     @pregunta = FactoryGirl.create(:pregunta_en_bloques)
     get :reporte_historico_completo_de_docente, tipo_reporte: 'historico_completo', cedula_docente: @docente.cedula, instrumento_id: @pregunta.bloques.first.instrumentos.first.id, format: :json
+    assert_response :success
+  end
+
+  test "debería mostrarme un reporte histórico completo para un docente en pdf" do
+    @docente = FactoryGirl.create(:docente)
+    @pregunta = FactoryGirl.create(:pregunta_en_bloques)
+    get :reporte_historico_completo_de_docente, tipo_reporte: 'historico_completo', cedula_docente: @docente.cedula, instrumento_id: @pregunta.bloques.first.instrumentos.first.id, format: :pdf
     assert_response :success
   end
 
@@ -186,6 +225,11 @@ class Api::V1::ReportesControllerTest < ActionController::TestCase
   
   test "debería mostrarme un reporte completo del período entre preguntas de un instrumento para un docente en json" do
     get :reporte_periodo_completo_de_docente, tipo_reporte: 'periodo_completo', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :json
+    assert_response :success
+  end
+
+  test "debería mostrarme un reporte completo del período entre preguntas de un instrumento para un docente en pdf" do
+    get :reporte_periodo_completo_de_docente, tipo_reporte: 'periodo_completo', cedula_docente: @respuesta.consulta.oferta_academica.docente.cedula, periodo: @respuesta.consulta.oferta_academica.oferta_periodo.periodo_academico.periodo, format: :pdf
     assert_response :success
   end
 

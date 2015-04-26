@@ -5,7 +5,7 @@
 	headers += ["Respuestas", "Inscritos", "Participación"] 
 %>
 <%= CSV.generate_line headers %>
-<% @resultados.each do |k,resultado|
+<% @resultados.each do |pregunta_id,resultado|
 		resultado.each do |periodo,secciones|
 			secciones.each do |s,info|
 				valores = {}

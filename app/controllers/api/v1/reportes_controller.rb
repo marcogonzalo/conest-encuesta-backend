@@ -26,7 +26,7 @@ module Api
 			rescue ActiveRecord::RecordNotFound
 				@error = :no_pregunta
 		    ensure
-		        if @error.nil?	
+		        if @error.nil?
 					respond_to do |format|
 						format.json { render :reporte_historico_pregunta_materia, status: :ok }
 						format.pdf do
@@ -34,9 +34,9 @@ module Api
 							send_data pdf.render, filename: "reporte-materia-#{@materia.codigo}-historico-pregunta.pdf"
 						end
 						format.csv do
-							headers['Content-Disposition'] = "attachment; filename=\"reporte-consulta\""
+							headers['Content-Disposition'] = "attachment; filename=\"reporte-materia-#{@materia.codigo}-historico-pregunta\""
 							headers['Content-Type'] ||= 'text/csv; charset=UTF-8; header=present'
-							render :reporte_historico_pregunta
+							render :reporte_historico_pregunta_materia
 						end
 					end
 				elsif @error == :no_materia	
@@ -115,7 +115,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_materia_completo, status: :ok }
+						format.json { render :reporte_completo_materia, status: :ok }
 						format.pdf do
 							pdf = ReporteMateriaHistoricoCompletoPdf.new(@materia,@instrumento,@resultados,"Reporte histórico") #Prawn::Document.new
 							send_data pdf.render, filename: "reporte-materia-#{@materia.codigo}-historico-completo.pdf"
@@ -167,7 +167,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_materia_periodo_comparado, status: :ok }
+						format.json { render :reporte_periodo_comparado_materia, status: :ok }
 					end
 				elsif @error == :no_materia	
 					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
@@ -210,7 +210,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_materia_completo, status: :ok }
+						format.json { render :reporte_completo_materia, status: :ok }
 						format.pdf do
 							pdf = ReporteMateriaPeriodoCompletoPdf.new(@materia,@instrumento,@resultados,"Reporte Período #{@periodo_academico.periodo}") #Prawn::Document.new
 							send_data pdf.render, filename: "reporte-materia-#{@materia.codigo}-periodo-#{@periodo_academico.periodo}-completo.pdf"
@@ -256,6 +256,11 @@ module Api
 							pdf = ReporteDocenteHistoricoPreguntaPdf.new(@docente,@pregunta,@resultados) #Prawn::Document.new
 							send_data pdf.render, filename: "reporte-docente-#{@docente.cedula}-historico-pregunta.pdf"
 						end
+						format.csv do
+							headers['Content-Disposition'] = "attachment; filename=\"reporte-docente-#{@docente.cedula}-historico-pregunta\""
+							headers['Content-Type'] ||= 'text/csv; charset=UTF-8; header=present'
+							render :reporte_historico_pregunta_docente
+						end
 					end
 				elsif @error == :no_docente	
 					render json: { estatus: "ERROR", mensaje: "La cédula del docente no está registrada" }, status: :not_found
@@ -294,7 +299,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_docente_completo, status: :ok }
+						format.json { render :reporte_completo_docente, status: :ok }
 						format.pdf do
 							pdf = ReporteDocenteHistoricoCompletoPdf.new(@docente,@instrumento,@resultados,"Reporte histórico") #Prawn::Document.new
 							send_data pdf.render, filename: "reporte-docente-#{@docente.cedula}-historico-completo.pdf"
@@ -392,7 +397,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_docente_periodo_comparado, status: :ok }
+						format.json { render :reporte_periodo_comparado_docente, status: :ok }
 					end
 				elsif @error == :no_docente	
 					render json: { estatus: "ERROR", mensaje: "La asignatura no está registrada" }, status: :not_found
@@ -442,7 +447,7 @@ module Api
 		    ensure
 				if @error.nil?
 					respond_to do |format|
-						format.json { render :reporte_docente_completo, status: :ok }
+						format.json { render :reporte_completo_docente, status: :ok }
 						format.pdf do
 							pdf = ReporteDocentePeriodoCompletoPdf.new(@docente,@instrumento,@resultados,"Reporte Docente #{@periodo_academico.periodo}") #Prawn::Document.new
 							send_data pdf.render, filename: "reporte-docente-#{@docente.cedula}-periodo-#{@periodo_academico.periodo}-completo.pdf"

@@ -16,8 +16,6 @@ class ReporteDocenteHistoricoCompletoPdf < PdfGenerator
 		grid([2,0],[19,11]).bounding_box do
 			titulo(@docente.nombre_completo,@instrumento.nombre,@titulo)
 			@instrumento.bloques.each do |b|
-				puts b.inspect
-				puts b.preguntas.inspect
 				if b.preguntas.size > 0
 					move_down 25
 					text b.nombre, size: 15, style: :bold, align: :center

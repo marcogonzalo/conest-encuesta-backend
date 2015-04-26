@@ -6,7 +6,7 @@ json.pregunta do
 	json.extract! @pregunta, :id, :interrogante
 end
 
-@resultados.each do |k,periodos|
+@resultados.each do |pregunta_id,periodos|
 	json.periodos periodos do |p, secciones|
 		json.periodo p
 		json.secciones secciones do |s,info|
