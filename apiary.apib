@@ -2658,7 +2658,7 @@ Recursos asociados a los **Tipos de preguntas** que se podrán manejar en SEDAD.
                 "valor_html":"input" 
             }
             
-### Eliminar un Instrumento [DELETE]
+### Eliminar un Tipo de Pregunta [DELETE]
 + Response 204
 
 # Group Estudiantes
@@ -2808,74 +2808,6 @@ Recursos asociados a las **Consultas** de Conest
         { "estatus": "ERROR", "mensaje": "Cédula #{cedula_estudiante} no se encuentra registrada" }
         
         
-        
-
-
-# Group Resultados
-Recursos asociados a los **Resultados** de las Consultas
-
-## Colección de Resultados [/resultados/{tipo_resultado}/materias/{codigo_materia}/preguntas/{pregunta_id}{format}]
-### Devolver los resultados totalizados de una pregunta agrupados por período y valor [GET]
-
-+ Parameters
-    + tipo_resultado (required, text, `sencillo`) ... `tipo_resultado` texto del tipo de resultado. Tiene un valor de ejemplo.
-    + codigo_materia (required, number, `6104`) ... `codigo` numérico de la asignatura. Tiene un valor de ejemplo.
-    + pregunta_id (required, number, `1`) ... `id` numérico de la pregunta. Tiene un valor de ejemplo.
-
-+ Response 200 (application/json)
-
-    + Body
-
-            {
-                "pregunta": {
-                    "id": 1,
-                    "interrogante": "La densidad de contenidos es asimilable en un trimestre"
-                },
-                "periodos": [
-                    { 
-                        "periodo": "01-2014",
-                        "secciones": [
-                            {
-                                "seccion":"C1",
-                                "datos": {
-                                    "total_estudiantes": 25,
-                                    "total_respuestas": 2
-                                },
-                                "totalizacion": [
-                                    { "valor": "4", "total": 1 },
-                                    { "valor": "5", "total": 1 }
-                                ]
-                            },
-                            {
-                                "seccion": "C2",
-                                "datos": {
-                                    "total_estudiantes": 18,
-                                    "total_respuestas": 3
-                                },
-                                "totalizacion": [
-                                    { "valor": "5", "total": 1 }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "periodo": "02-2014",
-                        "secciones": [
-                            {
-                                "seccion": "C1",
-                                "datos": {
-                                    "total_estudiantes": 25,
-                                    "total_respuestas": 1
-                                },
-                                "totalizacion": [
-                                    { "valor": "4", "total": 1 }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-
 
 # Group Reportes Historicos de Materia
 Recursos asociados a los **Reportes Históricos de Materia** de las Consultas
@@ -3329,12 +3261,1000 @@ Recursos asociados a los **Reportes Históricos de Materia** de las Consultas
             }
 
 
-# Group Reportes de Materia por Periodo
+# Group Reportes de Materia por Período
 Recursos asociados a los **Reportes Históricos de Materia** de las Consultas
+
+## Reporte de Período de Materia [/reportes/periodo_completo/materias/{codigo_materia}/periodos/{periodo_academico}{format}]
+### Resultados totalizados de un instrumento para una materia en un período agrupados por seccion y valores [GET]
+
++ Parameters
+    + codigo_materia (required, number, `6104`) ... `codigo` numérico de la asignatura. Tiene un valor de ejemplo.
+    + periodo_academico (required, string, `01-2014`) ... `periodo_academico` nombre del período. Tiene un valor de ejemplo.
+    + format (optional, string, `json`) ... `formato` de respuesta de la consulta (json, pdf, csv)
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "materia": {
+                    "codigo": "6014",
+                    "nombre": "Probabilidad y Estadistica"
+                },
+                "instrumento": {
+                "id": 1,
+                "nombre": "Evaluación Docente (rev.2014)",
+                "bloques": [
+                    {
+                        {
+                            "id": 5,
+                            "nombre": "General",
+                            "descripcion": "Preguntas sobre la activiidad de la asignatura en general",
+                            "tipo": "G",
+                            "preguntas": [
+                                {
+                                    "id": 32,
+                                    "interrogante": "Grado de dificultad del curso",
+                                    "descripcion": null,
+                                    "tipo_pregunta": {
+                                        "public_send": "valor_html",
+                                        "nombre": "nombre",
+                                        "valor": "valor",
+                                        "valor_html": "valor_html"
+                                    },
+                                    "opciones": [
+                                        {
+                                            "id": 156,
+                                            "etiqueta": "1",
+                                            "valor": 1
+                                        },
+                                        {
+                                            "id": 157,
+                                            "etiqueta": "2",
+                                            "valor": 2
+                                        },
+                                        {
+                                            "id": 158,
+                                            "etiqueta": "3",
+                                            "valor": 3
+                                        },
+                                        {
+                                            "id": 159,
+                                            "etiqueta": "4",
+                                            "valor": 4
+                                        },
+                                        {
+                                            "id": 160,
+                                            "etiqueta": "5",
+                                            "valor": 5
+                                        }
+                                    ],
+                                    "resultados": [
+                                        {
+                                            "periodo": "01-2014",
+                                            "secciones": [
+                                                {
+                                                    "seccion": "C1",
+                                                    "datos": {
+                                                        "total_estudiantes": 25,
+                                                        "total_respuestas": 2
+                                                    },
+                                                    "totalizacion": [
+                                                        {
+                                                            "valor": 1,
+                                                            "total": 1
+                                                        },
+                                                        {
+                                                            "valor": 2,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 3,
+                                                            "total": 1
+                                                        },
+                                                        {
+                                                            "valor": 4,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 5,
+                                                            "total": 0
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "seccion": "C2",
+                                                    "datos": {
+                                                        "total_estudiantes": 18,
+                                                        "total_respuestas": 1
+                                                    },
+                                                    "totalizacion": [
+                                                        {
+                                                            "valor": 1,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 2,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 3,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 4,
+                                                            "total": 1
+                                                        },
+                                                        {
+                                                            "valor": 5,
+                                                            "total": 0
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 33,
+                                    "interrogante": "Expectativa de calificación final",
+                                    "descripcion": null,
+                                    "tipo_pregunta": {
+                                        "public_send": "valor_html",
+                                        "nombre": "nombre",
+                                        "valor": "valor",
+                                        "valor_html": "valor_html"
+                                    },
+                                    "opciones": [
+                                        {
+                                            "id": 161,
+                                            "etiqueta": "1",
+                                            "valor": 1
+                                        },
+                                        {
+                                            "id": 162,
+                                            "etiqueta": "2",
+                                            "valor": 2
+                                        },
+                                        {
+                                            "id": 163,
+                                            "etiqueta": "3",
+                                            "valor": 3
+                                        },
+                                        {
+                                            "id": 164,
+                                            "etiqueta": "4",
+                                            "valor": 4
+                                        },
+                                        {
+                                            "id": 165,
+                                            "etiqueta": "5",
+                                            "valor": 5
+                                        }
+                                    ],
+                                    "resultados": [
+                                        {
+                                            "periodo": "01-2014",
+                                            "secciones": [
+                                                {
+                                                    "seccion": "C1",
+                                                    "datos": {
+                                                        "total_estudiantes": 25,
+                                                        "total_respuestas": 2
+                                                    },
+                                                    "totalizacion": [
+                                                        {
+                                                            "valor": 1,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 2,
+                                                            "total": 1
+                                                        },
+                                                        {
+                                                            "valor": 3,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 4,
+                                                            "total": 1
+                                                        },
+                                                        {
+                                                            "valor": 5,
+                                                            "total": 0
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "seccion": "C2",
+                                                    "datos": {
+                                                        "total_estudiantes": 18,
+                                                        "total_respuestas": 1
+                                                    },
+                                                    "totalizacion": [
+                                                        {
+                                                            "valor": 1,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 2,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 3,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 4,
+                                                            "total": 0
+                                                        },
+                                                        {
+                                                            "valor": 5,
+                                                            "total": 1
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+    + Body    
+
+            {
+                "estatus": "ERROR", 
+                "mensaje": "La asignatura no está registrada" 
+            }
+
+
+
 
 # Group Reportes Historicos de Docente
 Recursos asociados a los **Reportes Históricos de Materia** de las Consultas
 
+## Reporte Historico de Docente por Pregunta [/resultados/historico_pregunta/docentes/{cedula_docente}/preguntas/{pregunta_id}{format}]
+### Resultados historicos totalizados de una pregunta para un docente agrupados por materia, periodo, seccion y valores [GET]
+
++ Parameters
+    + cedula_docente (required, number, `12243532`) ... `cedula` del docente. Tiene un valor de ejemplo.
+    + pregunta_id (required, number, `1`) ... `id` numérico de la pregunta. Tiene un valor de ejemplo.
+    + format (optional, string, `json`) ... `formato` de respuesta de la consulta (json, pdf, csv)
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "materia": {
+                    "codigo": "6014",
+                    "nombre": "Probabilidad y Estadistica"
+                },
+                "pregunta": {
+                    "id": 1,
+                    "interrogante": "La densidad de contenidos es asimilable en un trimestre"
+                },
+                "periodos": [
+                    {
+                        "periodo": "01-2014",
+                        "materias": [
+                            {
+                                "materia": "6014",
+                                "secciones": [
+                                    {
+                                        "seccion": "C1",
+                                        "datos": {
+                                            "total_estudiantes": 25,
+                                            "total_respuestas": 2
+                                        },
+                                        "totalizacion": [
+                                            {
+                                                "valor": 1,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 2,
+                                                "total": 1
+                                            },
+                                            {
+                                                "valor": 3,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 4,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 5,
+                                                "total": 1
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "seccion": "C2",
+                                        "datos": {
+                                            "total_estudiantes": 18,
+                                            "total_respuestas": 1
+                                        },
+                                        "totalizacion": [
+                                            {
+                                                "valor": 1,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 2,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 3,
+                                                "total": 1
+                                            },
+                                            {
+                                                "valor": 4,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 5,
+                                                "total": 0
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "periodo": "02-2014",
+                        "materias": [
+                            {
+                                "materia": "6014",
+                                "secciones": [
+                                    {
+                                        "seccion": "C1",
+                                        "datos": {
+                                            "total_estudiantes": 25,
+                                            "total_respuestas": 1
+                                        },
+                                        "totalizacion": [
+                                            {
+                                                "valor": 1,
+                                                "total": 1
+                                            },
+                                            {
+                                                "valor": 2,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 3,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 4,
+                                                "total": 0
+                                            },
+                                            {
+                                                "valor": 5,
+                                                "total": 0
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body    
+
+            {
+                "estatus": "ERROR", 
+                "mensaje": "La asignatura no está registrada" 
+            }
+
+## Reporte Historico de Docente Completo [/resultados/historico_completo/docentes/{cedula_docente}/instrumentos/{instrumento_id}{format}]
+### Resultados historicos totalizados de un instrumento para un docente agrupados por periodo, materia, seccion y valores [GET]
+
++ Parameters
+    + cedula_docente (required, number, `12243532`) ... `cedula` del docente. Tiene un valor de ejemplo.
+    + instrumento_id (required, number, `1`) ... `id` numérico del instrumento. Tiene un valor de ejemplo.
+    + format (optional, string, `json`) ... `formato` de respuesta de la consulta (json, pdf, csv)
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "docente": {
+                    "cedula": "12243532",
+                    "nombre_completo": "Luis Armas"
+                },
+                "instrumento": {
+                "id": 1,
+                "nombre": "Evaluación Docente (rev.2014)",
+                "bloques": [
+                    {
+                        {
+                            "id": 5,
+                            "nombre": "General",
+                            "descripcion": "Preguntas sobre la activiidad de la asignatura en general",
+                            "tipo": "G",
+                            "preguntas": [
+                                {
+                                    "id": 32,
+                                    "interrogante": "Grado de dificultad del curso",
+                                    "descripcion": null,
+                                    "tipo_pregunta": {
+                                        "public_send": "valor_html",
+                                        "nombre": "nombre",
+                                        "valor": "valor",
+                                        "valor_html": "valor_html"
+                                    },
+                                    "opciones": [
+                                        {
+                                            "id": 156,
+                                            "etiqueta": "1",
+                                            "valor": 1
+                                        },
+                                        {
+                                            "id": 157,
+                                            "etiqueta": "2",
+                                            "valor": 2
+                                        },
+                                        {
+                                            "id": 158,
+                                            "etiqueta": "3",
+                                            "valor": 3
+                                        },
+                                        {
+                                            "id": 159,
+                                            "etiqueta": "4",
+                                            "valor": 4
+                                        },
+                                        {
+                                            "id": 160,
+                                            "etiqueta": "5",
+                                            "valor": 5
+                                        }
+                                    ],
+                                    "resultados": [
+                                        {
+                                            "periodo": "01-2014",
+                                            "materias": [
+                                                {
+                                                    "materia": "6014",
+                                                    "secciones": [
+                                                        {
+                                                            "seccion": "C1",
+                                                            "datos": {
+                                                                "total_estudiantes": 25,
+                                                                "total_respuestas": 2
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "seccion": "C2",
+                                                            "datos": {
+                                                                "total_estudiantes": 18,
+                                                                "total_respuestas": 1
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "periodo": "02-2014",
+                                            "materias": [
+                                                {
+                                                    "materia": "6014",
+                                                    "secciones": [
+                                                        {
+                                                            "seccion": "C1",
+                                                            "datos": {
+                                                                "total_estudiantes": 25,
+                                                                "total_respuestas": 1
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 33,
+                                    "interrogante": "Expectativa de calificación final",
+                                    "descripcion": null,
+                                    "tipo_pregunta": {
+                                        "public_send": "valor_html",
+                                        "nombre": "nombre",
+                                        "valor": "valor",
+                                        "valor_html": "valor_html"
+                                    },
+                                    "opciones": [
+                                        {
+                                            "id": 161,
+                                            "etiqueta": "1",
+                                            "valor": 1
+                                        },
+                                        {
+                                            "id": 162,
+                                            "etiqueta": "2",
+                                            "valor": 2
+                                        },
+                                        {
+                                            "id": 163,
+                                            "etiqueta": "3",
+                                            "valor": 3
+                                        },
+                                        {
+                                            "id": 164,
+                                            "etiqueta": "4",
+                                            "valor": 4
+                                        },
+                                        {
+                                            "id": 165,
+                                            "etiqueta": "5",
+                                            "valor": 5
+                                        }
+                                    ],
+                                    "resultados": [
+                                        {
+                                            "periodo": "01-2014",
+                                            "materias": [
+                                                {
+                                                    "materia": "6014",
+                                                    "secciones": [
+                                                        {
+                                                            "seccion": "C1",
+                                                            "datos": {
+                                                                "total_estudiantes": 25,
+                                                                "total_respuestas": 2
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "seccion": "C2",
+                                                            "datos": {
+                                                                "total_estudiantes": 18,
+                                                                "total_respuestas": 1
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 1
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "periodo": "02-2014",
+                                            "materias": [
+                                                {
+                                                    "materia": "6014",
+                                                    "secciones": [
+                                                        {
+                                                            "seccion": "C1",
+                                                            "datos": {
+                                                                "total_estudiantes": 25,
+                                                                "total_respuestas": 1
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+    + Body    
+
+            {
+                "estatus": "ERROR", 
+                "mensaje": "La asignatura no está registrada" 
+            }
+
+
 
 # Group Reportes de Docente por Periodo
-Recursos asociados a los **Reportes Históricos de Materia** de las Consultas
+## Reporte de Periodo de Docente Completo [/resultados/periodo_completo/docentes/{cedula_docente}/periodos/{periodo_academico}{format}]
+### Resultados de período totalizados para un docente agrupados por periodo, materia, seccion y valores [GET]
+
++ Parameters
+    + cedula_docente (required, number, `12243532`) ... `cedula` del docente. Tiene un valor de ejemplo.
+    + periodo_academico (required, string, `01-2014`) ... `periodo_academico` nombre del período. Tiene un valor de ejemplo.
+    + format (optional, string, `json`) ... `formato` de respuesta de la consulta (json, pdf, csv)
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "materia": {
+                    "codigo": "6014",
+                    "nombre": "Probabilidad y Estadistica"
+                },
+                "instrumento": {
+                "id": 1,
+                "nombre": "Evaluación Docente (rev.2014)",
+                "bloques": [
+                    {
+                        {
+                            "id": 5,
+                            "nombre": "General",
+                            "descripcion": "Preguntas sobre la activiidad de la asignatura en general",
+                            "tipo": "G",
+                            "preguntas": [
+                                {
+                                    "id": 32,
+                                    "interrogante": "Grado de dificultad del curso",
+                                    "descripcion": null,
+                                    "tipo_pregunta": {
+                                        "public_send": "valor_html",
+                                        "nombre": "nombre",
+                                        "valor": "valor",
+                                        "valor_html": "valor_html"
+                                    },
+                                    "opciones": [
+                                        {
+                                            "id": 156,
+                                            "etiqueta": "1",
+                                            "valor": 1
+                                        },
+                                        {
+                                            "id": 157,
+                                            "etiqueta": "2",
+                                            "valor": 2
+                                        },
+                                        {
+                                            "id": 158,
+                                            "etiqueta": "3",
+                                            "valor": 3
+                                        },
+                                        {
+                                            "id": 159,
+                                            "etiqueta": "4",
+                                            "valor": 4
+                                        },
+                                        {
+                                            "id": 160,
+                                            "etiqueta": "5",
+                                            "valor": 5
+                                        }
+                                    ],
+                                    "resultados": [
+                                        {
+                                            "periodo": "01-2014",
+                                            "materias": [
+                                                {
+                                                    "materia": "6014",
+                                                    "secciones": [
+                                                        {
+                                                            "seccion": "C1",
+                                                            "datos": {
+                                                                "total_estudiantes": 25,
+                                                                "total_respuestas": 2
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "seccion": "C2",
+                                                            "datos": {
+                                                                "total_estudiantes": 18,
+                                                                "total_respuestas": 1
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": 33,
+                                    "interrogante": "Expectativa de calificación final",
+                                    "descripcion": null,
+                                    "tipo_pregunta": {
+                                        "public_send": "valor_html",
+                                        "nombre": "nombre",
+                                        "valor": "valor",
+                                        "valor_html": "valor_html"
+                                    },
+                                    "opciones": [
+                                        {
+                                            "id": 161,
+                                            "etiqueta": "1",
+                                            "valor": 1
+                                        },
+                                        {
+                                            "id": 162,
+                                            "etiqueta": "2",
+                                            "valor": 2
+                                        },
+                                        {
+                                            "id": 163,
+                                            "etiqueta": "3",
+                                            "valor": 3
+                                        },
+                                        {
+                                            "id": 164,
+                                            "etiqueta": "4",
+                                            "valor": 4
+                                        },
+                                        {
+                                            "id": 165,
+                                            "etiqueta": "5",
+                                            "valor": 5
+                                        }
+                                    ],
+                                    "resultados": [
+                                        {
+                                            "periodo": "01-2014",
+                                            "materias": [
+                                                {
+                                                    "materia": "6014",
+                                                    "secciones": [
+                                                        {
+                                                            "seccion": "C1",
+                                                            "datos": {
+                                                                "total_estudiantes": 25,
+                                                                "total_respuestas": 2
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 1
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 0
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "seccion": "C2",
+                                                            "datos": {
+                                                                "total_estudiantes": 18,
+                                                                "total_respuestas": 1
+                                                            },
+                                                            "totalizacion": [
+                                                                {
+                                                                    "valor": 1,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 2,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 3,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 4,
+                                                                    "total": 0
+                                                                },
+                                                                {
+                                                                    "valor": 5,
+                                                                    "total": 1
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+    + Body    
+
+            {
+                "estatus": "ERROR", 
+                "mensaje": "La asignatura no está registrada" 
+            }
