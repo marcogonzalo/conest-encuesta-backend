@@ -2,7 +2,7 @@
 	@pregunta.opciones.each do |o|
 		headers.push(o.valor)
 	end
-	headers += ["Respuestas", "Inscritos", "Participación"] 
+	headers += ["Respuestas", "Inscritos", "Participación","Media"] 
 %>
 <%= CSV.generate_line headers %>
 <% @resultados.each do |pregunta_id,resultado|
@@ -22,7 +22,7 @@
 				@pregunta.opciones.each do |o|
 					arreglo_valores.push(valores[o.valor])
 				end
-				arreglo_valores += [datos["total_respuestas"],datos["total_estudiantes"],participacion]
+				arreglo_valores += [datos["total_respuestas"],datos["total_estudiantes"],participacion,datos["media_de_seccion"]]
 %>
 <%=		 		CSV.generate_line(arreglo_valores) %>
 <%

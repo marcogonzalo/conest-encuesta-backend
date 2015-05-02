@@ -28,6 +28,8 @@ class ReportePeriodo
 		aux_periodo = ""
 		aux_seccion = ""
 		total_respuestas = 0
+		total_puntos = 0
+		media_de_seccion = 0
 		opciones = pregunta.opciones.order(:valor)
 
 		# Para cada resultado {[periodo, seccion, valor] => total} de la materia
@@ -40,6 +42,8 @@ class ReportePeriodo
 
 			if aux_seccion != seccion
 				total_respuestas = 0
+				total_puntos = 0
+				media_de_seccion = 0
 				r[periodo][seccion] ||= {}
 				r[periodo][seccion]['datos'] ||= {}
 				r[periodo][seccion]['totalizacion'] ||= {}
@@ -56,6 +60,10 @@ class ReportePeriodo
 
 			total_respuestas += total
 			r[periodo][seccion]['datos']['total_respuestas'] = total_respuestas
+
+			total_puntos += (valor*total).to_f
+			media_de_seccion = (total_puntos/total_respuestas.to_f).to_f
+			r[periodo][seccion]['datos']['media_de_seccion'] = media_de_seccion
 		end
 		return resultados
 	end
@@ -71,6 +79,8 @@ class ReportePeriodo
 		aux_periodo = ""
 		aux_seccion = ""
 		total_respuestas = 0
+		total_puntos = 0
+		media_de_seccion = 0
 		opciones = pregunta.opciones.order(:valor)
 
 		# Para cada resultado {[periodo, materia, seccion, valor] => total} de la materia
@@ -89,6 +99,8 @@ class ReportePeriodo
 
 			if aux_seccion != seccion
 				total_respuestas = 0
+				total_puntos = 0
+				media_de_seccion = 0
 				r[periodo][materia][seccion] ||= {}
 				r[periodo][materia][seccion]['datos'] ||= {}
 				r[periodo][materia][seccion]['totalizacion'] ||= {}
@@ -105,6 +117,10 @@ class ReportePeriodo
 
 			total_respuestas += total
 			r[periodo][materia][seccion]['datos']['total_respuestas'] = total_respuestas
+
+			total_puntos += (valor*total).to_f
+			media_de_seccion = (total_puntos/total_respuestas.to_f).to_f
+			r[periodo][materia][seccion]['datos']['media_de_seccion'] = media_de_seccion
 		end
 		return resultados
 	end
