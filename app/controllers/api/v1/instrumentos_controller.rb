@@ -9,12 +9,15 @@ module Api
         @instrumentos = Instrumento.all
       end
 
+      # Retorna un instrumento con sus bloques, preguntas y opciones
       # GET /instrumentos/1
       # GET /instrumentos/1.json
       def show
         @instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:id])
       end
 
+      # Crea un instrumento según los parámetros recibidos. 
+      # Podría crear un instrumento completo si se cumple con todos los parámetros
       # POST /instrumentos
       # POST /instrumentos.json
       def create
@@ -31,6 +34,8 @@ module Api
         end
       end
 
+      # Actualiza un instrumento según los parámetros recibidos. 
+      # Podría actualizar un instrumento completo si se cumple con todos los parámetros
       # PATCH/PUT /instrumentos/1
       # PATCH/PUT /instrumentos/1.json
       def update

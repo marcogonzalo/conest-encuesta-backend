@@ -14,6 +14,8 @@ module Api
       def show
       end
 
+      # Crea un período académico conectándose a CONEST para obtener toda la información necesaria sobre el período. 
+      # De CONEST obtiene las ofertas académicas (asignaturas, secciones y docentes).
       # POST /periodos_academicos
       # POST /periodos_academicos.json
       def create
@@ -79,8 +81,9 @@ module Api
         end
       end
 
-      # POST /periodos_academicos/1/sincronizar_estudiantes
-      # POST /periodos_academicos/1/sincronizar_estudiantes.json
+      # Sincroniza los estudiantes de las distintas ofertas académicas registradas en CONEST para el período indicado
+      # POST /periodos_academicos/01-2014/sincronizar_estudiantes
+      # POST /periodos_academicos/01-2014/sincronizar_estudiantes.json
       def sincronizar_estudiantes
         periodo_academico_id = params[:periodo]
 
@@ -141,6 +144,8 @@ module Api
           params.require(:periodo_academico).permit(:periodo, :instrumento_id)
         end
 
+        # Método que procesa la información recibida desde CONEST sobre el período académico registrado
+        # En 'd' se contienen los datos de la respuesta enviada por CONEST
         def procesar_periodo(periodo_academico, d, instrumento_id = nil)
           # Iterar sobre las organizaciones (Escuelas)
           d['organizaciones'].each do |o|

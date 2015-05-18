@@ -1,6 +1,8 @@
 class ReportePeriodo
+	# Procesa y genera el arreglo de resultados para una materia especificada del período académico en cada pregunta recibida
 	def self.materia_periodo(oferta_periodo,preguntas)
 		resultados ||= {}
+		# Se recorre el arreglo de preguntas
 		preguntas.each do |pregunta|
 			resultados[pregunta.id] = {}
 			resultados[pregunta.id] = ReportePeriodo.resultados_pregunta_materia(pregunta,oferta_periodo)
@@ -8,8 +10,10 @@ class ReportePeriodo
 		return resultados
 	end
 
+	# Procesa y genera el arreglo de resultados para un docente especificado del período académico en cada pregunta recibida
 	def self.docente_periodo(ofertas_academicas,preguntas)
 		resultados ||= {}
+		# Se recorre el arreglo de preguntas
 		preguntas.each do |pregunta|
 			resultados[pregunta.id] = {}
 			resultados[pregunta.id] = ReportePeriodo.resultados_pregunta_docente(pregunta,ofertas_academicas)
@@ -17,6 +21,7 @@ class ReportePeriodo
 		return resultados
 	end
 
+	# Procesa los resultados almacenados para una materia en una pregunta
 	def self.resultados_pregunta_materia(pregunta,oferta_periodo)
 		# Se obtienen las respuestas y se totalizan agrupadas por período y valor de respuesta
 		respuestas = Respuesta.includes(consulta: { oferta_academica: { oferta_periodo: [:periodo_academico, :materia] } })
@@ -68,6 +73,7 @@ class ReportePeriodo
 		return resultados
 	end
 
+	# Procesa los resultados almacenados para un docente en una pregunta
 	def self.resultados_pregunta_docente(pregunta,ofertas_academicas)
 		# Se obtienen las respuestas y se totalizan agrupadas por período y valor de respuesta
 		respuestas = Respuesta.includes(consulta: { oferta_academica: { oferta_periodo: [:periodo_academico, :materia] } })

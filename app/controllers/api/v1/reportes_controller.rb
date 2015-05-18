@@ -10,16 +10,20 @@ module Api
 			# GET /api/v1/reportes/historico_pregunta/materias/6014/preguntas/1.json
 			def reporte_historico_pregunta_de_materia
 				@error = nil
+				# Se obtiene la Materia según su código
 				@materia = Materia.find_by(codigo: params[:codigo_materia])
 				if @materia.nil?
 					@error = :no_materia
 				else
+					# Se obtiene la pregunta por su id
 					@pregunta = Pregunta.find(params[:pregunta_id])
 					if @pregunta.nil?
 						@error = :no_pregunta
 					else
+						# Se construye el arreglo de preguntas arreglo de preguntas
 						@preguntas ||= []
 						@preguntas.push(@pregunta)
+						# Se pasan por parámentros la materia y el arreglo de preguntas
 						@resultados = ReporteHistorico.materia_preguntas(@materia,@preguntas)
 					end
 				end
@@ -47,13 +51,14 @@ module Api
 			end
 
 			# Devuelve todos los resultados de las preguntas especificadas de un instrumento en una materia
-			# GET /api/v1/reportes/historico_comparado/materias/6014/instrumentos/1.json?ids[]=1
+			# GET /api/v1/reportes/historico_comparado/materias/6014/instrumentos/1.json?ids[]=1&ids[]=2&ids[]=3
 			def reporte_historico_comparado_de_materia
 				@error = nil
 				if params[:ids].nil? or params[:ids].size == 0
 					@error = :no_parameters
 				else
 					preguntas_ids = params[:ids]
+					# Se obtiene la Materia según su código
 					@materia = Materia.find_by(codigo: params[:codigo_materia])
 					if @materia.nil?
 						@error = :no_materia
@@ -63,6 +68,7 @@ module Api
 						if @preguntas.nil? or @preguntas.size == 0
 							@error = :no_preguntas
 						else
+							# Se pasan por parámentros la materia y el arreglo de preguntas
 							@resultados = ReporteHistorico.materia_preguntas(@materia,@preguntas)
 						end
 					end
@@ -93,19 +99,25 @@ module Api
 				if @instrumento.nil?
 					@error = :no_instrumento
 				else
+					# Se obtiene la Materia según su código
 					@materia = Materia.find_by(codigo: params[:codigo_materia])
 					if @materia.nil?
 						@error = :no_materia
 					else
+						# Se construye el arreglo de preguntas
 						@preguntas ||= []
-						@instrumento.bloques.includes(:preguntas).each do |bloque|
-							bloque.preguntas.includes(:opciones).each do |pregunta|
-								@preguntas.push(pregunta)
-							end
-						end
+						# Se recorre todo el instrumento para obtener las preguntas
+						# @instrumento.bloques.includes(:preguntas).each do |bloque|
+						# 	bloque.preguntas.includes(:opciones).each do |pregunta|
+						# 		@preguntas.push(pregunta)
+						# 	end
+						# end
+						@preguntas = @instrumento.preguntas.includes(:opciones)
+
 						if @preguntas.nil? or @preguntas.size == 0
 							@error = :no_preguntas
 						else
+							# Se pasan por parámentros la materia y el arreglo de preguntas
 							@resultados = ReporteHistorico.materia_preguntas(@materia,@preguntas)
 						end
 					end
@@ -135,6 +147,7 @@ module Api
 			######
 
 			# Devuelve los resultados las preguntas especificadas de instrumento aplicado para el período en una materia
+			# GET /api/v1/reportes/periodo_comparado/materias/6014/periodos/01-2014.json?ids[]=1&ids[]=2&ids[]=3
 			def reporte_periodo_comparado_de_materia
 				@error = nil
 
@@ -146,6 +159,7 @@ module Api
 					if @periodo_academico.nil?
 						@error = :no_periodo
 					else
+						# Se obtiene la Materia según su código
 						@materia = Materia.find_by(codigo: params[:codigo_materia])
 						if @materia.nil?
 							@error = :no_materia
@@ -155,8 +169,12 @@ module Api
 								@error = :no_oferta_periodo
 								return nil
 							else
+								# Se construye el arreglo de preguntas
+								@preguntas ||= []
+								# Se recorre todo el instrumento para obtener las preguntas
 								@instrumento = @oferta_periodo.oferta_academica.first.consulta.instrumento
 								@preguntas = @instrumento.preguntas.includes(:opciones).where(id: preguntas_ids)
+								# Se pasan por parámentros la materia en el período y el arreglo de preguntas
 								@resultados = ReportePeriodo.materia_periodo(@oferta_periodo,@preguntas)
 							end
 						end
@@ -179,12 +197,14 @@ module Api
 			end
 
 			# Devuelve la totalización de resultados de cada sección para las preguntas del instrumento aplicado para el período en una materia
+			# GET /api/v1/reportes/periodo_completo/materias/6014/periodos/01-2014.json
 			def reporte_periodo_completo_de_materia
 				@error = nil
 				@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
 				if @periodo_academico.nil?
 					@error = :no_periodo
 				else
+					# Se obtiene la Materia según su código
 					@materia = Materia.find_by(codigo: params[:codigo_materia])
 					if @materia.nil?
 						@error = :no_materia
@@ -194,13 +214,17 @@ module Api
 							@error = :no_oferta_periodo
 							return nil
 						else
+							# Se construye el arreglo de preguntas
 							@preguntas ||= []
+							# Se recorre todo el instrumento para obtener las preguntas
 							@instrumento = @oferta_periodo.oferta_academica.first.consulta.instrumento
-							@instrumento.bloques.includes(:preguntas).each do |bloque|
-								bloque.preguntas.includes(:opciones).each do |pregunta|
-									@preguntas.push(pregunta)
-								end
-							end
+							# @instrumento.bloques.includes(:preguntas).each do |bloque|
+							# 	bloque.preguntas.includes(:opciones).each do |pregunta|
+							# 		@preguntas.push(pregunta)
+							# 	end
+							# end
+							@preguntas = @instrumento.preguntas.includes(:opciones)
+							# Se pasan por parámentros la materia en el período y el arreglo de preguntas
 							@resultados = ReportePeriodo.materia_periodo(@oferta_periodo,@preguntas)
 						end
 					end
@@ -233,6 +257,8 @@ module Api
 			# GET /api/v1/reportes/historico_comparado/docentes/12243532/preguntas/1.json
 			def reporte_historico_pregunta_de_docente
 				@error = nil
+
+				# Se obtiene el docente según su cédula
 				@docente = Docente.find_by(cedula: params[:cedula_docente])
 				if @docente.nil?
 					@error = :no_docente
@@ -241,8 +267,10 @@ module Api
 					if @pregunta.nil?
 						@error = :no_pregunta
 					else
+						# Se construye el arreglo de preguntas
 						@preguntas ||= []
 						@preguntas.push(@pregunta)
+						# Se pasan por parámentros el docente y el arreglo de preguntas
 						@resultados = ReporteHistorico.docente_preguntas(@docente,@preguntas)
 					end
 				end
@@ -273,23 +301,29 @@ module Api
 			# GET /api/v1/reportes/historico_comparado/docentes/12243532/instrumentos/1.json
 			def reporte_historico_completo_de_docente
 				@error = nil
+				# Se obtiene el instrumento del que se obtendrán los resultados
 				@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
 				if @instrumento.nil?
 					@error = :no_instrumento
 				else
+					# Se obtiene el docente según su cédula
 					@docente = Docente.find_by(cedula: params[:cedula_docente])
 					if @docente.nil?
 						@error = :no_docente
 					else
+						# Se construye el arreglo de preguntas
 						@preguntas ||= []
-						@instrumento.bloques.includes(:preguntas).each do |bloque|
-							bloque.preguntas.includes(:opciones).each do |pregunta|
-								@preguntas.push(pregunta)
-							end
-						end
+						# Se recorre todo el instrumento para obtener las preguntas
+						# @instrumento.bloques.includes(:preguntas).each do |bloque|
+						# 	bloque.preguntas.includes(:opciones).each do |pregunta|
+						# 		@preguntas.push(pregunta)
+						# 	end
+						# end
+						@preguntas = @instrumento.preguntas.includes(:opciones)
 						if @preguntas.nil? or @preguntas.size == 0
 							@error = :no_preguntas
 						else
+						# Se pasan por parámentros el docente y el arreglo de preguntas
 							@resultados = ReporteHistorico.docente_preguntas(@docente,@preguntas)
 						end
 					end
@@ -315,22 +349,28 @@ module Api
 			end
 			
 			# Devuelve todos los resultados de las preguntas especificadas de un instrumento en una materia
-			# GET /api/v1/reportes/historico_comparado/docentes/12243532/instrumentos/1.json?ids[]=1
+			# GET /api/v1/reportes/historico_comparado/docentes/12243532/instrumentos/1.json?ids[]=1&ids[]=2&ids[]=3
 			def reporte_historico_comparado_de_docente
 				@error = nil
 				if params[:ids].nil? or params[:ids].size == 0
 					@error = :no_parameters
 				else
 					preguntas_ids = params[:ids]
+					# Se obtiene el docente según su cédulapreguntas_ids = params[:ids]
 					@docente = Docente.find_by(cedula: params[:cedula_docente])
 					if @docente.nil?
 						@error = :no_docente
 					else
+						# Se construye el arreglo de preguntas
+						@preguntas ||= []
+						# Se obtiene el instrumento del que se obtendrán los resultados
 						@instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:instrumento_id])
+						# Se obtienen las preguntas del instrumento indicadas en la consulta
 						@preguntas = @instrumento.preguntas.where(id: preguntas_ids)
 						if @preguntas.nil? or @preguntas.size == 0
 							@error = :no_preguntas
 						else
+							# Se pasan por parámentros el docente y el arreglo de preguntas
 							@resultados = ReporteHistorico.docente_preguntas(@docente,@preguntas)
 						end
 					end
@@ -360,7 +400,7 @@ module Api
 			######
 
 			# Devuelve los resultados de las preguntas especificadas de instrumento aplicado para el período en un docente
-			# GET /api/v1/reportes/historico_comparado/docentes/12243532/periodo/01-2014.json?ids[]=1
+			# GET /api/v1/reportes/periodo_comparado/docentes/12243532/periodo/01-2014.json?ids[]=1&ids[]=2&ids[]=3
 			def reporte_periodo_comparado_de_docente
 				@error = nil
 
@@ -368,26 +408,33 @@ module Api
 					@error = :no_parameters
 				else
 					preguntas_ids = params[:ids]
+					# Se obtiene el período académico para el que se desean resultados
 					@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
 					if @periodo_academico.nil?
 						@error = :no_periodo
 					else
+						# Se obtiene el docente según su cédula
 						@docente = Docente.find_by(cedula: params[:cedula_docente])
 						if @docente.nil?
 							@error = :no_docente
 						else
+							# Se obtienen las ofertas académicas (secciones) del docente en el período
 							@ofertas_academicas = OfertaAcademica.includes(:consulta, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
 							if @ofertas_academicas.nil?
 								@error = :no_oferta_academica
 								return nil
 							else
-								@consultas = Consulta.where(oferta_academica: @ofertas_academicas.ids)
+								# Se construye el arreglo de preguntas
+								@preguntas ||= []
 								@preguntas = Pregunta.includes(:opciones).where(id: preguntas_ids)
-								@instrumento = Instrumento.includes(:preguntas).where(preguntas: { id: @preguntas.first.id }).first
+
+								#	@consultas = Consulta.where(oferta_academica: @ofertas_academicas.ids)
+								#	@instrumento = Instrumento.includes(:preguntas).where(preguntas: { id: @preguntas.first.id }).first
 
 								if @preguntas.nil? or @preguntas.size == 0
 									@error = :no_preguntas
 								else
+									# Se pasan por parámentros las secciones del docente en el período y el arreglo de preguntas
 									@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
 								end
 							end
@@ -413,31 +460,35 @@ module Api
 			end
 
 			# Devuelve los resultados de las preguntas de instrumento aplicado para el período en un docente
-			# GET /api/v1/reportes/historico_comparado/docentes/12243532/periodo/01-2014.json
+			# GET /api/v1/reportes/periodo_completo/docentes/12243532/periodo/01-2014.json
 			def reporte_periodo_completo_de_docente
 				@error = nil
-
-				preguntas_ids = params[:ids]
+				# Se obtiene el período académico para el que se desean resultados
 				@periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo])
 				if @periodo_academico.nil?
 					@error = :no_periodo
 				else
+					# Se obtiene el docente según su cédula
 					@docente = Docente.find_by(cedula: params[:cedula_docente])
 					if @docente.nil?
 						@error = :no_docente
 					else
+						# Se obtienen las ofertas académicas (secciones) del docente en el período
 						@ofertas_academicas = OfertaAcademica.includes(:consulta, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
 						if @ofertas_academicas.nil?
 							@error = :no_oferta_academica
 							return nil
 						else
+							# Se construye el arreglo de preguntas
 							@preguntas ||= []
 							@instrumento = @ofertas_academicas.first.consulta.instrumento
-							@instrumento.bloques.includes(:preguntas).each do |bloque|
-								bloque.preguntas.includes(:opciones).each do |pregunta|
-									@preguntas.push(pregunta)
-								end
-							end
+							# @instrumento.bloques.includes(:preguntas).each do |bloque|
+							# 	bloque.preguntas.includes(:opciones).each do |pregunta|
+							# 		@preguntas.push(pregunta)
+							# 	end
+							# end
+							@preguntas = @instrumento.preguntas.includes(:opciones)
+							# Se pasan por parámentros las secciones del docente en el período y el arreglo de preguntas
 							@resultados = ReportePeriodo.docente_periodo(@ofertas_academicas,@preguntas)
 						end
 					end

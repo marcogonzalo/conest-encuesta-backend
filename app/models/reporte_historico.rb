@@ -1,10 +1,12 @@
 class ReporteHistorico
+	# Procesa y genera el arreglo de resultados para  la materia especificada en cada pregunta recibida
 	def self.materia_preguntas(materia,preguntas)
 		if materia.nil?
 			error = :no_materia
 			return nil
 		else
 			resultados ||= {}
+			# Se recorre el arreglo de preguntas
 			preguntas.each do |pregunta|
 				resultados[pregunta.id] = {}
 				resultados[pregunta.id] = ReporteHistorico.resultados_pregunta_materia(pregunta,materia)
@@ -13,12 +15,14 @@ class ReporteHistorico
 		end
 	end
 
+	# Procesa y genera el arreglo de resultados para el docente especificado en cada pregunta recibida
 	def self.docente_preguntas(docente,preguntas)
 		if docente.nil?
 			error = :no_docente
 			return nil
 		else
 			resultados ||= {}
+			# Se recorre el arreglo de preguntas
 			preguntas.each do |pregunta|
 				resultados[pregunta.id] = {}
 				resultados[pregunta.id] = ReporteHistorico.resultados_pregunta_docente(pregunta,docente)
@@ -27,6 +31,7 @@ class ReporteHistorico
 		end
 	end
 
+	# Procesa los resultados almacenados para una materia en una pregunta
 	def self.resultados_pregunta_materia(pregunta,materia)
 		# Se obtienen las respuestas y se totalizan agrupadas por período y valor de respuesta
 		respuestas = Respuesta.includes(consulta: { oferta_academica: { oferta_periodo: [:periodo_academico, :materia] } })
@@ -82,6 +87,7 @@ class ReporteHistorico
 		return resultados
 	end
 
+	# Procesa los resultados almacenados para un docente en una pregunta
 	def self.resultados_pregunta_docente(pregunta,docente)
 		# Se obtienen las respuestas y se totalizan agrupadas por período y valor de respuesta
 		respuestas = Respuesta.includes(consulta: { oferta_academica: [{ oferta_periodo: [:periodo_academico, :materia] }, :docente] })

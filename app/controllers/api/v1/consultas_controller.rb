@@ -54,6 +54,7 @@ module Api
         end
       end
 
+      # Registra cada una de las respuestas de una consulta
       # POST /consultas/1/responder
       # POST /consultas/1/responder.json
       def responder
