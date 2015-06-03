@@ -6,6 +6,10 @@ gem 'rails', '4.2.0'
 gem 'pg'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+# JSON Web Token implementation in Ruby. Read more: https://github.com/progrium/ruby-jwt
+gem 'jwt'
+# Rack Middleware for handling Cross-Origin Resource Sharing (CORS), which makes cross-origin AJAX possible. Read more: https://github.com/cyu/rack-cors
+gem 'rack-cors', :require => 'rack/cors'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Simple HTTP and REST client for Ruby, inspired by microframework syntax for specifying actions. Read more: https://github.com/rest-client/rest-client

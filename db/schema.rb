@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402032208) do
+ActiveRecord::Schema.define(version: 20150529014040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20150402032208) do
   create_table "bloques", force: :cascade do |t|
     t.string   "nombre",      limit: 100, null: false
     t.string   "descripcion", limit: 255
+    t.string   "tipo",        limit: 4,   null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.string   "tipo"
   end
 
   create_table "bloques_instrumentos", id: false, force: :cascade do |t|
@@ -178,6 +178,15 @@ ActiveRecord::Schema.define(version: 20150402032208) do
   add_index "respuestas", ["consulta_id"], name: "index_respuestas_on_consulta_id", using: :btree
   add_index "respuestas", ["pregunta_id"], name: "index_respuestas_on_pregunta_id", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "descripcion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "roles", ["nombre"], name: "index_roles_on_nombre", using: :btree
+
   create_table "tipos_pregunta", force: :cascade do |t|
     t.string   "nombre",     limit: 45, null: false
     t.string   "valor",      limit: 45, null: false
@@ -192,6 +201,19 @@ ActiveRecord::Schema.define(version: 20150402032208) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "usuarios", force: :cascade do |t|
+    t.string   "cedula",     limit: 20
+    t.string   "clave",      limit: 100
+    t.integer  "rol_id"
+    t.string   "token"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "usuarios", ["cedula"], name: "index_usuarios_on_cedula", using: :btree
+  add_index "usuarios", ["rol_id"], name: "index_usuarios_on_rol_id", using: :btree
+  add_index "usuarios", ["token"], name: "index_usuarios_on_token", using: :btree
 
   add_foreign_key "consultas", "instrumentos"
   add_foreign_key "consultas", "oferta_academica"
