@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+
   namespace :api, except: [:new, :edit], defaults: {format: :json} do
     namespace :v1 do
+      post '/auth' => 'auth#authenticate'
 
       resources :consultas do
         member do

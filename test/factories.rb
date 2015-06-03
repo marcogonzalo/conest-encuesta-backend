@@ -1,4 +1,14 @@
-FactoryGirl.define do  
+FactoryGirl.define do  factory :usuario do
+    cedula 1
+clave 1
+rol nil
+token "MyString"
+  end
+  factory :rol do
+    nombre "MyString"
+descripcion "MyString"
+  end
+  
   factory :instrumento do
     nombre "cualquiera"
   end
