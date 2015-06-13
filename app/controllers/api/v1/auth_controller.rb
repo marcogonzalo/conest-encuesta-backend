@@ -5,7 +5,7 @@ module Api
 			before_action :set_usuario
 		  def authenticate
 		  	if @usuario
-		      render json: { rol_id: @usuario.rol_id, auth_token: @usuario.generate_auth_token }
+		      render json: { rol: {nombre: 'admin'}, auth_token: @usuario.generate_auth_token }
 		    else
 		      render json: { error: 'Nombre de usuario o clave inválido' }, status: :unauthorized
 		    end
