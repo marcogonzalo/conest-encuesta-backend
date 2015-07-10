@@ -1,5 +1,6 @@
 require 'exceptions'
 require 'jwt_authentication/auth_token'
+require 'pretty_api'
 module Api
 	module V1
 		class ApplicationController < ActionController::Base
@@ -7,7 +8,7 @@ module Api
 		  # For APIs, you may want to use :null_session instead.
 		  # protect_from_forgery with: :exception
 
-			before_action :set_current_user, :authenticate_request
+		#	before_action :set_current_user, :authenticate_request
 #			before_action :set_access_control_headers
 
 #			def set_access_control_headers

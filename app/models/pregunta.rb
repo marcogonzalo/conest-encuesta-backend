@@ -14,5 +14,5 @@ class Pregunta < ActiveRecord::Base
 
 	validates :tipo_pregunta_id,
 				numericality: { only_integer: true },
-				presence: true
+				allow_blank: true
 end

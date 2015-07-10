@@ -13,7 +13,7 @@ module Api
       # GET /instrumentos/1
       # GET /instrumentos/1.json
       def show
-        @instrumento = Instrumento.includes(bloques:{preguntas:[:tipo_pregunta, :opciones]}).find(params[:id])
+        @instrumento = Instrumento.includes(bloques:{preguntas:[:opciones]}).find(params[:id])
       end
 
       # Crea un instrumento según los parámetros recibidos. 
@@ -53,6 +53,7 @@ module Api
       # DELETE /instrumentos/1
       # DELETE /instrumentos/1.json
       def destroy
+        puts @instrumento
         @instrumento.destroy
         respond_to do |format|
           format.html { redirect_to api_v1_instrumentos_url, notice: 'Instrumento was successfully destroyed.' }
@@ -68,16 +69,19 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def instrumento_params
-          params.require(:instrumento).permit(:nombre, :descripcion, bloques_attributes: [
+          json_instrumento_params = params.permit(:nombre, :descripcion, 
+                                              bloques: [
                                                 :nombre, :descripcion, :tipo, 
-                                                preguntas_attributes: [
-                                                  :id, :interrogante, :descripcion, :tipo_pregunta_id, 
-                                                  opciones_attributes: [
+                                                preguntas: [
+                                                  :id, :interrogante, :descripcion, :tipo_pregunta, 
+                                                  opciones: [
                                                     :id, :etiqueta, :valor 
                                                   ]
                                                 ]
                                               ], bloque_ids: [])
+           PrettyApi.with_nested_attributes(json_instrumento_params,bloques: [preguntas: [:opciones]])
         end
+
     end
   end
 end

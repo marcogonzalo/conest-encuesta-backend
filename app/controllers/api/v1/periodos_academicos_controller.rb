@@ -122,7 +122,7 @@ module Api
                     end
                   end
                 end
-                render json: { estatus: r['estatus'], mensaje: "Controles para período #{@periodo_academico.periodo} actualizados" }, status: :ok
+                render json: { estatus: r['estatus'], mensaje: "Controles de consultas para período #{@periodo_academico.periodo} actualizados" }, status: :ok
               end
             end
           else
@@ -141,6 +141,7 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def periodo_academico_params
+          puts params
           params.require(:periodo_academico).permit(:periodo, :instrumento_id)
         end
 
