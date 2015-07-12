@@ -126,7 +126,7 @@ class PdfGenerator < Prawn::Document
 				opciones.each do |o|
 					arreglo_valores.push(valores[o])
 				end
-				data += [[i+=1,periodo,s,@materia.codigo]+arreglo_valores+[datos["total_respuestas"],datos["total_estudiantes"],participacion,datos["media_de_seccion"]]]
+				data += [[i+=1,periodo,@materia.codigo,s]+arreglo_valores+[datos["total_respuestas"],datos["total_estudiantes"],participacion,datos["media_de_seccion"]]]
 			end
 		end
 		return data
@@ -140,7 +140,7 @@ class PdfGenerator < Prawn::Document
 		end
 
 		# Títulos de las columnas para cabecera 
-		titulos = [{content: '#', rowspan: 2}, {content: 'Período', rowspan: 2}, {content: 'Sección', rowspan: 2}, {content: "Código", rowspan: 2}, {content: 'Opciones', colspan: opciones.count}, {content: "Respuestas", rowspan: 2}, {content: "Inscritos", rowspan: 2}, {content: "Participación", rowspan: 2}, {content: "Media", rowspan: 2}]
+		titulos = [{content: '#', rowspan: 2}, {content: 'Período', rowspan: 2}, {content: "Código", rowspan: 2}, {content: 'Sección', rowspan: 2}, {content: 'Opciones', colspan: opciones.count}, {content: "Respuestas", rowspan: 2}, {content: "Inscritos", rowspan: 2}, {content: "Participación", rowspan: 2}, {content: "Media", rowspan: 2}]
 		
 		# Junto los títulos y opciones como la cabecera
 		data = [titulos]+[opciones]
