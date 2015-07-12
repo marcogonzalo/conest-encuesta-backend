@@ -56,7 +56,11 @@ module Api
       end
       
       def consultas_sin_responder
-        @consultas_sin_responder = @estudiante.oferta_academica.sin_responder_consulta.includes(oferta_periodo: [:periodo_academico, :materia])
+        if @estudiante
+          @consultas_sin_responder = @estudiante.oferta_academica.sin_responder_consulta.includes(oferta_periodo: [:periodo_academico, :materia])
+        else
+          render json: { estatus: "ERROR", mensaje: "La cédula no coincide con ningún estudiante" }, status: :not_found
+        end
       end
 
       private
@@ -66,7 +70,10 @@ module Api
         end
 
         def set_estudiante_by_cedula
+          puts params[:id]
+          puts Estudiante.all.inspect
           @estudiante = Estudiante.find_by(cedula: params[:id])
+          puts @estudiante
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.
