@@ -1,7 +1,7 @@
 module Api
   module V1
     class ConsultasController < ApplicationController
-      before_action :set_consulta, only: [:show, :update, :destroy, :responder]
+      before_action :set_consulta, only: [:update, :destroy, :responder]
 
       # GET /consultas
       # GET /consultas.json
@@ -12,6 +12,7 @@ module Api
       # GET /consultas/1
       # GET /consultas/1.json
       def show
+        @consulta = Consulta.includes(oferta_academica: [ oferta_periodo: [ :materia ] ]).find(params[:id])
       end
 
       # POST /consultas
@@ -71,8 +72,10 @@ module Api
             if not @control.respondida
               # Se almacenan las respuestas
               respuestas.each do |r|
-                @respuesta = Respuesta.new(consulta: @consulta, pregunta_id: r['pregunta_id'], valor: r['valor'])
-                @respuesta.save
+                unless r['pregunta_id'].nil? or r['pregunta_id'].nil?
+                  @respuesta = Respuesta.new(consulta: @consulta, pregunta_id: r['pregunta_id'], valor: r['valor'])
+                  @respuesta.save
+                end
               end
               # Se marca la consulta como respondida
               ControlConsulta.where(oferta_academica_id: @consulta.oferta_academica_id, estudiante_id: @estudiante.id).update_all(respondida: true)
