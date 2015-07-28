@@ -4,6 +4,9 @@ class Api::V1::OfertasPeriodoControllerTest < ActionController::TestCase
   setup do
     @oferta_periodo = FactoryGirl.create(:oferta_periodo)
     @periodo_academico = FactoryGirl.create(:periodo_academico)
+
+    @usuario = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
   end
 
   test "should get index" do

@@ -193,6 +193,8 @@ module Api
 					render json: { estatus: "ERROR", mensaje: "El período no existe" }, status: :not_found
 				elsif @error == :no_oferta_periodo
 					render json: { estatus: "ERROR", mensaje: "El la oferta académica no existe en el período" }, status: :not_found
+				elsif @error == :no_parameters	
+					render json: { estatus: "ERROR", mensaje: "No se detectaron parámetros para la comparación." }.to_json, status: :bad_request
 				end
 			end
 

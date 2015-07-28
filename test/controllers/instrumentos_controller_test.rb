@@ -1,8 +1,12 @@
 require 'test_helper'
+require 'pretty_api'
 
 class Api::V1::InstrumentosControllerTest < ActionController::TestCase
   setup do
     @instrumento = instrumentos(:instrumento_1)
+
+    @usuario = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
   end
 
   test "should get index" do
@@ -35,7 +39,7 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
       assert_difference('Instrumento.count') do
         post :create, 
               instrumento: { 
-                descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, bloques_attributes: [{ 
+                descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, bloques: [{ 
                   nombre: @bloque.nombre, descripcion: @bloque.descripcion, tipo: @bloque.tipo 
                 }]
               }, format: :json
@@ -54,9 +58,9 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
           post :create, 
                 instrumento: { 
                   descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, 
-                  bloques_attributes: [{ 
+                  bloques: [{ 
                     nombre: @bloque.nombre, descripcion: @bloque.descripcion, tipo: @bloque.tipo,
-                    preguntas_attributes: [
+                    preguntas: [
                       { interrogante: @pregunta1.interrogante, descripcion: @pregunta1.descripcion, tipo_pregunta_id: @pregunta1.tipo_pregunta_id },
                       { interrogante: @pregunta2.interrogante, descripcion: @pregunta2.descripcion, tipo_pregunta_id: @pregunta2.tipo_pregunta_id }
                     ]
@@ -85,17 +89,17 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
             post :create, 
                   instrumento: { 
                     descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, 
-                    bloques_attributes: [{ 
+                    bloques: [{ 
                       nombre: @bloque.nombre, descripcion: @bloque.descripcion, tipo: @bloque.tipo,
-                      preguntas_attributes: [
+                      preguntas: [
                         { interrogante: @pregunta1.interrogante, descripcion: @pregunta1.descripcion, tipo_pregunta_id: @pregunta1.tipo_pregunta_id, 
-                          opciones_attributes: [
+                          opciones: [
                             { etiqueta: @opcion1.etiqueta, valor: @opcion1.valor },
                             { etiqueta: @opcion2.etiqueta, valor: @opcion2.valor }
                           ] 
                         },
                         { interrogante: @pregunta2.interrogante, descripcion: @pregunta2.descripcion, tipo_pregunta_id: @pregunta2.tipo_pregunta_id, 
-                          opciones_attributes: [
+                          opciones: [
                             { etiqueta: @opcion3.etiqueta, valor: @opcion3.valor },
                             { etiqueta: @opcion4.etiqueta, valor: @opcion4.valor },
                             { etiqueta: @opcion5.etiqueta, valor: @opcion5.valor },

@@ -3,6 +3,9 @@ require 'test_helper'
 class Api::V1::DocentesControllerTest < ActionController::TestCase
   setup do
     @docente = FactoryGirl.create(:docente)
+
+    @usuario = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
   end
 
   test "should get index" do

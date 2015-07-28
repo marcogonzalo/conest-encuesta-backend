@@ -4,17 +4,19 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
-# JSON Web Token implementation in Ruby. Read more: https://github.com/progrium/ruby-jwt
-gem 'jwt'
 # Rack Middleware for handling Cross-Origin Resource Sharing (CORS), which makes cross-origin AJAX possible. Read more: https://github.com/cyu/rack-cors
 gem 'rack-cors', :require => 'rack/cors'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.0'
 # Simple HTTP and REST client for Ruby, inspired by microframework syntax for specifying actions. Read more: https://github.com/rest-client/rest-client
 # Para conexion con API de Conest
 gem 'rest-client'
+# JSON Web Token implementation in Ruby. Read more: https://github.com/progrium/ruby-jwt
+gem 'jwt'
+# Continuation of CanCan, the authorization Gem for Ruby on Rails. Read more: https://github.com/CanCanCommunity/cancancan
+gem 'cancancan', '~> 1.10'
+# bundle exec rake doc:rails generates the API under doc/api.
+gem 'sdoc', '~> 0.4.0', group: :doc
 # Create seeds for each environment, share seeds between environments and specify dependencies to load your seeds in order. Read more: https://github.com/james2m/seedbank
 gem 'seedbank'
 # Prawn is a fast, tiny, and nimble PDF generator for Ruby. Read more: https://github.com/prawnpdf/prawn

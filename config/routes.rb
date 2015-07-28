@@ -67,6 +67,9 @@ Rails.application.routes.draw do
       resources :respuestas, except: [:update, :delete]
 
       resources :tokens, except: [:show]
+      
+      resources :roles, except: [:create, :delete]
+      resources :permisos, except: [:delete]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

@@ -3,6 +3,13 @@ class Usuario < ActiveRecord::Base
 
 	def generate_auth_token
 		payload = { user_id: self.id }
-		AuthToken.encode(payload)
+		token = AuthToken.encode(payload)
+		self.token = token
+		self.save
+		token
+	end
+
+	def super_admin?
+		return self.rol.nombre.eql?('SuperAdmin')
 	end
 end
