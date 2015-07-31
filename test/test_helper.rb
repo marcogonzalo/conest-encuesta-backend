@@ -22,7 +22,7 @@ class ActiveSupport::TestCase
 		puts "\n\nRequest:\n#{request.params}"
 		if response
 			puts "\nResponse:\nCode: #{response.code}"
-			puts"Body: #{response.body}" unless response.body.empty?
+			puts "Body: #{response.body}" unless response.body.empty?
 		end
 		puts "\n\n"
 	end

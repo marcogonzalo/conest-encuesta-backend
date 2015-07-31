@@ -19,20 +19,19 @@ module Api
 
 			def edit
 		#		@permisos = Permiso.all.select{|i| ["Part"].include? i.subject_class}.compact
-				@permisos = Permiso.all.compact
+				@permisos = Permiso.all
 				@rol_permisos = @rol.permisos.collect{|p| p.id}
 				render json: {rol: @rol, permisos: @permisos, permisos_rol: @rol_permisos }
 			end
 
 			def update
 				@rol.permisos = []
-				@rol.set_permisos(params[:permisos]) if params[:permisos]
-				if @rol.save
-					redirect_to roles_path and return
-				end
+				@rol.asignar_permisos(params[:permisos]) if params[:permisos]
+				@rol.save
+
 		#		@permisos = Permiso.all.select{|i| ["Part"].include? i.subject_class}.compact
-				@permisos = Permiso.all.compact
-				render json: {rol: @rol, permisos: @rol.permisos }
+				@permisos = Permiso.all
+				render json: {rol: @rol, permisos: @permisos, permisos_rol: @rol.permisos }
 			end
 
 			private

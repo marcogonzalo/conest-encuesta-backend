@@ -1,9 +1,9 @@
 class Rol < ActiveRecord::Base
 	has_and_belongs_to_many :permisos
 	def asignar_permisos(permisos)
-		permisos.each do |id|
+		permisos.each do |p|
 		#find the main permiso assigned from the UI
-			permiso = Permiso.find(id)
+			permiso = Permiso.find(p.id)
 		    self.permisos << permiso
 =begin
 			case permiso.clase
