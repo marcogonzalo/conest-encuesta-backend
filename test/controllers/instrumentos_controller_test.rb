@@ -5,8 +5,8 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
   setup do
     @instrumento = instrumentos(:instrumento_1)
 
-    @usuario = FactoryGirl.create(:usuario_superadmin)
-    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
+    @current_user = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @current_user.token.to_s 
   end
 
   test "should get index" do

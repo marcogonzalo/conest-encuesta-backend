@@ -21,28 +21,28 @@ FactoryGirl.define do
       # attributes; `create_list`'s second argument is the number of records
       # to create and we make sure the user is associated properly to the post
       after(:create) do |usuario| 
-        usuario.rol = create(:rol_superadmin) 
+        usuario.rol = Rol.find_by(nombre: "SuperAdmin")
         usuario.generate_auth_token
       end
     end
 
     factory :usuario_admin do
       after(:create) do |usuario| 
-        usuario.rol = create(:rol_admin) 
+        usuario.rol = Rol.find_by(nombre: "Admin") 
         usuario.generate_auth_token
       end
     end
 
     factory :usuario_estudiante do
       after(:create) do |usuario| 
-        usuario.rol = create(:rol_estudiante) 
+        usuario.rol = Rol.find_by(nombre: "Estudiante")
         usuario.generate_auth_token
       end
     end
 
     factory :usuario_docente do
       after(:create) do |usuario| 
-        usuario.rol = create(:rol_docente) 
+        usuario.rol = Rol.find_by(nombre: "Docente")
         usuario.generate_auth_token
       end
     end

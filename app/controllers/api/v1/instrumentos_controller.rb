@@ -1,10 +1,11 @@
 module Api
   module V1
     class InstrumentosController < ApplicationController
-#      before_action :load_and_authorize_resource
-#      before_action :cargar_permisos # call this after load_and_authorize else it gives a cancan error
       
       before_action :set_instrumento, only: [:show, :update, :destroy]
+
+      load_and_authorize_resource
+      before_action :cargar_permisos # call this after load_and_authorize else it gives a cancan error
 
       # GET /instrumentos
       # GET /instrumentos.json
@@ -56,7 +57,6 @@ module Api
       # DELETE /instrumentos/1
       # DELETE /instrumentos/1.json
       def destroy
-        puts @instrumento
         @instrumento.destroy
         respond_to do |format|
           format.html { redirect_to api_v1_instrumentos_url, notice: 'Instrumento was successfully destroyed.' }

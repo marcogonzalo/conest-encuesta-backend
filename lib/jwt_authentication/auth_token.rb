@@ -8,7 +8,7 @@ class AuthToken
   end
   
   def self.decode(token)
-#    byebug
+    return nil if token.nil?
     payload = JWT.decode(token, nil, false)
     payload[0]
   rescue JWT::ExpiredSignature
