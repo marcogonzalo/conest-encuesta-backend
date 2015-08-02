@@ -41,9 +41,6 @@ class Api::V1::RolesControllerTest < ActionController::TestCase
       patch :update, id: @rol.id, permisos: [@permiso], format: :json
       despues_2 = @rol.permisos.count
 
-      puts @rol.permisos.inspect
-
       assert_equal despues_1, despues_2 
   end
-
 end

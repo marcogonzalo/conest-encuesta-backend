@@ -69,7 +69,9 @@ Rails.application.routes.draw do
       resources :tokens, except: [:show]
       
       resources :roles, except: [:create, :delete]
-      resources :permisos, except: [:delete]
+
+      get '/usuario_puede/:nombre_permiso' => 'permisos#puede'
+
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

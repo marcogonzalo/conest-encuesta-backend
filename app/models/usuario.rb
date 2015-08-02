@@ -1,3 +1,4 @@
+require 'jwt_authentication/auth_token'
 class Usuario < ActiveRecord::Base
 	belongs_to :rol
 

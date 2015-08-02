@@ -79,8 +79,7 @@ module Api
 
 			# CanCanCan: carga los permisos del usuario actual
 			def cargar_permisos
-#				@current_permissions = @current_user.rol.permisos.collect{|i| [i.clase, i.accion]}
-				true
+				@permisos_de_usuario = @current_user.rol.permisos.collect{|i| i.nombre}
 			end
 		end
 	end
