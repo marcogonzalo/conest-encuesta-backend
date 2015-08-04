@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529014040) do
+ActiveRecord::Schema.define(version: 20150716223310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,24 @@ ActiveRecord::Schema.define(version: 20150529014040) do
   end
 
   add_index "periodos_academicos", ["periodo"], name: "index_periodos_academicos_on_periodo", using: :btree
+
+  create_table "permisos", force: :cascade do |t|
+    t.string   "clase",       null: false
+    t.string   "accion",      null: false
+    t.string   "nombre",      null: false
+    t.string   "descripcion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "permisos", ["accion"], name: "index_permisos_on_accion", using: :btree
+  add_index "permisos", ["clase"], name: "index_permisos_on_clase", using: :btree
+  add_index "permisos", ["nombre"], name: "index_permisos_on_nombre", using: :btree
+
+  create_table "permisos_roles", id: false, force: :cascade do |t|
+    t.integer "permiso_id", null: false
+    t.integer "rol_id",     null: false
+  end
 
   create_table "preguntas", force: :cascade do |t|
     t.string   "interrogante",     limit: 100, null: false

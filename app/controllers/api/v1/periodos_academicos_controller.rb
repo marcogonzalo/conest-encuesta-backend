@@ -141,7 +141,6 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def periodo_academico_params
-          puts params
           params.require(:periodo_academico).permit(:periodo, :instrumento_id)
         end
 

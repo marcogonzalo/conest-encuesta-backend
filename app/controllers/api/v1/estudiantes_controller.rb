@@ -70,10 +70,7 @@ module Api
         end
 
         def set_estudiante_by_cedula
-          puts params[:id]
-          puts Estudiante.all.inspect
           @estudiante = Estudiante.find_by(cedula: params[:id])
-          puts @estudiante
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,7 +1,11 @@
 module Api
   module V1
     class InstrumentosController < ApplicationController
+      
       before_action :set_instrumento, only: [:show, :update, :destroy]
+
+      load_and_authorize_resource
+      before_action :cargar_permisos # call this after load_and_authorize else it gives a cancan error
 
       # GET /instrumentos
       # GET /instrumentos.json
@@ -53,7 +57,6 @@ module Api
       # DELETE /instrumentos/1
       # DELETE /instrumentos/1.json
       def destroy
-        puts @instrumento
         @instrumento.destroy
         respond_to do |format|
           format.html { redirect_to api_v1_instrumentos_url, notice: 'Instrumento was successfully destroyed.' }
@@ -69,7 +72,7 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def instrumento_params
-          json_instrumento_params = params.permit(:nombre, :descripcion, 
+          json_instrumento_params = params.require(:instrumento).permit(:nombre, :descripcion, 
                                               bloques: [
                                                 :id, :nombre, :descripcion, :tipo, 
                                                 preguntas: [
@@ -79,9 +82,8 @@ module Api
                                                   ]
                                                 ]
                                               ], bloque_ids: [])
-           PrettyApi.with_nested_attributes(json_instrumento_params,bloques: [preguntas: [:opciones]])
+          PrettyApi.with_nested_attributes(json_instrumento_params,bloques: [preguntas: [:opciones]])
         end
-
     end
   end
 end

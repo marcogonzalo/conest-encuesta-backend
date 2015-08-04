@@ -3,6 +3,9 @@ require 'test_helper'
 class Api::V1::ReportesControllerTest < ActionController::TestCase
 	setup do
     @respuesta = FactoryGirl.create(:respuesta)
+   
+    @usuario = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
   end
 
   # # #

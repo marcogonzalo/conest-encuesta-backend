@@ -4,6 +4,9 @@ class Api::V1::OpcionesControllerTest < ActionController::TestCase
   setup do
     @opcion = FactoryGirl.create(:opcion)
     @pregunta = FactoryGirl.create(:pregunta)
+
+    @usuario = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
   end
 
   test "should get index" do

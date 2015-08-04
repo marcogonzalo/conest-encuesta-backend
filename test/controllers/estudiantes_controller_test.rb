@@ -5,6 +5,9 @@ class Api::V1::EstudiantesControllerTest < ActionController::TestCase
     @estudiante = FactoryGirl.create(:estudiante)
     FactoryGirl.create(:control_consulta)
     @estudiante_con_consultas = FactoryGirl.create(:estudiante_con_consultas_por_responder, control_count: 5)
+   
+    @usuario = FactoryGirl.create(:usuario_superadmin)
+    request.headers['Authorization'] = "Bearer " + @usuario.token.to_s 
   end
 
   test "should get index" do

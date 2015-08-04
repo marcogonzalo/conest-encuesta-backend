@@ -1,12 +1,74 @@
-FactoryGirl.define do  factory :usuario do
-    cedula 1
-clave 1
-rol nil
-token "MyString"
+
+FactoryGirl.define do  
+  roles = Array.new(["SuperAdmin","Admin","Estudiante","Docente"])
+
+  factory :usuario do
+    cedula { Forgery(:basic).number(at_least: 15000000, at_most: 30000000) }
+    clave { Forgery(:basic).number(at_least: 15000000, at_most: 30000000) }
+    association :rol
+
+     # user_with_posts will create post data after the user has been created
+    factory :usuario_superadmin do
+      # posts_count is declared as a transient attribute and available in
+      # attributes on the factory, as well as the callback via the evaluator
+
+      # the after(:create) yields two values; the user instance itself and the
+      # evaluator, which stores all values from the factory, including transient
+      # attributes; `create_list`'s second argument is the number of records
+      # to create and we make sure the user is associated properly to the post
+      after(:create) do |usuario| 
+        usuario.rol = Rol.find_by(nombre: "SuperAdmin")
+        usuario.generate_auth_token
+      end
+    end
+
+    factory :usuario_admin do
+      after(:create) do |usuario| 
+        usuario.rol = Rol.find_by(nombre: "Admin") 
+        usuario.generate_auth_token
+      end
+    end
+
+    factory :usuario_estudiante do
+      after(:create) do |usuario| 
+        usuario.rol = Rol.find_by(nombre: "Estudiante")
+        usuario.generate_auth_token
+      end
+    end
+
+    factory :usuario_docente do
+      after(:create) do |usuario| 
+        usuario.rol = Rol.find_by(nombre: "Docente")
+        usuario.generate_auth_token
+      end
+    end
   end
+  
   factory :rol do
-    nombre "MyString"
-descripcion "MyString"
+    nombre { roles[Forgery(:basic).number(at_least: 0, at_most: roles.size-1)] }
+    descripcion "MyString"
+
+    factory :rol_superadmin do
+      before(:create) { |rol| rol = Rol.find_by(nombre: "SuperAdmin") }
+    end
+
+    factory :rol_admin do
+      before(:create) { |rol| rol.nombre = "Admin" }
+    end
+
+    factory :rol_estudiante do
+      before(:create) { |rol| rol.nombre = "Estudiante" }
+    end
+    
+    factory :rol_docente do
+      before(:create) { |rol| rol.nombre = "Docente" }
+    end
+  end
+  
+  factory :permiso do
+    nombre "myPermiso"
+    clase "Clase"
+    accion "accion"
   end
   
   factory :instrumento do
