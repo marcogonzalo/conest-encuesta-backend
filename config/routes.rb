@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       resources :periodos_academicos do
         resources :ofertas_periodo
       end
-      post '/periodos_academicos/:periodo/sincronizar_estudiantes' => 'periodos_academicos#sincronizar_estudiantes', as: 'sincronizar_estudiantes_de_periodo'
+      get '/periodos_academicos/:periodo/sincronizar_estudiantes' => 'periodos_academicos#sincronizar_estudiantes', as: 'sincronizar_estudiantes_de_periodo'
 
       resources :carreras, shallow: true do
         resources :materias

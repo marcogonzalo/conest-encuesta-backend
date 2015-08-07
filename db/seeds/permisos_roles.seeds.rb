@@ -8,6 +8,8 @@ after 'permisos' do
 	rol.permisos.destroy_all
 	rol.permisos << Permiso.find_by(nombre: 'listarPeriodos')
 	rol.permisos << Permiso.find_by(nombre: 'crearPeriodo')
+	rol.permisos << Permiso.find_by(nombre: 'sincronizarPeriodo')
+	rol.permisos << Permiso.find_by(nombre: 'sincronizarEstudiantes')
 	rol.permisos << Permiso.find_by(nombre: 'listarInstrumentos')
 	rol.permisos << Permiso.find_by(nombre: 'verInstrumento')
 	rol.permisos << Permiso.find_by(nombre: 'crearInstrumento')

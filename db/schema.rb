@@ -197,10 +197,8 @@ ActiveRecord::Schema.define(version: 20150716223310) do
   add_index "respuestas", ["pregunta_id"], name: "index_respuestas_on_pregunta_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
-    t.string   "nombre"
-    t.string   "descripcion"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string "nombre",      null: false
+    t.string "descripcion"
   end
 
   add_index "roles", ["nombre"], name: "index_roles_on_nombre", using: :btree
@@ -221,7 +219,7 @@ ActiveRecord::Schema.define(version: 20150716223310) do
   end
 
   create_table "usuarios", force: :cascade do |t|
-    t.string   "cedula",     limit: 20
+    t.string   "cedula",     limit: 20,  null: false
     t.string   "clave",      limit: 100
     t.integer  "rol_id"
     t.string   "token"

@@ -15,6 +15,8 @@ after 'roles' do
 	# Permisos para gestion de períodos
 	Permiso.find_or_create_by(clase: 'PeriodoAcademico', accion: 'index', nombre: 'listarPeriodos')
 	Permiso.find_or_create_by(clase: 'PeriodoAcademico', accion: 'create', nombre: 'crearPeriodo')
+	Permiso.find_or_create_by(clase: 'PeriodoAcademico', accion: 'update', nombre: 'sincronizarPeriodo')
+	Permiso.find_or_create_by(clase: 'PeriodoAcademico', accion: 'sincronizar_estudiantes', nombre: 'sincronizarEstudiantes')
 
 	# Permisos para consulta de reportes de materia
 	Permiso.find_or_create_by(clase: 'Reporte', accion: 'index', nombre: 'listarReportes')

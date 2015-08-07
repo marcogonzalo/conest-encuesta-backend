@@ -24,33 +24,18 @@ module Api
 
         response = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico_id}",
                                   :conest_token  => Token::actual
-        r = JSON.parse(response.body)
+        respuesta_conest = JSON.parse(response.body)
 
         if response.code.eql?(200)
-          if r['estatus'] == 'OK'
+          if respuesta_conest['estatus'] == 'OK'
             # Datos de la respuesta enviada por Conest
-            d = r['datos']
+            datos_conest = respuesta_conest['datos']
 
-            @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: d['periodo_academico_id'])
+            @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: datos_conest['periodo_academico_id'])
 
-            if @periodo_academico.id.nil?
-              # Crear el nuevo periodo academico
-              @periodo_academico.update(asignaturas_hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
-              procesar_periodo(@periodo_academico, d, instrumento_id)
-              render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} registrado" }, status: :created
-            else
-              # Si el hash es el mismo no hay cambios en el listado
-              if @periodo_academico.asignaturas_hash_sum.eql?(r['sha1_sum'])
-                render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
-              else
-                # Si no es el mismo, actualizo y continuo
-                @periodo_academico.update(asignaturas_hash_sum: r['sha1_sum'], sincronizacion: r['fecha_hora'])
-                procesar_periodo(@periodo_academico, d, instrumento_id)
-                render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} actualizado" }, status: :ok
-              end
-            end
+            sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)
           else
-            render json: { estatus: r['estatus'], mensaje: r['mensaje'] }, status: :bad_request
+            render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
           end
         else
           render nothing: true, status: response.code
@@ -82,36 +67,42 @@ module Api
       end
 
       # Sincroniza los estudiantes de las distintas ofertas académicas registradas en CONEST para el período indicado
-      # POST /periodos_academicos/01-2014/sincronizar_estudiantes
-      # POST /periodos_academicos/01-2014/sincronizar_estudiantes.json
+      # GET /periodos_academicos/01-2014/sincronizar_estudiantes
+      # GET /periodos_academicos/01-2014/sincronizar_estudiantes.json
       def sincronizar_estudiantes
         periodo_academico_id = params[:periodo]
 
         response = RestClient.get "#{CONEST_API[:base_url]}/estudiantes_y_asignaturas_en_periodo_academico/#{periodo_academico_id}",
                                   :conest_token  => Token::actual
-        r = JSON.parse(response.body)
+        respuesta_conest = JSON.parse(response.body)
 
         if response.code.eql?(200)
-          if r['estatus'] == 'OK'
+          if respuesta_conest['estatus'] == 'OK'
             # Datos de la respuesta enviada por Conest
-            d = r['datos']
+            datos_conest = respuesta_conest['datos']
 
-            @periodo_academico = PeriodoAcademico.find_by(periodo: d['periodo_academico_id'])
+            @periodo_academico = PeriodoAcademico.find_by(periodo: datos_conest['periodo_academico_id'])
 
             if @periodo_academico.nil?
-              render json: { estatus: r['estatus'], mensaje: "Período #{d['periodo_academico_id']} no está registrado" }, status: :not_found
+              render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{datos_conest['periodo_academico_id']} no está registrado" }, status: :not_found
             else
               # Si el hash es el mismo no hay cambios en el listado
-              if @periodo_academico.estudiantes_hash_sum.eql?(r['sha1_sum'])
-                render json: { estatus: r['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
+              if @periodo_academico.estudiantes_hash_sum.eql?(respuesta_conest['sha1_sum'])
+                render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
               else
-                @periodo_academico.update(estudiantes_hash_sum: r['sha1_sum'])
-                d['carreras'].each do |c|
+                @periodo_academico.update(estudiantes_hash_sum: respuesta_conest['sha1_sum'])
+                datos_conest['carreras'].each do |c|
                   @carrera = Carrera.find_by(codigo: c['id'])
                   c['estudiantes'].each do |e|
                     # Obtengo el Estudiante
                     @estudiante = Estudiante.find_or_initialize_by(cedula: e['cedula'])
                     @estudiante.update(cedula: e['cedula'], primer_nombre: e['primer_nombre'], segundo_nombre: e['segundo_nombre'], primer_apellido: e['primer_apellido'], segundo_apellido: e['segundo_apellido'])
+
+                    # Creación de usuarios de Estudiante
+                    unless Usuario.exists?(cedula: @estudiante.cedula)
+                      rol = Rol.find_by(nombre: 'Estudiante')
+                      usuario = Usuario.create(cedula: @estudiante.cedula, clave: @estudiante.cedula, rol: rol)
+                    end
                     
                     e['materias'].each do |m|
                       @materia = Materia.find_by(codigo: m['codigo'], carrera: @carrera)
@@ -122,11 +113,11 @@ module Api
                     end
                   end
                 end
-                render json: { estatus: r['estatus'], mensaje: "Controles de consultas para período #{@periodo_academico.periodo} actualizados" }, status: :ok
+                render json: { estatus: respuesta_conest['estatus'], mensaje: "Controles de consultas para período #{@periodo_academico.periodo} actualizados" }, status: :ok
               end
             end
           else
-            render json: { estatus: r['estatus'], mensaje: r['mensaje'] }, status: :bad_request
+            render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
           end
         else
           render nothing: true, status: response.code
@@ -144,11 +135,30 @@ module Api
           params.require(:periodo_academico).permit(:periodo, :instrumento_id)
         end
 
+        def sincronizar_periodo(periodo_academico, respuesta_conest, datos_conest, instrumento_id)
+          if periodo_academico.id.nil?
+            # Crear el nuevo periodo academico
+            periodo_academico.update(asignaturas_hash_sum: respuesta_conest['sha1_sum'], sincronizacion: respuesta_conest['fecha_hora'])
+            procesar_periodo(periodo_academico, datos_conest, instrumento_id)
+            render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{periodo_academico.periodo} registrado" }, status: :created
+          else
+            # Si el hash es el mismo no hay cambios en el listado
+            if periodo_academico.asignaturas_hash_sum.eql?(respuesta_conest['sha1_sum'])
+              render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{periodo_academico.periodo} sin modificaciones" }, status: :not_modified
+            else
+              # Si no es el mismo, actualizo y continuo
+              periodo_academico.update(asignaturas_hash_sum: respuesta_conest['sha1_sum'], sincronizacion: respuesta_conest['fecha_hora'])
+              procesar_periodo(periodo_academico, datos_conest, instrumento_id)
+              render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{periodo_academico.periodo} actualizado" }, status: :ok
+            end
+          end
+        end
+
         # Método que procesa la información recibida desde CONEST sobre el período académico registrado
         # En 'd' se contienen los datos de la respuesta enviada por CONEST
-        def procesar_periodo(periodo_academico, d, instrumento_id = nil)
+        def procesar_periodo(periodo_academico, datos_conest, instrumento_id = nil)
           # Iterar sobre las organizaciones (Escuelas)
-          d['organizaciones'].each do |o|
+          datos_conest['organizaciones'].each do |o|
             # Para cada Carrera de cada Organizacion
             o['carreras'].each do |c|
               @carrera = Carrera.find_or_initialize_by(codigo: c['id'], organizacion_id: o['id'])
@@ -167,6 +177,13 @@ module Api
                 @coordinador = Docente.find_or_initialize_by(cedula: m['coordinador']['cedula'])
                 @coordinador.update(m['coordinador'])
                 
+                # Creación de usuario de Coordinador
+                unless Usuario.exists?(cedula: @coordinador.cedula)
+                  rol = Rol.find_by(nombre: 'Docente')
+                  usuario = Usuario.create(cedula: @coordinador.cedula, clave: @coordinador.cedula, rol: rol)
+                end
+
+
                 # Obtengo la oferta en el periodo
                 @oferta_periodo = OfertaPeriodo.find_or_initialize_by(periodo_academico: periodo_academico, materia: @materia)
                 @oferta_periodo.update(docente_coordinador: @coordinador)
@@ -177,6 +194,12 @@ module Api
                   # Obtengo el docente
                   @docente = Docente.find_or_initialize_by(cedula: s['docente']['cedula'])
                   @docente.update(s['docente'])
+
+                  # Creación de usuarios de Docente
+                  unless Usuario.exists?(cedula: @docente.cedula)
+                    rol = Rol.find_by(nombre: 'Docente')
+                    usuario = Usuario.create(cedula: @docente.cedula, clave: @docente.cedula, rol: rol)
+                  end
                   
                   # Registro la oferta academica para ese periodo
                   @oferta_academica = OfertaAcademica.find_or_initialize_by(nombre_seccion: s['nombre'], oferta_periodo: @oferta_periodo)

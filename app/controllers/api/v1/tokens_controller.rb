@@ -1,6 +1,7 @@
 module Api
   module V1
     class TokensController < ApplicationController
+      skip_before_action :authenticate_request
       before_action :set_token, only: [:show, :destroy]
 
       # GET /tokens
