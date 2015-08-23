@@ -5,6 +5,7 @@ module Api
       before_action :set_instrumento, only: [:show, :update, :destroy]
 
       load_and_authorize_resource
+      skip_authorize_resource :only => :show
       before_action :cargar_permisos # call this after load_and_authorize else it gives a cancan error
 
       # GET /instrumentos

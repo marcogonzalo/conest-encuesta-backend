@@ -37,10 +37,6 @@ module Api
 			def set_rol
 				@rol = Rol.find(params[:id])
 			end
-		 
-			def es_super_admin?
-				redirect_to home_path and return unless @current_user.super_admin?
-			end
 		end
 	end
 end

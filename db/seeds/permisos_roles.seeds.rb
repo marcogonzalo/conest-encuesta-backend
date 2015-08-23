@@ -15,6 +15,7 @@ after 'permisos' do
 	rol.permisos << Permiso.find_by(nombre: 'crearInstrumento')
 	rol.permisos << Permiso.find_by(nombre: 'editarInstrumento')
 	rol.permisos << Permiso.find_by(nombre: 'eliminarInstrumento')
+	rol.permisos << Permiso.find_by(nombre: 'cambiarInstrumentoDeConsulta')
 	rol = nil
 
 	rol = Rol.find_by(nombre: 'Estudiante')

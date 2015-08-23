@@ -81,6 +81,11 @@ module Api
 			def cargar_permisos
 				@permisos_de_usuario = @current_user.rol.permisos.collect{|i| i.nombre}
 			end
+
+			def es_super_admin?
+				redirect_to auth_path and return unless @current_user.super_admin?
+			end
+
 		end
 	end
 end
