@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api, except: [:new, :edit], defaults: {format: :json} do
     namespace :v1 do
-      post '/auth' => 'auth#authenticate'
+      post '/auth' => 'auth#authenticate', as: 'auth'
 
       resources :consultas do
         member do
@@ -37,8 +37,12 @@ Rails.application.routes.draw do
       end
       
       # Rutas asociadas a elementos de Conest
-      resources :periodos_academicos do
-        resources :ofertas_periodo
+      resources :periodos_academicos, shallow: true do
+        resources :ofertas_periodo do
+          member do
+            match '/cambiar_instrumento' => 'ofertas_periodo#cambiar_instrumento', as: 'cambiar_instrumento_consulta', via: [:patch, :put]
+          end
+        end
       end
       get '/periodos_academicos/:periodo/sincronizar_estudiantes' => 'periodos_academicos#sincronizar_estudiantes', as: 'sincronizar_estudiantes_de_periodo'
 
@@ -68,7 +72,11 @@ Rails.application.routes.draw do
 
       resources :tokens, except: [:show]
       
-      resources :roles, except: [:create, :delete]
+      resources :roles, except: [:create, :delete] do
+        member do
+          get '/editar' => 'roles#edit'
+        end
+      end
 
       get '/usuario_puede/:nombre_permiso' => 'permisos#puede'
 

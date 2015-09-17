@@ -12,8 +12,8 @@ module Api
 			end
 
 			def show
-				@permisos = @rol.permisos
-				render json: {rol: @rol, permisos: @permisos }
+				@permisos_permisos = @rol.permisos
+				render json: {rol: @rol, permisos_rol: @permisos_rol }
 			end
 
 			def edit
