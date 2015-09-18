@@ -7,7 +7,7 @@ module Api
 
 			def index
 				#Listar permisos que no son de SuperAdmin.
-				@roles = Rol.all.select{|i| i.nombre != "SuperAdmin"}
+				@roles = Rol.all.select{|i| i.nombre != 'SuperAdmin'}
 				render json: @roles
 			end
 
@@ -18,19 +18,22 @@ module Api
 
 			def edit
 		#		@permisos = Permiso.all.select{|i| ["Part"].include? i.subject_class}.compact
-				@permisos = Permiso.all
+				@permisos = Permiso.all.select{|p| p.nombre != 'accesoTotal' }
 				@rol_permisos = @rol.permisos.collect{|p| p.id}
 				render json: {rol: @rol, permisos: @permisos, permisos_rol: @rol_permisos }
 			end
 
 			def update
+				puts params[:permisos_rol].inspect
 				@rol.permisos = []
-				@rol.asignar_permisos(params[:permisos]) if params[:permisos]
+				@rol.asignar_permisos(params[:permisos_rol]) if params[:permisos_rol]
 				@rol.save
 
 		#		@permisos = Permiso.all.select{|i| ["Part"].include? i.subject_class}.compact
-				@permisos = Permiso.all
-				render json: {rol: @rol, permisos: @permisos, permisos_rol: @rol.permisos }
+				@permisos = Permiso.all.select{|p| p.nombre != 'accesoTotal' }
+				@rol_permisos = @rol.permisos.collect{|p| p.id}
+				puts @rol_permisos.inspect
+				render json: {rol: @rol, permisos: @permisos, permisos_rol: @rol_permisos }
 			end
 
 			private
