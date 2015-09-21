@@ -1,6 +1,7 @@
 module Api
   module V1
     class OfertasPeriodoController < ApplicationController
+      load_and_authorize_resource
       before_action :set_oferta_periodo, only: [:show, :update, :destroy]
       before_action :set_periodo_academico, only: [:index, :create]
 
@@ -22,7 +23,7 @@ module Api
         respond_to do |format|
           if @oferta_periodo.save
             format.html { redirect_to @oferta_periodo, notice: 'Oferta periodo was successfully created.' }
-            format.json { render :show, status: :created, location: api_v1_periodo_academico_oferta_periodo_url(@oferta_periodo.periodo_academico_id, @oferta_periodo) }
+            format.json { render :show, status: :created, location: api_v1_oferta_periodo_url(@oferta_periodo.periodo_academico_id, @oferta_periodo) }
           else
             format.html { render :new }
             format.json { render json: @oferta_periodo.errors, status: :unprocessable_entity }
@@ -36,11 +37,43 @@ module Api
         respond_to do |format|
           if @oferta_periodo.update(oferta_periodo_params)
             format.html { redirect_to @oferta_periodo, notice: 'Oferta periodo was successfully updated.' }
-            format.json { render :show, status: :ok, location: api_v1_periodo_academico_oferta_periodo_url(@oferta_periodo.periodo_academico_id, @oferta_periodo) }
+            format.json { render :show, status: :ok, location: api_v1_oferta_periodo_url(@oferta_periodo.periodo_academico_id, @oferta_periodo) }
           else
             format.html { render :edit }
             format.json { render json: @oferta_periodo.errors, status: :unprocessable_entity }
           end
+        end
+      end
+
+
+      # PATCH/PUT /consultas/1
+      # PATCH/PUT /consultas/1.json
+      def cambiar_instrumento
+        @oferta_periodo = OfertaPeriodo.includes(oferta_academica: [:consulta]).find(cambio_instrumento_params[:id])
+
+        # Falta PU
+        # Falta verificar existencia de respuestas
+        # Falta cambio
+        instrumento = Instrumento.find(cambio_instrumento_params[:instrumento_id])
+
+        existen_respuestas = false
+
+        # Se verifica si ninguna seccion ha recibido respuesta a su consulta
+        @oferta_periodo.oferta_academica.each do |seccion|
+          unless seccion.consulta.respuestas.size > 0
+            existen_respuestas = true
+            break
+          end
+        end
+
+        # Si ninguna seccion ha recibido respuesta, entonces 
+        if existen_respuestas
+          render json: { error: 'No se puede realizar el cambio. Se encontró al menos una respuesta registrada con el instrumento actual.' }, status: :ok  
+        else
+          @oferta_periodo.oferta_academica.each do |seccion|
+            seccion.consulta.update(instrumento_id: instrumento.id)
+          end
+          render json: { error: 'Cambio de instrumento satisfactorio' }, status: :ok  
         end
       end
 
@@ -62,6 +95,11 @@ module Api
         
         def set_periodo_academico
           @periodo_academico = PeriodoAcademico.find(params[:periodo_academico_id])
+        end
+
+        # Parametros para el cambio de un instrumento para una consulta de una materia en un periodo
+        def cambio_instrumento_params
+          params.permit(:id, :instrumento_id)
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.
