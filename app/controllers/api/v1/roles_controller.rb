@@ -38,7 +38,7 @@ module Api
 
 			private
 			def set_rol
-				@rol = Rol.find(params[:id])
+				@rol = Rol.includes(:permisos).find(params[:id])
 			end
 		end
 	end
