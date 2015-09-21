@@ -77,6 +77,12 @@ Rails.application.routes.draw do
           get '/editar' => 'roles#edit'
         end
       end
+      
+      resources :usuarios, except: [:create, :delete] do
+        member do
+          get '/editar' => 'usuarios#edit'
+        end
+      end
 
       get '/usuario_puede/:nombre_permiso' => 'permisos#puede'
 
