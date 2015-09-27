@@ -86,7 +86,7 @@ module Api
               # Datos de la respuesta enviada por Conest
               datos_conest = respuesta_conest['datos']
 
-              sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)
+              sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)              
             else
               render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
             end
@@ -119,7 +119,7 @@ module Api
               if @periodo_academico.estudiantes_hash_sum.eql?(respuesta_conest['sha1_sum'])
                 render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
               else
-                @periodo_academico.update(estudiantes_hash_sum: respuesta_conest['sha1_sum'])
+                @periodo_academico.update(estudiantes_hash_sum: respuesta_conest['sha1_sum'], sincronizacion: respuesta_conest['fecha_hora'])
                 datos_conest['carreras'].each do |c|
                   @carrera = Carrera.find_by(codigo: c['id'])
                   c['estudiantes'].each do |e|
@@ -142,7 +142,7 @@ module Api
                     end
                   end
                 end
-                render json: { estatus: respuesta_conest['estatus'], mensaje: "Controles de consultas para período #{@periodo_academico.periodo} actualizados" }, status: :ok
+                render json: { estatus: respuesta_conest['estatus'], mensaje: "Controles de consultas para período #{@periodo_academico.periodo} actualizados", sincronizacion: @periodo_academico.sincronizacion }, status: :ok
               end
             else
               render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
@@ -177,6 +177,7 @@ module Api
           end
           return respuesta
         end
+
         def sincronizar_periodo(periodo_academico, respuesta_conest, datos_conest, instrumento_id)
           if periodo_academico.id.nil?
             # Crear el nuevo periodo academico
@@ -191,7 +192,7 @@ module Api
               # Si no es el mismo, actualizo y continuo
               periodo_academico.update(asignaturas_hash_sum: respuesta_conest['sha1_sum'], sincronizacion: respuesta_conest['fecha_hora'])
               procesar_periodo(periodo_academico, datos_conest, instrumento_id)
-              render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{periodo_academico.periodo} actualizado" }, status: :ok
+              render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{periodo_academico.periodo} actualizado", sincronizacion: @periodo_academico.sincronizacion }, status: :ok
             end
           end
         end
