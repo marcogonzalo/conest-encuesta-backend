@@ -22,23 +22,26 @@ module Api
         periodo_academico_id = periodo_academico_params[:periodo]
         instrumento_id = periodo_academico_params[:instrumento_id]
 
-        response = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico_id}",
-                                  :conest_token  => Token::actual
-        respuesta_conest = JSON.parse(response.body)
+        if PeriodoAcademico.where(periodo: periodo_academico_params[:periodo]).blank?
+          response = obtener_de_conest_api('asignaturas', periodo_academico_id)
+          respuesta_conest = JSON.parse(response.body)
+  
+          if response.code.eql?(200)
+            if respuesta_conest['estatus'] == 'OK'
+              # Datos de la respuesta enviada por Conest
+              datos_conest = respuesta_conest['datos']
 
-        if response.code.eql?(200)
-          if respuesta_conest['estatus'] == 'OK'
-            # Datos de la respuesta enviada por Conest
-            datos_conest = respuesta_conest['datos']
+              @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: datos_conest['periodo_academico_id'])
 
-            @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: datos_conest['periodo_academico_id'])
-
-            sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)
+              sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)
+            else
+              render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
+            end
           else
-            render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
+            render nothing: true, status: response.code
           end
         else
-          render nothing: true, status: response.code
+          render json: { estatus: 'ERROR', mensaje: 'El período ya fue registrado anteriormente' }, status: :not_modified
         end
       end
 
@@ -66,26 +69,52 @@ module Api
         end
       end
 
+      # Crea un período académico conectándose a CONEST para obtener toda la información necesaria sobre el período. 
+      # De CONEST obtiene las ofertas académicas (asignaturas, secciones y docentes).
+      # POST /periodos_academicos
+      # POST /periodos_academicos.json
+      def sincronizar_asignaturas
+        periodo_academico_id = periodo_academico_params[:periodo]
+
+        @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: periodo_academico_id)
+
+        if @periodo_academico
+          response = obtener_de_conest_api('asignaturas', periodo_academico_id)
+          respuesta_conest = JSON.parse(response.body)
+          if response.code.eql?(200)
+            if respuesta_conest['estatus'] == 'OK'
+              # Datos de la respuesta enviada por Conest
+              datos_conest = respuesta_conest['datos']
+
+              sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)
+            else
+              render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
+            end
+          else
+            render nothing: true, status: response.code
+          end
+        else
+          render json: { estatus: 'ERROR', mensaje: "El período #{periodo_academico_id} no está registrado" }, status: :not_found
+        end
+      end
+
       # Sincroniza los estudiantes de las distintas ofertas académicas registradas en CONEST para el período indicado
       # GET /periodos_academicos/01-2014/sincronizar_estudiantes
       # GET /periodos_academicos/01-2014/sincronizar_estudiantes.json
       def sincronizar_estudiantes
         periodo_academico_id = params[:periodo]
 
-        response = RestClient.get "#{CONEST_API[:base_url]}/estudiantes_y_asignaturas_en_periodo_academico/#{periodo_academico_id}",
-                                  :conest_token  => Token::actual
-        respuesta_conest = JSON.parse(response.body)
+        @periodo_academico = PeriodoAcademico.find_by(periodo: periodo_academico_id)
 
-        if response.code.eql?(200)
-          if respuesta_conest['estatus'] == 'OK'
-            # Datos de la respuesta enviada por Conest
-            datos_conest = respuesta_conest['datos']
+        if @periodo_academico
+          response = obtener_de_conest_api('estudiantes', periodo_academico_id)
+          respuesta_conest = JSON.parse(response.body)
 
-            @periodo_academico = PeriodoAcademico.find_by(periodo: datos_conest['periodo_academico_id'])
+          if response.code.eql?(200)
+            if respuesta_conest['estatus'] == 'OK'
+              # Datos de la respuesta enviada por Conest
+              datos_conest = respuesta_conest['datos']
 
-            if @periodo_academico.nil?
-              render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{datos_conest['periodo_academico_id']} no está registrado" }, status: :not_found
-            else
               # Si el hash es el mismo no hay cambios en el listado
               if @periodo_academico.estudiantes_hash_sum.eql?(respuesta_conest['sha1_sum'])
                 render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{@periodo_academico.periodo} sin modificaciones" }, status: :not_modified
@@ -115,12 +144,14 @@ module Api
                 end
                 render json: { estatus: respuesta_conest['estatus'], mensaje: "Controles de consultas para período #{@periodo_academico.periodo} actualizados" }, status: :ok
               end
+            else
+              render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
             end
           else
-            render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
+            render nothing: true, status: response.code
           end
         else
-          render nothing: true, status: response.code
+          render json: { estatus: 'ERROR', mensaje: "El período #{periodo_academico_id} no está registrado" }, status: :not_found
         end
       end
 
@@ -135,6 +166,17 @@ module Api
           params.require(:periodo_academico).permit(:periodo, :instrumento_id)
         end
 
+        def obtener_de_conest_api(solicitud, periodo_academico)
+          respuesta = nil
+          if(solicitud == "asignaturas")
+            respuesta = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico}",
+                                    :conest_token  => Token::actual
+          elsif(solicitud == "estudiantes")
+            respuesta = RestClient.get "#{CONEST_API[:base_url]}/estudiantes_y_asignaturas_en_periodo_academico/#{periodo_academico}",
+                                    :conest_token  => Token::actual
+          end
+          return respuesta
+        end
         def sincronizar_periodo(periodo_academico, respuesta_conest, datos_conest, instrumento_id)
           if periodo_academico.id.nil?
             # Crear el nuevo periodo academico
