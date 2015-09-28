@@ -1,4 +1,4 @@
 json.array!(@ofertas_periodo) do |oferta_periodo|
-  json.extract! oferta_periodo, :id, :materia_id, :periodo_academico_id, :docente_coordinador
-  json.url api_v1_oferta_periodo_url(oferta_periodo.periodo_academico_id, oferta_periodo, format: :json)
+  json.extract! oferta_periodo, :id, :materia, :docente_coordinador
+  json.instrumento_de_consulta oferta_periodo.oferta_academica.first.consulta.instrumento  
 end

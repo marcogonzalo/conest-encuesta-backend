@@ -8,7 +8,7 @@ module Api
       # GET /ofertas_periodo
       # GET /ofertas_periodo.json
       def index
-        @ofertas_periodo = @periodo_academico.ofertas_periodo
+        @ofertas_periodo = @periodo_academico.ofertas_periodo.includes([oferta_academica: { consulta: :instrumento } ], :materia, :docente_coordinador)
       end
 
       # GET /ofertas_periodo/1
@@ -51,16 +51,12 @@ module Api
       def cambiar_instrumento
         @oferta_periodo = OfertaPeriodo.includes(oferta_academica: [:consulta]).find(cambio_instrumento_params[:id])
 
-        # Falta PU
-        # Falta verificar existencia de respuestas
-        # Falta cambio
         instrumento = Instrumento.find(cambio_instrumento_params[:instrumento_id])
 
-        existen_respuestas = false
-
         # Se verifica si ninguna seccion ha recibido respuesta a su consulta
+        existen_respuestas = false
         @oferta_periodo.oferta_academica.each do |seccion|
-          unless seccion.consulta.respuestas.size > 0
+          if seccion.consulta.respuestas.size > 0
             existen_respuestas = true
             break
           end
@@ -68,12 +64,12 @@ module Api
 
         # Si ninguna seccion ha recibido respuesta, entonces 
         if existen_respuestas
-          render json: { error: 'No se puede realizar el cambio. Se encontró al menos una respuesta registrada con el instrumento actual.' }, status: :ok  
+          render json: { estatus: 'ERROR', mensaje: 'No se puede realizar el cambio. Se encontró al menos una respuesta registrada con el instrumento actual.' }, status: :ok  
         else
           @oferta_periodo.oferta_academica.each do |seccion|
             seccion.consulta.update(instrumento_id: instrumento.id)
           end
-          render json: { error: 'Cambio de instrumento satisfactorio' }, status: :ok  
+          render json: { estatus: 'OK', mensaje: 'Cambio de instrumento satisfactorio' }, status: :ok  
         end
       end
 
@@ -94,7 +90,9 @@ module Api
         end
         
         def set_periodo_academico
-          @periodo_academico = PeriodoAcademico.find(params[:periodo_academico_id])
+          puts params[:periodo_academico_id]
+          @periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo_academico_id])
+          puts @periodo_academico.inspect
         end
 
         # Parametros para el cambio de un instrumento para una consulta de una materia en un periodo
