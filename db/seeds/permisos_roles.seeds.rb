@@ -6,6 +6,7 @@ after 'permisos' do
 
 	rol = Rol.find_by(nombre: 'Admin')
 	rol.permisos.destroy_all
+	rol.permisos << Permiso.find_by(nombre: 'listarCarreras')
 	rol.permisos << Permiso.find_by(nombre: 'listarPeriodos')
 	rol.permisos << Permiso.find_by(nombre: 'crearPeriodo')
 	rol.permisos << Permiso.find_by(nombre: 'sincronizarPeriodo')
@@ -20,6 +21,7 @@ after 'permisos' do
 
 	rol = Rol.find_by(nombre: 'Estudiante')
 	rol.permisos.destroy_all
+	rol.permisos << Permiso.find_by(nombre: 'listarInstrumentos')
 	rol.permisos << Permiso.find_by(nombre: 'verInstrumento')
 	rol.permisos << Permiso.find_by(nombre: 'listarPeriodos')
 	rol.permisos << Permiso.find_by(nombre: 'listarConsultasSinResponder')
@@ -30,10 +32,14 @@ after 'permisos' do
 	rol.permisos << Permiso.find_by(nombre: 'verReporteHistoricoCompletoDeDocente')
 	rol.permisos << Permiso.find_by(nombre: 'verReportePeriodoComparadoDeDocente')
 	rol.permisos << Permiso.find_by(nombre: 'verReportePeriodoCompletoDeDocente')
+	rol.permisos << Permiso.find_by(nombre: 'listarCarreras')
+	rol.permisos << Permiso.find_by(nombre: 'listarDocentes')
+	rol.permisos << Permiso.find_by(nombre: 'listarPreguntas')
 	rol = nil
 
 	rol = Rol.find_by(nombre: 'Docente')
 	rol.permisos.destroy_all
+	rol.permisos << Permiso.find_by(nombre: 'listarInstrumentos')
 	rol.permisos << Permiso.find_by(nombre: 'verInstrumento')
 	rol.permisos << Permiso.find_by(nombre: 'listarPeriodos')
 	rol.permisos << Permiso.find_by(nombre: 'listarReportes')
@@ -42,5 +48,8 @@ after 'permisos' do
 	rol.permisos << Permiso.find_by(nombre: 'verReporteHistoricoCompletoDeDocente')
 	rol.permisos << Permiso.find_by(nombre: 'verReportePeriodoComparadoDeDocente')
 	rol.permisos << Permiso.find_by(nombre: 'verReportePeriodoCompletoDeDocente')
+	rol.permisos << Permiso.find_by(nombre: 'listarCarreras')
+	rol.permisos << Permiso.find_by(nombre: 'listarDocentes')
+	rol.permisos << Permiso.find_by(nombre: 'listarPreguntas')
 	rol = nil
 end

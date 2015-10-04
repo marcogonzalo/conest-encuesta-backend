@@ -9,6 +9,8 @@ after 'roles' do
 	Permiso.find_or_create_by(clase: 'Instrumento', accion: 'update', nombre: 'editarInstrumento')
 	Permiso.find_or_create_by(clase: 'Instrumento', accion: 'destroy', nombre: 'eliminarInstrumento')
 
+	Permiso.find_or_create_by(clase: 'Pregunta', accion: 'index', nombre: 'listarPreguntas')
+
 	Permiso.find_or_create_by(clase: 'Estudiante', accion: 'consultas_sin_responder', nombre:'listarConsultasSinResponder')
 	Permiso.find_or_create_by(clase: 'Consulta', accion: 'responder', nombre:'responderConsultas')
 
@@ -35,4 +37,9 @@ after 'roles' do
 	Permiso.find_or_create_by(clase: 'ReporteHistorico', accion: 'reporte_historico_completo_de_docente', nombre: 'verReporteHistoricoCompletoDeDocente')
 	Permiso.find_or_create_by(clase: 'ReportePeriodo', accion: 'reporte_periodo_comparado_de_docente', nombre: 'verReportePeriodoComparadoDeDocente')
 	Permiso.find_or_create_by(clase: 'ReportePeriodo', accion: 'reporte_periodo_completo_de_docente', nombre: 'verReportePeriodoCompletoDeDocente')
+	
+	# Permisos para consulta de listados de modelos de Conest
+	Permiso.find_or_create_by(clase: 'Carrera', accion: 'index', nombre: 'listarCarreras')
+	Permiso.find_or_create_by(clase: 'Estudiante', accion: 'index', nombre: 'listarEstudiantes')
+	Permiso.find_or_create_by(clase: 'Docente', accion: 'index', nombre: 'listarDocentes')
 end

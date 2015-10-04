@@ -10,6 +10,7 @@ module Api
 			before_action :set_current_user, :authenticate_request
 
 			rescue_from CanCan::AccessDenied do |exception|
+				Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
 				render json: { error: 'No autorizado, no tiene permisos' }, status: :unauthorized
 			end
 

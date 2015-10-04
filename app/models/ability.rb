@@ -33,7 +33,7 @@ class Ability
         if permiso.clase == "all"
             can permiso.accion.to_sym, permiso.clase.to_sym
         else
-            can permiso.accion.to_sym, permiso.clase.to_sym
+            can permiso.accion.to_sym, permiso.clase.constantize
         end
     end
   end
