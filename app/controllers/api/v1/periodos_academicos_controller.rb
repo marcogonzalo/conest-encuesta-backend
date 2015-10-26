@@ -74,7 +74,7 @@ module Api
       # POST /periodos_academicos
       # POST /periodos_academicos.json
       def sincronizar_asignaturas
-        periodo_academico_id = periodo_academico_params[:periodo]
+        periodo_academico_id = params[:periodo]
 
         @periodo_academico = PeriodoAcademico.find_or_initialize_by(periodo: periodo_academico_id)
 
@@ -85,6 +85,8 @@ module Api
             if respuesta_conest['estatus'] == 'OK'
               # Datos de la respuesta enviada por Conest
               datos_conest = respuesta_conest['datos']
+
+              instrumento_id = Instrumento.last;
 
               sincronizar_periodo(@periodo_academico, respuesta_conest, datos_conest, instrumento_id)              
             else
