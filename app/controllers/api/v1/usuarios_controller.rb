@@ -1,10 +1,10 @@
 module Api
 	module V1
 		class UsuariosController < ApplicationController
-			load_and_authorize_resource
+			authorize_resource
 			before_action :es_super_admin?
 			before_action :set_usuario, only: [:show, :edit, :update]
-			before_action :set_rol, only: [:show, :update]
+			before_action :set_rol, only: [:update]
 
 			def index
 				@usuarios = Usuario.includes(:rol).all.order(updated_at: :desc).limit(10).select{|i| i.rol_id != 1}
@@ -12,7 +12,8 @@ module Api
 			end
 
 			def show
-				render json: {usuario: @usuario, rol: @rol }
+				puts params[:id]
+				render json: {usuario: @usuario, rol: @usuario.rol }
 			end
 
 			def edit
@@ -27,7 +28,7 @@ module Api
 
 			private
 			def set_usuario
-				@usuario = Usuario.find_by(cedula: params[:id])
+				@usuario = Usuario.find_by(cedula: params['id'])
 			end
 
 			def set_rol

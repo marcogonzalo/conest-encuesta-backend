@@ -3,7 +3,7 @@ class Usuario < ActiveRecord::Base
 	belongs_to :rol
 
 	def generate_auth_token
-		payload = { user_id: self.id }
+		payload = { usuario_cedula: self.cedula }
 		token = AuthToken.encode(payload)
 		self.token = token
 		self.save

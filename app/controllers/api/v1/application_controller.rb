@@ -31,7 +31,7 @@ module Api
 			# Based on the user_id inside the token payload, find the user.
 			def set_current_user
 				if decoded_auth_token
-					@current_user ||= Usuario.find(decoded_auth_token['user_id'])
+					@current_user ||= Usuario.includes(rol: [:permisos]).find_by(cedula: decoded_auth_token['usuario_cedula'])
 				end
 			end
 
