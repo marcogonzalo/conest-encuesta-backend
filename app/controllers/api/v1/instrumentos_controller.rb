@@ -1,3 +1,4 @@
+require 'pretty_api'
 module Api
   module V1
     class InstrumentosController < ApplicationController
@@ -18,7 +19,7 @@ module Api
       # GET /instrumentos/1
       # GET /instrumentos/1.json
       def show
-        @instrumento = Instrumento.includes(bloques:{preguntas:[:opciones]}).find(params[:id])
+        @instrumento = Instrumento.includes(bloques:[ preguntas:[:opciones] ]).find(params[:id])
       end
 
       # Crea un instrumento según los parámetros recibidos. 
@@ -68,7 +69,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_instrumento
-          @instrumento = Instrumento.find(params[:id])
+          @instrumento = Instrumento.includes(bloques:[ preguntas:[:opciones] ]).find(params[:id])
         end
 
         # Never trust parameters from the scary internet, only allow the white list through.
