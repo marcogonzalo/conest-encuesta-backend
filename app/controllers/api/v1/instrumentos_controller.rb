@@ -74,7 +74,7 @@ module Api
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def instrumento_params
-          json_instrumento_params = params.require(:instrumento).permit(:nombre, :descripcion, 
+          json_instrumento_params = params.permit(:nombre, :descripcion, 
                                               bloques: [
                                                 :id, :nombre, :descripcion, :tipo, 
                                                 preguntas: [
