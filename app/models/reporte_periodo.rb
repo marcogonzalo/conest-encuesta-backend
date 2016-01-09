@@ -82,27 +82,43 @@ class ReportePeriodo
 								.group("periodos_academicos.periodo", "materias.codigo", "oferta_academica.nombre_seccion", "respuestas.valor")
 								.order('count_id ASC')
 								.count
-		aux_periodo = ""
-		aux_seccion = ""
+		aux_periodo = nil
+		aux_materia = nil
+		aux_seccion = nil
 		total_respuestas = 0
 		total_puntos = 0
 		media_de_seccion = 0
 		opciones = pregunta.opciones.order(:valor)
-
+		
 		# Para cada resultado {[periodo, materia, seccion, valor] => total} de la materia
 		resultados = respuestas.each_with_object({}) do |((periodo, materia, seccion, valor), total), r|
+			puts "respuestas"
+			puts respuestas
+			puts "valor"
+			puts valor
+
+			puts "#{aux_periodo}, #{periodo}"
+			puts "#{aux_materia}, #{materia}"
+			puts "#{aux_seccion}, #{seccion}"
+
+			# Verificacion de que periodo es distinto"
+			puts (aux_periodo != periodo)
 			if aux_periodo != periodo
-				aux_periodo = periodo
-				aux_materia = ""
 				r[periodo] ||= {}
+				aux_periodo = periodo
+				aux_materia = nil
 			end
 
+
+			# Verificacion de que materia es distinta"
+			puts (aux_materia != materia)
 			if aux_materia != materia
-				aux_materia = materia
-				aux_seccion = ""
 				r[periodo][materia] ||= {}
+				aux_materia = materia
+				aux_seccion = nil
 			end
 
+			# Verificacion de que seccion es distinta"
 			if aux_seccion != seccion
 				total_respuestas = 0
 				total_puntos = 0
@@ -110,6 +126,8 @@ class ReportePeriodo
 				r[periodo][materia][seccion] ||= {}
 				r[periodo][materia][seccion]['datos'] ||= {}
 				r[periodo][materia][seccion]['totalizacion'] ||= {}
+
+				# Inicializacion de totalizacion de valores
 				opciones.each do |o|
 					r[periodo][materia][seccion]['totalizacion'][o.valor] = 0
 				end
@@ -119,6 +137,8 @@ class ReportePeriodo
 				r[periodo][materia][seccion]['datos']['total_estudiantes'] = oferta_academica.nro_estudiantes
 				aux_seccion = seccion
 			end
+
+			# Asignacion de totalizacion a valor
 			r[periodo][materia][seccion]['totalizacion'][valor] = total
 
 			total_respuestas += total
