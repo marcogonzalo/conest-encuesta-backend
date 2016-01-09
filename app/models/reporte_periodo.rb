@@ -28,10 +28,10 @@ class ReportePeriodo
 								.where(ofertas_periodo: { id: oferta_periodo.id }, respuestas: { pregunta_id: pregunta.id })
 								.references(:ofertas_periodo)
 								.group("periodos_academicos.periodo", "oferta_academica.nombre_seccion", "respuestas.valor")
-								.order('count_id ASC')
+								.order('oferta_academica.nombre_seccion ASC')
 								.count
-		aux_periodo = ""
-		aux_seccion = ""
+		aux_periodo = nil
+		aux_seccion = nil
 		total_respuestas = 0
 		total_puntos = 0
 		media_de_seccion = 0
@@ -39,12 +39,17 @@ class ReportePeriodo
 
 		# Para cada resultado {[periodo, seccion, valor] => total} de la materia
 		resultados = respuestas.each_with_object({}) do |((periodo, seccion, valor), total), r|
+			puts respuestas
+			puts "Verificacion de que periodo es distinto"
+			puts (aux_periodo != periodo)
 			if aux_periodo != periodo
-				aux_periodo = periodo
-				aux_seccion = ""
 				r[periodo] ||= {}
+				aux_periodo = periodo
+				aux_seccion = nil
 			end
 
+			puts "Verificacion de que seccion es distinta"
+			puts (aux_seccion != seccion)
 			if aux_seccion != seccion
 				total_respuestas = 0
 				total_puntos = 0
@@ -54,6 +59,8 @@ class ReportePeriodo
 				r[periodo][seccion]['totalizacion'] ||= {}
 				opciones.each do |o|
 					r[periodo][seccion]['totalizacion'][o.valor] = 0
+					puts "r[periodo][seccion]['totalizacion'][#{o.valor}]"
+					puts r[periodo][seccion]['totalizacion'][o.valor]
 				end
 
 				# Se obtiene el total de estudiantes de esa sección en ese período
@@ -62,6 +69,8 @@ class ReportePeriodo
 				aux_seccion = seccion
 			end
 			r[periodo][seccion]['totalizacion'][valor] = total
+			puts "r[periodo][seccion]['totalizacion'][#{valor}]"
+			puts r[periodo][seccion]['totalizacion'][valor]
 
 			total_respuestas += total
 			r[periodo][seccion]['datos']['total_respuestas'] = total_respuestas
@@ -92,14 +101,6 @@ class ReportePeriodo
 		
 		# Para cada resultado {[periodo, materia, seccion, valor] => total} de la materia
 		resultados = respuestas.each_with_object({}) do |((periodo, materia, seccion, valor), total), r|
-			puts "respuestas"
-			puts respuestas
-			puts "valor"
-			puts valor
-
-			puts "#{aux_periodo}, #{periodo}"
-			puts "#{aux_materia}, #{materia}"
-			puts "#{aux_seccion}, #{seccion}"
 
 			# Verificacion de que periodo es distinto"
 			puts (aux_periodo != periodo)
