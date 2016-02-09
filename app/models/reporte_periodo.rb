@@ -57,10 +57,10 @@ class ReportePeriodo
 				r[periodo][seccion] ||= {}
 				r[periodo][seccion]['datos'] ||= {}
 				r[periodo][seccion]['totalizacion'] ||= {}
+
+				# Inicializacion de totalizacion de valores
 				opciones.each do |o|
 					r[periodo][seccion]['totalizacion'][o.valor] = 0
-					puts "r[periodo][seccion]['totalizacion'][#{o.valor}]"
-					puts r[periodo][seccion]['totalizacion'][o.valor]
 				end
 
 				# Se obtiene el total de estudiantes de esa sección en ese período
@@ -68,10 +68,10 @@ class ReportePeriodo
 				r[periodo][seccion]['datos']['total_estudiantes'] = oferta_academica.nro_estudiantes
 				aux_seccion = seccion
 			end
+			
+			# Asignacion de totalizacion a valor
 			r[periodo][seccion]['totalizacion'][valor] = total
-			puts "r[periodo][seccion]['totalizacion'][#{valor}]"
-			puts r[periodo][seccion]['totalizacion'][valor]
-
+			
 			total_respuestas += total
 			r[periodo][seccion]['datos']['total_respuestas'] = total_respuestas
 

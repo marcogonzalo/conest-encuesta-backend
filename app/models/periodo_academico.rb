@@ -120,8 +120,8 @@ class PeriodoAcademico < ActiveRecord::Base
 			    
 			    e['materias'].each do |m|
 			      materia = Materia.find_by(codigo: m['codigo'], carrera: carrera)
-			      oferta_periodo = @materia.ofertas_periodo.find_by(periodo_academico: self)
-			      oferta_academica = @oferta_periodo.oferta_academica.find_by(oferta_periodo: oferta_periodo, nombre_seccion: m['nombre_seccion'])
+			      oferta_periodo = materia.ofertas_periodo.find_by(periodo_academico: self)
+			      oferta_academica = oferta_periodo.oferta_academica.find_by(oferta_periodo: oferta_periodo, nombre_seccion: m['nombre_seccion'])
 
 			      control_consulta = ControlConsulta.find_or_create_by(oferta_academica: oferta_academica, estudiante: estudiante)
 			    end

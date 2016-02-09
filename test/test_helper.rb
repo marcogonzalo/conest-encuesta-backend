@@ -13,13 +13,12 @@ end
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
-	#load "#{Rails.root}/db/seeds/roles.seeds.rb"
-	#load "#{Rails.root}/db/seeds/permisos.seeds.rb"
-	#load "#{Rails.root}/db/seeds/permisos_roles.seeds.rb"
 
   # Add more helper methods to be used by all tests here...
 	def get_context(request,response=nil)
-		puts "\n\nRequest:\n#{request.params}"
+		puts "\n\nRequest Headers:"
+		request.headers.each { |key, value| puts "#{key} => #{value}" }
+		puts "\nRequest Params:\n#{request.params}"
 		if response
 			puts "\nResponse:\nCode: #{response.code}"
 			puts "Body: #{response.body}" unless response.body.empty?

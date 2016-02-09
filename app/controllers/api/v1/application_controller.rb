@@ -80,6 +80,7 @@ module Api
 
 			# CanCanCan: carga los permisos del usuario actual
 			def cargar_permisos
+				puts @current_user.inspect
 				@permisos_de_usuario = @current_user.rol.permisos.collect{|i| i.nombre}
 			end
 

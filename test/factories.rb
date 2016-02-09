@@ -1,6 +1,6 @@
 
 FactoryGirl.define do  
-  roles = Array.new(["SuperAdmin","Admin","Estudiante","Docente"])
+  roles = ["SuperAdmin","Admin","Estudiante","Docente"]
 
   factory :usuario do
     cedula { Forgery(:basic).number(at_least: 15000000, at_most: 30000000) }
@@ -53,15 +53,15 @@ FactoryGirl.define do
     end
 
     factory :rol_admin do
-      before(:create) { |rol| rol.nombre = "Admin" }
+      before(:create) { |rol| rol = Rol.find_by(nombre: "Admin") }
     end
 
     factory :rol_estudiante do
-      before(:create) { |rol| rol.nombre = "Estudiante" }
+      before(:create) { |rol| rol = Rol.find_by(nombre: "Estudiante") }
     end
     
     factory :rol_docente do
-      before(:create) { |rol| rol.nombre = "Docente" }
+      before(:create) { |rol| rol = Rol.find_by(nombre: "Docente") }
     end
   end
   
@@ -69,10 +69,13 @@ FactoryGirl.define do
     nombre "myPermiso"
     clase "Clase"
     accion "accion"
+    factory :permiso_en_rol do
+      after(:create) {|permiso| permiso.roles = [create(:rol)]}
+    end
   end
   
   factory :instrumento do
-    nombre "cualquiera"
+    nombre  { |n| "Instrumento #{n}" }
   end
 
   factory :bloque do

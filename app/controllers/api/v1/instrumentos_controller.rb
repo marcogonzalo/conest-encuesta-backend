@@ -7,8 +7,7 @@ module Api
 
       load_and_authorize_resource
       skip_authorize_resource :only => :show
-      before_action :cargar_permisos # call this after load_and_authorize else it gives a cancan error
-
+      
       # GET /instrumentos
       # GET /instrumentos.json
       def index
@@ -32,7 +31,7 @@ module Api
         respond_to do |format|
           if @instrumento.save
             format.html { redirect_to @instrumento, notice: 'Instrumento was successfully created.' }
-            format.json { render :show, status: :created, location: api_v1_instrumento_url(@instrumento) }
+            format.json { render :show, status: :created }
           else
             format.html { render :new }
             format.json { render json: @instrumento.errors, status: :unprocessable_entity }
@@ -48,7 +47,7 @@ module Api
         respond_to do |format|
           if @instrumento.update(instrumento_params)
             format.html { redirect_to @instrumento, notice: 'Instrumento was successfully updated.' }
-            format.json { render :show, status: :ok, location: api_v1_instrumento_url(@instrumento) }
+            format.json { render :show, status: :ok }
           else
             format.html { render :edit }
             format.json { render json: @instrumento.errors, status: :unprocessable_entity }

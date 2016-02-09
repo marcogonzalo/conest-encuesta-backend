@@ -3,6 +3,7 @@ require 'test_helper'
 class Api::V1::OfertasPeriodoControllerTest < ActionController::TestCase
   setup do
     @oferta_periodo = FactoryGirl.create(:oferta_periodo)
+    @consulta = FactoryGirl.create(:consulta)
     @periodo_academico = FactoryGirl.create(:periodo_academico)
 
     @usuario = FactoryGirl.create(:usuario_superadmin)
@@ -10,7 +11,7 @@ class Api::V1::OfertasPeriodoControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index, periodo_academico_id: @oferta_periodo.periodo_academico_id, format: :json
+    get :index, periodo_academico_id: @consulta.oferta_academica.oferta_periodo.periodo_academico_id, format: :json
     assert_response :success
     assert_not_nil assigns(:ofertas_periodo)
   end
@@ -37,7 +38,7 @@ class Api::V1::OfertasPeriodoControllerTest < ActionController::TestCase
   end
 
   test "debe cambiar el instrumento de de las consultas de una materia en un periodo si no existen respuestas a la consulta" do
-    @instrumento = FactoryGirl.create(:instrumento_2)
+    @instrumento = FactoryGirl.create(:instrumento)
     @oferta_periodo.oferta_academica.each do |seccion|
       seccion.consulta.respuestas.destroy_all
     end
@@ -47,7 +48,7 @@ class Api::V1::OfertasPeriodoControllerTest < ActionController::TestCase
   end
 
   test "no debe cambiar el instrumento de de las consultas de una materia en un periodo si existen respuestas a la consulta" do
-    @instrumento = FactoryGirl.create(:instrumento_2)
+    @instrumento = FactoryGirl.create(:instrumento)
     @respuesta = FactoryGirl.create(:respuesta)
 
     patch :update, periodo_academico_id: @oferta_periodo.periodo_academico, id: @oferta_periodo, oferta_periodo: { docente_coordinador: @oferta_periodo.docente_coordinador, materia_id: @oferta_periodo.materia_id, periodo_academico_id: @oferta_periodo.periodo_academico_id }, format: :json

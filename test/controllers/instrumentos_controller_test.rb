@@ -3,7 +3,7 @@ require 'pretty_api'
 
 class Api::V1::InstrumentosControllerTest < ActionController::TestCase
   setup do
-    @instrumento = instrumentos(:instrumento_1)
+    @instrumento = FactoryGirl.create(:instrumento)
 
     @current_user = FactoryGirl.create(:usuario_superadmin)
     request.headers['Authorization'] = "Bearer " + @current_user.token.to_s 
@@ -17,10 +17,10 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
 
   test "should create instrumento" do
     assert_difference('Instrumento.count') do
-      post :create, instrumento: { descripcion: @instrumento.descripcion, nombre: @instrumento.nombre }, format: :json
+      post :create, { descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, format: :json }
+      assert_response 201
     end
 
-    assert_response 201
   end
 
   test "should show instrumento" do
@@ -38,11 +38,12 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
     assert_difference('Bloque.count') do
       assert_difference('Instrumento.count') do
         post :create, 
-              instrumento: { 
+              { 
                 descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, bloques: [{ 
                   nombre: @bloque.nombre, descripcion: @bloque.descripcion, tipo: @bloque.tipo 
-                }]
-              }, format: :json
+                }], 
+                format: :json
+              }
       end
     end
     assert_response 201
@@ -56,7 +57,7 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
       assert_difference('Bloque.count') do
         assert_difference('Instrumento.count') do
           post :create, 
-                instrumento: { 
+                { 
                   descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, 
                   bloques: [{ 
                     nombre: @bloque.nombre, descripcion: @bloque.descripcion, tipo: @bloque.tipo,
@@ -64,8 +65,9 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
                       { interrogante: @pregunta1.interrogante, descripcion: @pregunta1.descripcion, tipo_pregunta_id: @pregunta1.tipo_pregunta_id },
                       { interrogante: @pregunta2.interrogante, descripcion: @pregunta2.descripcion, tipo_pregunta_id: @pregunta2.tipo_pregunta_id }
                     ]
-                  }]
-                }, format: :json
+                  }], 
+                  format: :json
+                }
         end
       end
     end
@@ -87,7 +89,7 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
         assert_difference('Bloque.count') do
           assert_difference('Instrumento.count') do
             post :create, 
-                  instrumento: { 
+                  { 
                     descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, 
                     bloques: [{ 
                       nombre: @bloque.nombre, descripcion: @bloque.descripcion, tipo: @bloque.tipo,
@@ -107,8 +109,9 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
                           ] 
                         }
                       ]
-                    }]
-                  }, format: :json
+                    }], 
+                    format: :json
+                  }
           end
         end
       end
@@ -122,11 +125,12 @@ class Api::V1::InstrumentosControllerTest < ActionController::TestCase
     assert_no_difference('Bloque.count') do
       assert_difference('Instrumento.count') do
         post :create, 
-              instrumento: { 
+              { 
                 descripcion: @instrumento.descripcion, nombre: @instrumento.nombre, bloque_ids: [ 
                   @bloque.id
-                ]
-              }, format: :json
+                ], 
+                format: :json
+              }
       end
     end
     assert_response 201

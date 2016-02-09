@@ -5,7 +5,7 @@ class Api::V1::RolesControllerTest < ActionController::TestCase
   #   assert true
   # end
   setup do
-    @rol = FactoryGirl.create(:rol)
+    @rol = Rol.last
     @permiso = FactoryGirl.create(:permiso)
 
     @usuario = FactoryGirl.create(:usuario_superadmin)

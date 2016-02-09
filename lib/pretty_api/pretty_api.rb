@@ -10,7 +10,7 @@ module PrettyApi
       when Array
         with_nested_array_attributes(params, attrs)
       when String, Symbol
-        params["#{attrs}_attributes"] = params.delete attrs unless params[attrs].nil?
+        params["#{attrs}_attributes"] = params.delete attrs
       end
       params
     end
@@ -18,20 +18,16 @@ module PrettyApi
     private
 
     def with_nested_hash_attributes(params, attrs)
-      unless attrs.nil?      
-        attrs.each do |k, v|
-          with_nested_attributes params[k], v
-          with_nested_attributes params, k
-        end
+      attrs.each do |k, v|
+        with_nested_attributes params[k], v
+        with_nested_attributes params, k
       end
     end
 
     def with_nested_array_attributes(params, attrs)
-      unless params.nil?      
-        params.each do |np|
-          attrs.each do |v|
-            with_nested_attributes np, v
-          end
+      params.each do |np|
+        attrs.each do |v|
+          with_nested_attributes np, v
         end
       end
     end

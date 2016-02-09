@@ -1,7 +1,7 @@
 module Api
   module V1
     class OfertasPeriodoController < ApplicationController
-      load_and_authorize_resource
+      #load_and_authorize_resource
       before_action :set_oferta_periodo, only: [:show, :update, :destroy]
       before_action :set_periodo_academico, only: [:index, :create]
 
@@ -90,9 +90,7 @@ module Api
         end
         
         def set_periodo_academico
-          puts params[:periodo_academico_id]
-          @periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo_academico_id])
-          puts @periodo_academico.inspect
+          @periodo_academico = PeriodoAcademico.find(params[:periodo_academico_id])
         end
 
         # Parametros para el cambio de un instrumento para una consulta de una materia en un periodo
