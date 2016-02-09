@@ -55,19 +55,19 @@ class Api::V1::PeriodosAcademicosControllerTest < ActionController::TestCase
   end
 
   test "should show periodo_academico" do
-    get :show, id: @periodo_academico, format: :json
+    get :show, id: @periodo_academico.periodo, format: :json
     assert_response :success
   end
 
   test "should update periodo_academico" do
-    patch :update, id: @periodo_academico, periodo_academico: { asignaturas_hash_sum: @periodo_academico.asignaturas_hash_sum, periodo: @periodo_academico.periodo, sincronizacion: @periodo_academico.sincronizacion }, format: :json
+    patch :update, id: @periodo_academico.periodo, periodo_academico: { asignaturas_hash_sum: @periodo_academico.asignaturas_hash_sum, periodo: @periodo_academico.periodo, sincronizacion: @periodo_academico.sincronizacion }, format: :json
     assert_response 200
   end
 
   test "should destroy periodo_academico" do
     skip "No puede borrarse por dependencias creadas"
     assert_difference('PeriodoAcademico.count', -1) do
-      delete :destroy, id: @periodo_academico, format: :json
+      delete :destroy, id: @periodo_academico.periodo, format: :json
     end
 
     assert_response 204
