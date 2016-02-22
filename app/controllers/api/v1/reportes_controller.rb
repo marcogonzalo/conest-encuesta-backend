@@ -164,7 +164,7 @@ module Api
 						if @materia.nil?
 							@error = :no_materia
 						else
-							@oferta_periodo = OfertaPeriodo.includes(:periodo_academico, :materia, :docente_coordinador, [oferta_academica: :consulta]).find_by(materia: @materia, periodo_academico: @periodo_academico)
+							@oferta_periodo = OfertaPeriodo.includes(oferta_academica: { consulta: { instrumento: [bloques: [ preguntas: :opciones ] ] } }).find_by(materia: @materia, periodo_academico: @periodo_academico)
 							if @oferta_periodo.nil?
 								@error = :no_oferta_periodo
 								return nil
@@ -211,7 +211,7 @@ module Api
 					if @materia.nil?
 						@error = :no_materia
 					else
-						@oferta_periodo = OfertaPeriodo.includes(:periodo_academico, :materia, :docente_coordinador, [oferta_academica: :consulta]).find_by(materia: @materia, periodo_academico: @periodo_academico)
+						@oferta_periodo = OfertaPeriodo.includes(oferta_academica: { consulta: { instrumento: [bloques: [ preguntas: :opciones ] ] } }).find_by(materia: @materia, periodo_academico: @periodo_academico)
 						if @oferta_periodo.nil?
 							@error = :no_oferta_periodo
 							return nil
@@ -421,7 +421,7 @@ module Api
 							@error = :no_docente
 						else
 							# Se obtienen las ofertas académicas (secciones) del docente en el período
-							@ofertas_academicas = OfertaAcademica.includes(:consulta, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
+							@ofertas_academicas = OfertaAcademica.includes({ consulta: { instrumento: [bloques: [ preguntas: :opciones ] ] } }, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
 							if @ofertas_academicas.nil?
 								@error = :no_oferta_academica
 								return nil
@@ -476,7 +476,7 @@ module Api
 						@error = :no_docente
 					else
 						# Se obtienen las ofertas académicas (secciones) del docente en el período
-						@ofertas_academicas = OfertaAcademica.includes(:consulta, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
+						@ofertas_academicas = OfertaAcademica.includes( { consulta: { instrumento: [bloques: [ preguntas: :opciones ] ] } }, :docente, {oferta_periodo: :periodo_academico}).where(docente: @docente, ofertas_periodo: { periodo_academico_id: @periodo_academico.id })
 						if @ofertas_academicas.nil?
 							@error = :no_oferta_academica
 							return nil
