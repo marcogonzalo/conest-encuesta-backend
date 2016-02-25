@@ -9,6 +9,6 @@ class Token < ActiveRecord::Base
 
 	def self.actual
 		t = Token.last
-		t.token
+		t.nil? ? nil : t.token
 	end
 end
