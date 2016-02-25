@@ -165,6 +165,11 @@ module Api
 
         def obtener_de_conest_api(solicitud, periodo_academico)
           respuesta = nil
+          if(Token::actual.nil?)
+            render json: { estatus: 'ERROR', mensaje: "Debe generar un token para la aplicación. Ejecute una llamada POST hacia la siguiente URL: /api/v1/tokens" }, status: :bad_request
+            return false
+          end
+          
           if(solicitud == "asignaturas")
             respuesta = RestClient.get "#{CONEST_API[:base_url]}/asignaturas_en_periodo_academico/#{periodo_academico}",
                                     :conest_token  => Token::actual
