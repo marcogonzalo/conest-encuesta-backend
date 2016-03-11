@@ -1,5 +1,5 @@
 class PeriodoAcademico < ActiveRecord::Base
-	has_many :ofertas_periodo
+	has_many :ofertas_periodo, :dependent => :destroy
 
 	validates :periodo,
 				presence: true,
@@ -78,6 +78,7 @@ class PeriodoAcademico < ActiveRecord::Base
     end
 
 	def sincronizar_periodo(respuesta_conest, datos_conest, instrumento_id)
+		puts (self.id)
 		if self.id.nil?
 		# Crear el nuevo periodo academico
 			self.update(asignaturas_hash_sum: respuesta_conest['sha1_sum'], sincronizacion: respuesta_conest['fecha_hora'])

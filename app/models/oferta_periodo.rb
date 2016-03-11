@@ -1,5 +1,5 @@
 class OfertaPeriodo < ActiveRecord::Base
-	has_many	:oferta_academica
+	has_many	:oferta_academica, :dependent => :destroy
 	belongs_to 	:materia
 	belongs_to 	:periodo_academico
 	belongs_to 	:docente_coordinador, :class_name => 'Docente', :foreign_key => 'docente_coordinador'

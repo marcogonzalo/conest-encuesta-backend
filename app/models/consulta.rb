@@ -1,5 +1,5 @@
 class Consulta < ActiveRecord::Base
-	has_many :respuestas
+	has_many :respuestas, :dependent => :destroy
 	belongs_to :oferta_academica
 	belongs_to :instrumento
 
