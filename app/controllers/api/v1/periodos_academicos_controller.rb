@@ -115,7 +115,6 @@ module Api
       # GET /periodos_academicos/01-2014/sincronizar_estudiantes.json
       def sincronizar_estudiantes
         periodo_academico_id = params[:periodo]
-
         @periodo_academico = PeriodoAcademico.find_by(periodo: periodo_academico_id)
 
         if @periodo_academico
@@ -163,7 +162,6 @@ module Api
             respuesta = RestClient.get "#{CONEST_API[:base_url]}/estudiantes_y_asignaturas_en_periodo_academico/#{periodo_academico}",
                                     :conest_token  => Token::actual
           end
-          puts respuesta
           return respuesta
         end
     end

@@ -8,6 +8,7 @@ module Api
       # GET /ofertas_periodo
       # GET /ofertas_periodo.json
       def index
+        puts @periodo_academico.inspect
         @ofertas_periodo = @periodo_academico.ofertas_periodo.includes([oferta_academica: { consulta: :instrumento } ], :materia, :docente_coordinador)
       end
 
@@ -90,7 +91,7 @@ module Api
         end
         
         def set_periodo_academico
-          @periodo_academico = PeriodoAcademico.find(params[:periodo_academico_id])
+          @periodo_academico = PeriodoAcademico.find_by(periodo: params[:periodo_academico_id])
         end
 
         # Parametros para el cambio de un instrumento para una consulta de una materia en un periodo
