@@ -19,11 +19,11 @@ module Api
 			end
 		
 			rescue_from Exceptions::AuthenticationTimeoutError do
-				render json: { error: 'Tiempo de autenticación vencido' }, status: 419 # unofficial timeout status code
+				render json: { error: 'Tiempo de autenticación vencido' }, status: 440 # unofficial timeout status code
 			end
 		
 			rescue_from JWT::ExpiredSignature do
-				render json: { error: 'Token vencido' }, status: 419 # unofficial timeout status code
+				render json: { error: 'Token vencido' }, status: 440 # unofficial timeout status code
 			end
 
 			private
