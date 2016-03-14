@@ -22,7 +22,9 @@ module Api
 			end
 
 			def update
-				@usuario.update_attribute(:rol_id, @rol.id)
+				unless @current_user.cedula == @usuario.cedula
+					@usuario.update_attribute(:rol_id, @rol.id)
+				end
 				render json: {usuario: @usuario, rol: @usuario.rol }
 			end
 
