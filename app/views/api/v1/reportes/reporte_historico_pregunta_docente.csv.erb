@@ -3,9 +3,8 @@
 		headers.push(o.valor)
 	end
 	headers += ["Respuestas", "Inscritos", "Participación","Media"] 
-%>
-<%= CSV.generate_line headers %>
-<% @resultados.each do |pregunta_id,resultado|
+%><%= CSV.generate_line headers %><% 
+	@resultados.each do |pregunta_id,resultado|
 		resultado.each do |periodo,materias|
 
 			materias.each do |m,secciones|
@@ -25,9 +24,7 @@
 						arreglo_valores.push(valores[o.valor])
 					end
 					arreglo_valores += [datos["total_respuestas"],datos["total_estudiantes"],participacion,datos["media_de_seccion"]]
-%>
-<%=			 		CSV.generate_line(arreglo_valores) %>
-<%
+%><%= CSV.generate_line(arreglo_valores) %><%
 				end
 			end
 		end
