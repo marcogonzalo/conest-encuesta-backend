@@ -75,11 +75,11 @@ module Api
         def instrumento_params
           json_instrumento_params = params.permit(:nombre, :descripcion, 
                                               bloques: [
-                                                :id, :nombre, :descripcion, :tipo, 
+                                                :id, :nombre, :descripcion, :tipo, :_destroy,
                                                 preguntas: [
-                                                  :id, :interrogante, :descripcion, :tipo_pregunta, 
+                                                  :id, :interrogante, :descripcion, :tipo_pregunta, :_destroy,
                                                   opciones: [
-                                                    :id, :etiqueta, :valor 
+                                                    :id, :etiqueta, :valor, :_destroy
                                                   ]
                                                 ]
                                               ], bloque_ids: [])

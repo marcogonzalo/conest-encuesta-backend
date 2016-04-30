@@ -1,7 +1,7 @@
 class Bloque < ActiveRecord::Base
 	has_and_belongs_to_many :instrumentos
 	has_and_belongs_to_many :preguntas
-	accepts_nested_attributes_for :preguntas
+	accepts_nested_attributes_for :preguntas, :allow_destroy => true
 
 	TIPO = Hash["D"  => "Docente", 
 				"G"  => "General",

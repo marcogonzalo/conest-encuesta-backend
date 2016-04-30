@@ -2,7 +2,7 @@ class Instrumento < ActiveRecord::Base
 	has_and_belongs_to_many :bloques
 	has_many :preguntas, through: :bloques 
 	has_many :consultas
-	accepts_nested_attributes_for :bloques
+	accepts_nested_attributes_for :bloques, :allow_destroy => true
 
 	validates :nombre, 
 				length: { maximum: 100 },
