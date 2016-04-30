@@ -1,3 +1,4 @@
+<%= CSV.generate_line ['Reporte', 'Histórico de Pregunta'] %><%= CSV.generate_line ['Docente:', @docente.cedula, @docente.nombre_completo] %>
 <% headers = ['Período', 'Materia', 'Sección']
 	@pregunta.opciones.each do |o|
 		headers.push(o.valor)
