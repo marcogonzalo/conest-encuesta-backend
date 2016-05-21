@@ -42,7 +42,7 @@ module Api
             when :ok
               render json: { estatus: respuesta_conest['estatus'], mensaje: "Período #{@periodo_academico.periodo} actualizado", sincronizacion: @periodo_academico.sincronizacion }, status: :ok
             else
-              nil
+              render json: { estatus: 500, mensaje: "No se obtuvo resultado. Verifique la disponibilidad del servicio en Conest" }, status: 500
             end
           else
             render json: { estatus: respuesta_conest['estatus'], mensaje: respuesta_conest['mensaje'] }, status: :bad_request
